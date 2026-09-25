@@ -68,6 +68,28 @@ const GAMES_DATA = [
     ],
     version: "v1.0-Release",
     author: "clive520"
+  },
+  {
+    id: "bubble-shooter",
+    title: "星際泡泡龍：光子消消樂",
+    subtitle: "Bubble Galaxy: Photon Pop",
+    category: "arcade",
+    categoryName: "經典街機",
+    badge: "🔥 全新上線",
+    status: "playable",
+    path: "./games/bubble-shooter/index.html",
+    icon: "🫧",
+    thumbnailGradient: "linear-gradient(135deg, #0369a1 0%, #4338ca 50%, #d946ef 100%)",
+    description: "經典泡泡龍全面升級！精準折射軌跡瞄準、超爽快懸空整片掉落大爆破，搭配高爆炸彈與彩虹量子球的暢快消除！",
+    tags: ["經典泡泡龍", "三消爆破", "折射瞄準", "特殊彩球", "Canvas 60FPS"],
+    features: [
+      "精準鏡面反彈折射瞄準虛線",
+      "三消連鎖爆破與懸空泡泡重力脫落判定",
+      "高爆炸彈、貫穿雷射、七彩彩虹等特殊能量球",
+      "20 個幾何星圖關卡 ＋ 無盡下壓極限狂潮"
+    ],
+    version: "v1.0-Release",
+    author: "clive520"
   }
 ];
 

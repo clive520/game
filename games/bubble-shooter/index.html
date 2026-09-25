@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星際泡泡龍：光子消消樂 | Bubble Galaxy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+  <!-- 頂部即時戰情列 -->
+  <header class="hud-bar">
+    <div class="hud-left">
+      <a href="../../index.html" class="back-link">
+        <span>⬅</span>
+        <span>返回大廳</span>
+      </a>
+      <div class="game-title-group">
+        <h2>星際泡泡龍：光子消消樂</h2>
+      </div>
+    </div>
+
+    <!-- 關卡標題與模式標籤 -->
+    <div class="hud-center">
+      <div id="lblLevelTitle" class="level-title-chip">第 1 關：光子原點</div>
+      <div id="modePill" class="phase-pill emerald">🫧 關卡星圖模式</div>
+    </div>
+
+    <!-- 即時數值 -->
+    <div class="hud-stats">
+      <div class="stat-chip">
+        <span class="stat-icon">⭐</span>
+        <div>
+          <div class="stat-label">消除積分</div>
+          <div id="valScore" class="stat-value val-score">0</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">⚡</span>
+        <div>
+          <div class="stat-label">連續連擊</div>
+          <div id="valCombo" class="stat-value val-combo">0</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">⚠️</span>
+        <div>
+          <div class="stat-label">下壓警戒</div>
+          <div id="foulDots" class="foul-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 輔助控制項 -->
+    <div class="hud-controls">
+      <button id="btnLevels" class="hud-btn" title="選擇星圖關卡">📑 關卡</button>
+      <button id="btnToggleMode" class="hud-btn primary" title="切換無盡下壓狂潮">🌌 無盡下壓</button>
+      <button id="btnHelp" class="hud-btn">📖 指南</button>
+      <button id="btnMute" class="hud-btn">🔊 音效: 開</button>
+    </div>
+  </header>
+
+  <!-- 泡泡龍消除主視窗 -->
+  <main class="game-viewport">
+    <div id="alertToast" class="alert-toast">光子發射器已連線</div>
+    <canvas id="gameCanvas"></canvas>
+  </main>
+
+  <!-- 底部操作提示與換彈控制列 -->
+  <footer class="control-bar">
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <span class="tip-text">
+        瞄準：移動滑鼠或手指 ｜ 發射：點擊或按空白鍵 ｜ 換彈：按鍵盤 <span class="key-tag">C</span>
+      </span>
+    </div>
+
+    <div class="action-buttons">
+      <button id="btnSwap" class="btn-swap">
+        <span>🔄</span>
+        <span>切換備彈球</span>
+        <span class="key-tag">C 鍵</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- 關卡選擇彈窗 (Level Select Modal) -->
+  <div id="levelSelectModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><span>📑</span> 選擇星際星圖關卡</h2>
+        <button class="btn-close-modal" onclick="document.getElementById('levelSelectModal').classList.remove('active')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="levelGrid" class="level-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 過關結算彈窗 (Stage Victory Modal) -->
+  <div id="victoryModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="victoryTitle">🏆 星圖全清獲勝！</h2>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p style="color: #cbd5e1; margin-bottom: 12px;">太棒了！所有光子泡泡已成功清除！</p>
+        <div style="font-size: 2.2rem; color: #fbbf24; margin: 16px 0;" id="victoryStars">⭐⭐⭐</div>
+        <div style="font-size: 1.1rem; color: #38bdf8; font-family: var(--font-mono); font-weight: 700;">
+          最終得分：<span id="victoryScore">0</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnNextLevel" class="modal-btn primary">挑戰下一關 ➡</button>
+        <button class="modal-btn secondary" onclick="document.getElementById('victoryModal').classList.remove('active'); window.bubbleGame.openLevelSelectModal();">選關清單</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 失敗結算彈窗 (Game Over Modal) -->
+  <div id="gameOverModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 style="color: #f43f5e;">💥 警戒線失守！</h2>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p style="color: #cbd5e1; margin-bottom: 12px;">泡泡堆積觸碰到底部死亡警戒線，防線已被突破！</p>
+        <div style="font-size: 1.1rem; color: #fbbf24; font-family: var(--font-mono); font-weight: 700; margin: 16px 0;">
+          本次作戰得分：<span id="gameOverScore">0</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnRetry" class="modal-btn primary">重新挑戰 🔄</button>
+        <a href="../../index.html" class="modal-btn secondary">返回大廳</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作戰指南說明彈窗 (Help Modal) -->
+  <div id="helpModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><span>📖</span> 星際泡泡龍：作戰指南</h2>
+        <button id="btnCloseHelp" class="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="guide-block">
+          <h3>🎯 鏡面折射瞄準與三消爆破</h3>
+          <p>
+            移動滑鼠或手指瞄準，畫面會顯示撞擊左右牆壁時的<strong>鏡面折射反彈虛線</strong>。將相同顏色的泡泡湊成 <strong>3 顆以上相連</strong>即可瞬間消除！
+          </p>
+        </div>
+
+        <div class="guide-block">
+          <h3>💥 懸空大脫落（Orphan Drop）</h3>
+          <p>
+            不必一個一個慢慢消！只要擊碎上層的核心連接點，<strong>所有失去天花板支撐的懸空泡泡都會整片自由落體墜落</strong>，獎勵超大額連鎖掉落加分！
+          </p>
+        </div>
+
+        <div class="guide-block">
+          <h3>⚡ 特殊能量彩球</h3>
+          <ul style="margin: 8px 0 0 16px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+            <li><strong style="color: #f43f5e;">💣 反物質高爆彈</strong>：擊中後直接引爆周圍 3×3 範圍內所有泡泡！</li>
+            <li><strong style="color: #38bdf8;">⚡ 貫穿光子雷射</strong>：整橫排泡泡直接貫穿消除！</li>
+            <li><strong style="color: #ffffff;">🌈 七彩量子萬能球</strong>：萬能色，可視為任何顏色觸發三消！</li>
+            <li><strong style="color: #a855f7;">🔄 備彈即時交換</strong>：按鍵盤 <span class="key-tag">C</span> 或點擊砲台左側可隨時切換備用球！</li>
+          </ul>
+        </div>
+
+        <div class="guide-block">
+          <h3>⚠️ 天花板下壓與死亡警戒線</h3>
+          <p>
+            當發射泡泡未產生消除時，右上角警戒點會累計；<strong>每累計 5 次失誤，頂部天花板將下壓一層</strong>！千萬不要讓泡泡觸碰到下方的紅色虛線死亡警戒線！
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnGotIt" class="modal-btn primary">啟動光子砲台！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入腳本 -->
+  <script src="./js/audio.js"></script>
+  <script src="./js/grid.js"></script>
+  <script src="./js/entities.js"></script>
+  <script src="./js/levels.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>
