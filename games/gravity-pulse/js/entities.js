@@ -562,6 +562,7 @@ class Probe {
     this.radius = 9;
     this.state = "orbiting"; // "free" | "orbiting" | "dead" | "cleared"
     this.orbitNode = null;
+    this.lastNode = null;
     this.orbitAngle = 0;
     this.orbitSpeed = 2.4;
     this.trail = [];
@@ -573,13 +574,15 @@ class Probe {
     if (this.state !== "orbiting" || !this.orbitNode) return false;
 
     // 計算切線發射向量速度
-    const dir = this.orbitNode.dir;
-    const speed = (this.orbitNode.currentSpeed || 2.4) * (this.orbitNode.orbitRadius || 55);
+    const node = this.orbitNode;
+    const dir = node.dir;
+    const speed = (node.currentSpeed || 2.4) * (node.orbitRadius || 55);
 
     this.vx = -Math.sin(this.orbitAngle) * speed * dir;
     this.vy = Math.cos(this.orbitAngle) * speed * dir;
 
     this.state = "free";
+    this.lastNode = node; // 紀錄剛彈射脫離的天體，避免在脫離捕獲圈前被立即二次吸回
     this.orbitNode = null;
     this.leaps++;
     return true;
@@ -588,6 +591,7 @@ class Probe {
   captureByNode(node) {
     this.state = "orbiting";
     this.orbitNode = node;
+    this.lastNode = null;
 
     // 若節點為反轉星，進場時翻轉旋轉方向
     if (node.type === "inverter") {
@@ -634,9 +638,19 @@ class Probe {
       this.x += this.vx * dt;
       this.y += this.vy * dt;
 
+      // 檢查是否已遠離上次脫離的天體
+      if (this.lastNode) {
+        const dLast = Math.hypot(this.x - this.lastNode.x, this.y - this.lastNode.y);
+        if (dLast > this.lastNode.captureRadius + 10) {
+          this.lastNode = null;
+        }
+      }
+
       // 檢查是否進入任何引力節點的捕獲半徑
       for (const node of nodes) {
         if (node.isExploded) continue;
+        if (node === this.lastNode) continue; // 剛脫離的天體在未離開捕獲半徑前不重複捕獲！
+
         const d = Math.hypot(this.x - node.x, this.y - node.y);
         if (d <= node.captureRadius) {
           this.captureByNode(node);

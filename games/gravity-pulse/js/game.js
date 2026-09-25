@@ -114,14 +114,27 @@ class GravityPulseGame {
       this.initCanvasSize();
     });
 
-    // 點擊畫布或發射按鈕進行引力彈射
-    this.canvas.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
+    // 點擊畫布或視窗區域進行引力彈射
+    const handleLaunchInput = (e) => {
+      // 避免點擊右上/下方按鈕時觸發重複彈射
+      if (e.target && (e.target.tagName === "BUTTON" || e.target.closest("button") || e.target.closest(".modal-card"))) {
+        return;
+      }
+      e.preventDefault?.();
       this.triggerLaunch();
-    });
+    };
+
+    this.canvas.addEventListener("pointerdown", handleLaunchInput);
+    if (this.canvas.parentElement) {
+      this.canvas.parentElement.addEventListener("pointerdown", handleLaunchInput);
+    }
 
     if (this.btnLaunch) {
-      this.btnLaunch.addEventListener("click", () => this.triggerLaunch());
+      this.btnLaunch.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.btnLaunch.blur();
+        this.triggerLaunch();
+      });
     }
 
     if (this.btnRetry) {
@@ -130,10 +143,14 @@ class GravityPulseGame {
 
     // 鍵盤操作 (Space / Enter 彈射, R 重試)
     window.addEventListener("keydown", (e) => {
-      if (e.code === "Space" || e.code === "Enter") {
+      // 空白鍵或 Enter 觸發切線彈射
+      if (e.code === "Space" || e.key === " " || e.key === "Spacebar" || e.keyCode === 32 || e.code === "Enter" || e.key === "Enter") {
         e.preventDefault();
+        if (document.activeElement && document.activeElement.tagName === "BUTTON") {
+          document.activeElement.blur();
+        }
         this.triggerLaunch();
-      } else if (e.code === "KeyR") {
+      } else if (e.code === "KeyR" || e.key === "r" || e.key === "R") {
         e.preventDefault();
         this.restartLevel();
       }
