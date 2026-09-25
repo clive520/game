@@ -95,6 +95,12 @@ class CyberDefenseGame {
     this.modalFinalScore = document.getElementById("modalFinalScore");
     this.modalFinalWave = document.getElementById("modalFinalWave");
     this.btnModalRestart = document.getElementById("btnModalRestart");
+
+    // 作戰指南說明彈窗
+    this.helpModal = document.getElementById("helpModal");
+    this.btnHelp = document.getElementById("btnHelp");
+    this.btnCloseHelp = document.getElementById("btnCloseHelp");
+    this.btnGotIt = document.getElementById("btnGotIt");
   }
 
   initEvents() {
@@ -261,6 +267,33 @@ class CyberDefenseGame {
     // 重新開始
     if (this.btnModalRestart) {
       this.btnModalRestart.addEventListener("click", () => this.restartGame());
+    }
+
+    // 作戰指南說明彈窗開關事件
+    if (this.btnHelp && this.helpModal) {
+      this.btnHelp.addEventListener("click", () => {
+        this.helpModal.classList.add("active");
+      });
+    }
+
+    if (this.btnCloseHelp && this.helpModal) {
+      this.btnCloseHelp.addEventListener("click", () => {
+        this.helpModal.classList.remove("active");
+      });
+    }
+
+    if (this.btnGotIt && this.helpModal) {
+      this.btnGotIt.addEventListener("click", () => {
+        this.helpModal.classList.remove("active");
+      });
+    }
+
+    if (this.helpModal) {
+      this.helpModal.addEventListener("click", (e) => {
+        if (e.target === this.helpModal) {
+          this.helpModal.classList.remove("active");
+        }
+      });
     }
   }
 

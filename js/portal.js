@@ -95,6 +95,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // 遊玩指南彈窗開關
+  const guideModal = document.getElementById("guideModal");
+  const btnOpenGuide = document.getElementById("btnOpenGuide");
+  const btnCloseGuide = document.getElementById("btnCloseGuide");
+
+  if (btnOpenGuide && guideModal) {
+    btnOpenGuide.addEventListener("click", () => {
+      guideModal.classList.add("active");
+    });
+  }
+
+  if (btnCloseGuide && guideModal) {
+    btnCloseGuide.addEventListener("click", () => {
+      guideModal.classList.remove("active");
+    });
+  }
+
+  if (guideModal) {
+    guideModal.addEventListener("click", (e) => {
+      if (e.target === guideModal) {
+        guideModal.classList.remove("active");
+      }
+    });
+  }
+
   // 初次渲染
   renderGames();
 });

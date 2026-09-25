@@ -60,6 +60,7 @@
 
     <!-- 輔助控制開關 -->
     <div class="hud-controls">
+      <button id="btnHelp" class="hud-btn">📖 作戰指南</button>
       <button id="btnSpeed" class="hud-btn">⚡ 速度: 1x</button>
       <button id="btnMute" class="hud-btn">🔊 音效: 開</button>
     </div>
@@ -162,6 +163,96 @@
       <div class="modal-actions">
         <button id="btnModalRestart" class="modal-btn primary">重新迎戰</button>
         <a href="../../index.html" class="modal-btn secondary">返回大廳</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作戰指南 / 遊戲說明彈窗 (Help Modal) -->
+  <div id="helpModal" class="modal-overlay">
+    <div class="modal-card help-card">
+      <div class="help-header">
+        <h2><span>📖</span> 星際作戰指揮指南</h2>
+        <button id="btnCloseHelp" class="btn-close-help" title="關閉說明">✕</button>
+      </div>
+
+      <div class="help-body">
+        <!-- 戰役目標 -->
+        <section class="help-section">
+          <h3>🎯 戰役目標</h3>
+          <p>
+            阻止機械軍團從左側紅色傳送門入侵右側藍色能量核心（❤️ 基地生命 20 點）。堅守並消滅全部 15 波敵軍即可贏得星際戰役勝利！
+          </p>
+        </section>
+
+        <!-- 迷宮建造規範 -->
+        <section class="help-section">
+          <h3>🧱 開放式迷宮建造 (Mazing Protocol)</h3>
+          <p>
+            點擊下方防禦塔或按熱鍵 <span class="key-tag">1</span> ~ <span class="key-tag">4</span>，在戰場網格上點擊放置防禦塔。防禦塔會成為實體障礙物，敵人會依據 <strong>A* 尋路演算法</strong> 即時重新尋找繞行路線。
+          </p>
+          <p style="color: #f87171;">
+            ⚠️ <strong>防堵死警報</strong>：嚴禁將通往核心的路徑完全封死！若放置會導致無路可走，系統將顯示紅色警告並拒絕建造。
+          </p>
+        </section>
+
+        <!-- 指揮官機甲操作 -->
+        <section class="help-section">
+          <h3>🤖 機甲指揮官操作</h3>
+          <p>您可親臨戰線巡邏，協助防線補漏：</p>
+          <div class="help-grid-cards">
+            <div class="help-card-mini">
+              <div class="card-name">🏃 機甲移動</div>
+              <div class="card-desc">使用鍵盤 <span class="key-tag">W</span> <span class="key-tag">A</span> <span class="key-tag">S</span> <span class="key-tag">D</span> 直接移動，或在畫布上點擊 <strong>滑鼠右鍵</strong> 指派導航目標。</div>
+            </div>
+            <div class="help-card-mini">
+              <div class="card-name">🔫 自動等離子機砲</div>
+              <div class="card-desc">機甲自帶高頻等離子槍，會自動索敵並射擊進入射程內的敵軍。</div>
+            </div>
+            <div class="help-card-mini">
+              <div class="card-name">⚡ EMP 震撼脈衝 <span class="key-tag">Q</span></div>
+              <div class="card-desc">（冷卻 10 秒）釋放全場電磁脈衝，造成範圍傷害並使機械敵軍完全癱瘓 3.5 秒。</div>
+            </div>
+            <div class="help-card-mini">
+              <div class="card-name">🚀 軌道精準轟炸 <span class="key-tag">E</span></div>
+              <div class="card-desc">（冷卻 18 秒）對滑鼠游標指針座標召喚軌道重砲，造成半徑 100 範圍 220 毀滅打擊。</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 防禦塔武裝庫 -->
+        <section class="help-section">
+          <h3>⚡ 高科技防禦塔武裝庫</h3>
+          <div class="help-grid-cards">
+            <div class="help-card-mini">
+              <div class="card-name">⚡ 光子脈衝塔 <span class="key-tag">1</span> (50 💎)</div>
+              <div class="card-desc">造價低廉、射速極快。最適合用來快速阻路構築長距離蜿蜒迷宮。</div>
+            </div>
+            <div class="help-card-mini">
+              <div class="card-name">🎯 重力磁軌砲 <span class="key-tag">2</span> (120 💎)</div>
+              <div class="card-desc">超遠射程，發射高能粒子束瞬間貫穿直線上的所有敵軍，長走道剋星！</div>
+            </div>
+            <div class="help-card-mini">
+              <div class="card-name">🌀 電磁緩速塔 <span class="key-tag">3</span> (80 💎)</div>
+              <div class="card-desc">持續釋放電磁環，降低 50% 移動速度，將敵人長時間滯留在火力網內。</div>
+            </div>
+            <div class="help-card-mini">
+              <div class="card-name">🚀 巡弋導彈塔 <span class="key-tag">4</span> (150 💎)</div>
+              <div class="card-desc">發射自動尋標追蹤導彈，命中產生大範圍高爆群傷，剋制密集部隊。</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 戰術升級與實戰技巧 -->
+        <section class="help-section">
+          <h3>💡 指揮官實戰技巧</h3>
+          <p>• <strong>升級與折價回收</strong>：點選已建造的防禦塔，可升級至 Lv.2 / Lv.3 大幅強化傷害與射程；亦可隨時以 70% 價格出售回收晶體。</p>
+          <p>• <strong>提早迎戰獎勵</strong>：在波次間隔按 <span class="key-tag">空白鍵 Space</span> 或點擊「呼叫下一波」，提早迎戰可額外獲得 <strong>+25 晶體獎勵</strong>！</p>
+          <p>• <strong>取消選取</strong>：按 <span class="key-tag">ESC</span> 可隨時退出造塔狀態或取消選取防禦塔。</p>
+        </section>
+      </div>
+
+      <div class="help-footer">
+        <button id="btnGotIt" class="modal-btn primary">我明白了，開始作戰！</button>
       </div>
     </div>
   </div>
