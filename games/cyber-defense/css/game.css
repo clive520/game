@@ -26,7 +26,8 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   font-family: var(--font-family);
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -38,10 +39,11 @@ body {
 
 /* 頂部即時戰情列 (Top HUD) */
 .hud-bar {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 24px;
+  padding: 8px 20px;
   background: var(--bg-panel);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-cyan);
@@ -155,29 +157,39 @@ body {
 /* 主遊戲戰場區域 */
 .game-viewport {
   flex: 1;
+  min-height: 0;
+  min-width: 0;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 6px 12px;
   background: #05080e;
 }
 
 #gameCanvas {
   display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  aspect-ratio: 22 / 14;
+  object-fit: contain;
   background-color: #080d18;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(6, 182, 212, 0.2);
   border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 8px;
   cursor: crosshair;
 }
 
 /* 浮動戰術提示/警報浮層 */
 .alert-toast {
   position: absolute;
-  top: 20px;
-  padding: 10px 24px;
+  top: 14px;
+  padding: 8px 20px;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   pointer-events: none;
   opacity: 0;
@@ -207,14 +219,15 @@ body {
 
 /* 底部防禦塔建造與技能面板 (Bottom Command Bar) */
 .command-bar {
+  flex-shrink: 0;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: 6px 16px;
   background: var(--bg-panel);
   backdrop-filter: blur(14px);
   border-top: 1px solid var(--border-cyan);
-  gap: 20px;
+  gap: 14px;
   z-index: 20;
 }
 
@@ -222,52 +235,52 @@ body {
 .commander-panel {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 5px 12px;
+  border-radius: 8px;
 }
 
 .commander-avatar {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   background: linear-gradient(135deg, #0284c7, #6366f1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 20px;
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
 }
 
 .commander-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .commander-name {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--neon-cyan);
 }
 
 .skills-row {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .skill-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 6px;
   color: var(--text-primary);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -298,7 +311,7 @@ body {
 .tower-select-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .tower-card {
@@ -308,9 +321,9 @@ body {
   justify-content: center;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 8px 14px;
-  border-radius: 10px;
-  min-width: 90px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  min-width: 72px;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
@@ -329,18 +342,18 @@ body {
 }
 
 .tower-card-icon {
-  font-size: 1.6rem;
-  margin-bottom: 2px;
+  font-size: 1.25rem;
+  margin-bottom: 1px;
 }
 
 .tower-card-name {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .tower-card-cost {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--neon-yellow);
   font-family: var(--font-mono);

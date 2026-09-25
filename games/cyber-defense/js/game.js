@@ -682,6 +682,12 @@ class CyberDefenseGame {
     ctx.lineWidth = 2;
     ctx.stroke();
 
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = "#f43f5e";
+    ctx.font = "bold 10px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("傳送門", startX, startY - this.cellSize * 0.48);
+
     // 繪製終點基地核心 (Exit: Col cols-1, Mid Row)
     const exitX = this.pathfinding.exit.col * this.cellSize + this.cellSize / 2;
     const exitY = this.pathfinding.exit.row * this.cellSize + this.cellSize / 2;
@@ -694,6 +700,12 @@ class CyberDefenseGame {
     ctx.strokeStyle = "#22d3ee";
     ctx.lineWidth = 2;
     ctx.stroke();
+
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = "#22d3ee";
+    ctx.font = "bold 10px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("基地核心", exitX, exitY - this.cellSize * 0.48);
 
     ctx.restore();
   }

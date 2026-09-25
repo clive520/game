@@ -210,6 +210,13 @@ class Commander {
     ctx.arc(this.x, this.y, this.radius + 3, Math.PI - 0.6, Math.PI + 0.6);
     ctx.stroke();
 
+    // 指揮官標籤
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = "#38bdf8";
+    ctx.font = "bold 11px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("🤖 指揮官", this.x, this.y - this.radius - 8);
+
     ctx.restore();
   }
 }
