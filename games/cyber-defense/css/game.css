@@ -1,0 +1,566 @@
+:root {
+  --bg-dark: #070b12;
+  --bg-panel: rgba(13, 21, 38, 0.85);
+  --border-cyan: rgba(6, 182, 212, 0.4);
+  --border-cyan-bright: #06b6d4;
+  --neon-cyan: #22d3ee;
+  --neon-blue: #3b82f6;
+  --neon-purple: #a855f7;
+  --neon-pink: #f43f5e;
+  --neon-yellow: #fbbf24;
+  --neon-green: #34d399;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace, Consolas, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(6, 182, 212, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 80% 90%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    linear-gradient(to bottom, #070b12, #04070c);
+}
+
+/* 頂部即時戰情列 (Top HUD) */
+.hud-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-cyan);
+  z-index: 20;
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  color: var(--neon-cyan);
+  border-color: var(--border-cyan);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.game-title-group h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #fff, var(--neon-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: var(--font-mono);
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-icon {
+  font-size: 1.1rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.val-gold { color: var(--neon-yellow); text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
+.val-lives { color: var(--neon-pink); text-shadow: 0 0 10px rgba(244, 63, 94, 0.4); }
+.val-wave { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(34, 211, 238, 0.4); }
+.val-score { color: var(--neon-purple); }
+
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-btn:hover {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
+.hud-btn.active {
+  background: var(--border-cyan-bright);
+  color: #070b12;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+}
+
+/* 主遊戲戰場區域 */
+.game-viewport {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #05080e;
+}
+
+#gameCanvas {
+  display: block;
+  background-color: #080d18;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(6, 182, 212, 0.2);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  cursor: crosshair;
+}
+
+/* 浮動戰術提示/警報浮層 */
+.alert-toast {
+  position: absolute;
+  top: 20px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  z-index: 30;
+}
+
+.alert-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alert-toast.danger {
+  background: rgba(239, 68, 68, 0.9);
+  color: #fff;
+  border: 1px solid #f87171;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+}
+
+.alert-toast.info {
+  background: rgba(6, 182, 212, 0.9);
+  color: #070b12;
+  border: 1px solid #22d3ee;
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+}
+
+/* 底部防禦塔建造與技能面板 (Bottom Command Bar) */
+.command-bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border-cyan);
+  gap: 20px;
+  z-index: 20;
+}
+
+/* 指揮官狀態與技能 */
+.commander-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+
+.commander-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0284c7, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.commander-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.commander-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+}
+
+.skills-row {
+  display: flex;
+  gap: 8px;
+}
+
+.skill-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-btn:hover:not(:disabled) {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: var(--neon-cyan);
+}
+
+.skill-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.key-badge {
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--neon-cyan);
+  font-family: var(--font-mono);
+}
+
+/* 防禦塔選擇建造列 */
+.tower-select-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tower-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: 10px;
+  min-width: 90px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tower-card:hover {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: var(--border-cyan);
+  transform: translateY(-2px);
+}
+
+.tower-card.selected {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 18px rgba(6, 182, 212, 0.5);
+}
+
+.tower-card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 2px;
+}
+
+.tower-card-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tower-card-cost {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--neon-yellow);
+  font-family: var(--font-mono);
+}
+
+.tower-hotkey {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* 塔資訊與操作面板（升級/販售） */
+.inspect-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  border-radius: 10px;
+  min-width: 220px;
+}
+
+.inspect-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inspect-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+}
+
+.inspect-stats {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.inspect-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-upgrade {
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  color: var(--neon-green);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-upgrade:hover {
+  background: var(--neon-green);
+  color: #070b12;
+}
+
+.btn-sell {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-sell:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* 波次控制按鈕 */
+.wave-action-box {
+  display: flex;
+  align-items: center;
+}
+
+.btn-start-wave {
+  background: linear-gradient(135deg, #06b6d4, #2563eb);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  transition: all 0.2s;
+}
+
+.btn-start-wave:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
+  filter: brightness(1.1);
+}
+
+.btn-start-wave:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 遊戲結束 / 通關 Modal 彈窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 8, 14, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #0d1527;
+  border: 1px solid var(--border-cyan);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(6, 182, 212, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1);
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.modal-title.defeat {
+  color: #f43f5e;
+  text-shadow: 0 0 20px rgba(244, 63, 94, 0.6);
+}
+
+.modal-title.victory {
+  color: #34d399;
+  text-shadow: 0 0 20px rgba(52, 211, 153, 0.6);
+}
+
+.modal-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.modal-stats {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.modal-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.modal-btn.primary {
+  background: var(--border-cyan-bright);
+  color: #070b12;
+  border: none;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+.modal-btn.primary:hover {
+  background: var(--neon-cyan);
+}
+
+.modal-btn.secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+}
+
+.modal-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

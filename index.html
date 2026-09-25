@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星際遊戲矩陣 | Nexus Arcade - HTML5 Web Games</title>
+  <meta name="description" content="多款精選 HTML5 網頁遊戲平台。首發旗艦《星際守望者：迷宮防線》開放式迷宮建造塔防。支援 GitHub Pages 靜態極速載入。">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/portal.css">
+</head>
+<body>
+  <!-- 背景網格紋理 -->
+  <div class="bg-grid-overlay"></div>
+
+  <!-- 頂部導覽列 -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="./index.html" class="logo-group">
+        <div class="logo-icon">🎮</div>
+        <div class="logo-text">
+          <h1>NEXUS ARCADE</h1>
+          <p>星際遊戲矩陣平台</p>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="https://github.com/clive520" target="_blank" rel="noopener noreferrer" class="github-btn">
+          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="container">
+    <!-- 焦點首推遊戲橫幅 (Hero Banner) -->
+    <section class="hero-section">
+      <div class="featured-card">
+        <div class="featured-content">
+          <div class="featured-badge">🔥 旗艦首發推薦</div>
+          <h2>星際守望者：迷宮防線</h2>
+          <div class="subtitle">CYBER DEFENSE: MAZING PROTOCOL</div>
+          <p>
+            突破傳統固定路線！自由在開放式戰場建造高科技防禦塔構建迷宮阻隔強敵，親自操控星際指揮官機甲穿梭防線，結合 A* 即時動態尋路與雷射轟炸的極致塔防對決。
+          </p>
+
+          <div class="feature-bullets">
+            <div class="bullet-item"><span class="bullet-icon">✦</span> 開放式造塔迷宮 (Mazing)</div>
+            <div class="bullet-item"><span class="bullet-icon">✦</span> A* 即時動態尋路引擎</div>
+            <div class="bullet-item"><span class="bullet-icon">✦</span> 可操控星際指揮官機甲</div>
+            <div class="bullet-item"><span class="bullet-icon">✦</span> 60 FPS Canvas 流暢打擊</div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="./games/cyber-defense/index.html" class="btn-primary">
+              <span>立即啟動遊戲</span>
+              <span>➔</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="featured-visual">
+          <div class="visual-mockup">
+            <div class="visual-icon-glow">🛡️</div>
+            <div class="visual-tag">[ PROTOCOL: ONLINE ]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分類過濾與搜尋控制列 -->
+    <section class="controls-section">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-category="all">全部遊戲</button>
+        <button class="filter-tab" data-category="strategy">🛡️ 策略塔防</button>
+        <button class="filter-tab" data-category="action">🚀 動作射擊</button>
+        <button class="filter-tab" data-category="puzzle">🧩 休閒益智</button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="搜尋遊戲名稱或標籤...">
+      </div>
+    </section>
+
+    <!-- 遊戲展示清單 (由 JS 動態注入) -->
+    <section>
+      <div id="gameCount" style="font-size: 0.875rem; color: var(--text-dim); margin-bottom: 16px;"></div>
+      <div id="gamesGrid" class="games-grid">
+        <!-- 動態渲染卡片 -->
+      </div>
+    </section>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Nexus Arcade. 極速靜態網頁遊戲平台 · 專為 GitHub Pages 打造</p>
+    </div>
+  </footer>
+
+  <!-- 載入腳本 -->
+  <script src="./js/games-data.js"></script>
+  <script src="./js/portal.js"></script>
+</body>
+</html>

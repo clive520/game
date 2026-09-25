@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星際守望者：迷宮防線 | Cyber Defense: Mazing Protocol</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+  <!-- 頂部即時戰情列 -->
+  <header class="hud-bar">
+    <div class="hud-left">
+      <a href="../../index.html" class="back-link">
+        <span>⬅</span>
+        <span>返回大廳</span>
+      </a>
+      <div class="game-title-group">
+        <h2>星際守望者：迷宮防線</h2>
+      </div>
+    </div>
+
+    <!-- 數值核心 HUD -->
+    <div class="hud-stats">
+      <div class="stat-chip">
+        <span class="stat-icon">💎</span>
+        <div>
+          <div class="stat-label">能源晶體</div>
+          <div id="valGold" class="stat-value val-gold">300</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">❤️</span>
+        <div>
+          <div class="stat-label">基地核心</div>
+          <div id="valLives" class="stat-value val-lives">20</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">🌊</span>
+        <div>
+          <div class="stat-label">當前波次</div>
+          <div id="valWave" class="stat-value val-wave">0 / 15</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">⭐</span>
+        <div>
+          <div class="stat-label">作戰得分</div>
+          <div id="valScore" class="stat-value val-score">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 輔助控制開關 -->
+    <div class="hud-controls">
+      <button id="btnSpeed" class="hud-btn">⚡ 速度: 1x</button>
+      <button id="btnMute" class="hud-btn">🔊 音效: 開</button>
+    </div>
+  </header>
+
+  <!-- 主戰場畫布 -->
+  <main class="game-viewport">
+    <div id="alertToast" class="alert-toast">系統連線就緒</div>
+    <canvas id="gameCanvas"></canvas>
+  </main>
+
+  <!-- 底部指揮與防禦塔建造列 -->
+  <footer class="command-bar">
+    <!-- 指揮官機甲面板 -->
+    <div class="commander-panel">
+      <div class="commander-avatar">🤖</div>
+      <div class="commander-info">
+        <div class="commander-name">機甲指揮官 (WASD / 右鍵移動)</div>
+        <div class="skills-row">
+          <button id="btnSkillEMP" class="skill-btn">
+            <span class="key-badge">Q</span>
+            <span>EMP 震撼脈衝</span>
+            <span id="cdEMP"></span>
+          </button>
+          <button id="btnSkillOrbital" class="skill-btn">
+            <span class="key-badge">E</span>
+            <span>軌道精準轟炸</span>
+            <span id="cdOrbital"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 防禦塔選擇建造 -->
+    <div class="tower-select-row">
+      <div class="tower-card" data-tower="pulse">
+        <span class="tower-hotkey">[1]</span>
+        <span class="tower-card-icon">⚡</span>
+        <span class="tower-card-name">光子脈衝</span>
+        <span class="tower-card-cost">50 💎</span>
+      </div>
+
+      <div class="tower-card" data-tower="railgun">
+        <span class="tower-hotkey">[2]</span>
+        <span class="tower-card-icon">🎯</span>
+        <span class="tower-card-name">重力磁軌</span>
+        <span class="tower-card-cost">120 💎</span>
+      </div>
+
+      <div class="tower-card" data-tower="emp">
+        <span class="tower-hotkey">[3]</span>
+        <span class="tower-card-icon">🌀</span>
+        <span class="tower-card-name">電磁緩速</span>
+        <span class="tower-card-cost">80 💎</span>
+      </div>
+
+      <div class="tower-card" data-tower="missile">
+        <span class="tower-hotkey">[4]</span>
+        <span class="tower-card-icon">🚀</span>
+        <span class="tower-card-name">巡弋導彈</span>
+        <span class="tower-card-cost">150 💎</span>
+      </div>
+    </div>
+
+    <!-- 塔升級與販售面板 (選取時顯示) -->
+    <div id="inspectPanel" class="inspect-panel" style="display: none;">
+      <div class="inspect-info">
+        <div id="inspectName" class="inspect-name">防禦塔資訊</div>
+        <div id="inspectStats" class="inspect-stats">傷害: 0 | 射程: 0</div>
+      </div>
+      <div class="inspect-actions">
+        <button id="btnUpgrade" class="btn-upgrade">升級</button>
+        <button id="btnSell" class="btn-sell">出售</button>
+      </div>
+    </div>
+
+    <!-- 波次啟動按鈕 -->
+    <div class="wave-action-box">
+      <button id="btnStartWave" class="btn-start-wave">啟動第一波 ➔</button>
+    </div>
+  </footer>
+
+  <!-- 結算彈窗 Modal -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <h2 id="modalTitle" class="modal-title">戰役結算</h2>
+      <p id="modalDesc" class="modal-desc">戰鬥總結報告</p>
+      
+      <div class="modal-stats">
+        <div>
+          <div style="font-size: 0.8rem; color: #94a3b8;">最終得分</div>
+          <div id="modalFinalScore" style="font-size: 1.4rem; font-weight: 800; color: #a855f7;">0</div>
+        </div>
+        <div>
+          <div style="font-size: 0.8rem; color: #94a3b8;">防守波次</div>
+          <div id="modalFinalWave" style="font-size: 1.4rem; font-weight: 800; color: #22d3ee;">0 / 15</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnModalRestart" class="modal-btn primary">重新迎戰</button>
+        <a href="../../index.html" class="modal-btn secondary">返回大廳</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 核心腳本載入順序 -->
+  <script src="./js/audio.js"></script>
+  <script src="./js/pathfinding.js"></script>
+  <script src="./js/entities.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>
