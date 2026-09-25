@@ -51,22 +51,23 @@ class BubbleShooterGame {
   }
 
   initCanvasSize() {
-    const rect = this.canvas.parentElement.getBoundingClientRect();
+    const cabinet = this.canvas.parentElement;
+    const rect = cabinet ? cabinet.getBoundingClientRect() : this.canvas.getBoundingClientRect();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    this.width = rect.width;
-    this.height = rect.height;
+    this.width = Math.floor(rect.width);
+    this.height = Math.floor(rect.height);
 
-    this.canvas.width = this.width * dpr;
-    this.canvas.height = this.height * dpr;
+    this.canvas.width = Math.round(this.width * dpr);
+    this.canvas.height = Math.round(this.height * dpr);
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
 
     this.ctx.resetTransform?.();
     this.ctx.scale(dpr, dpr);
 
-    // 動態計算泡泡半徑 (10 列泡泡滿版適配)
-    this.bubbleRadius = Math.max(16, Math.min(26, Math.floor(this.width / 20.5)));
+    // 10 列六角蜂巢泡泡：1 欄佔 2R，10 欄需要 20R，完美對齊
+    this.bubbleRadius = Math.max(16, Math.floor(this.width / 20.4));
 
     if (this.grid) {
       this.grid.radius = this.bubbleRadius;
@@ -74,7 +75,7 @@ class BubbleShooterGame {
     }
     if (this.cannon) {
       this.cannon.x = this.width / 2;
-      this.cannon.y = this.height - this.bubbleRadius * 2.2;
+      this.cannon.y = this.height - this.bubbleRadius * 2.8;
       this.cannon.radius = this.bubbleRadius;
     }
   }
@@ -653,7 +654,7 @@ class BubbleShooterGame {
     ctx.clearRect(0, 0, this.width, this.height);
 
     // 1. 繪製底部死亡警戒線 (Danger Warning Line)
-    const dangerY = this.radius + this.dangerRow * (this.grid ? this.grid.rowHeight : 35);
+    const dangerY = this.bubbleRadius + this.dangerRow * (this.grid ? this.grid.rowHeight : 35);
     ctx.save();
     ctx.strokeStyle = "rgba(244, 63, 94, 0.4)";
     ctx.lineWidth = 1.5;

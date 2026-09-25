@@ -4,17 +4,17 @@
  */
 
 const BUBBLE_COLORS = {
-  red: { name: "赤焰紅", hex: "#f43f5e", dark: "#881337", glow: "rgba(244, 63, 94, 0.6)", symbol: "▲" },
-  blue: { name: "星海藍", hex: "#00f0ff", dark: "#0e7490", glow: "rgba(0, 240, 255, 0.6)", symbol: "●" },
-  green: { name: "翡翠綠", hex: "#10b981", dark: "#064e3b", glow: "rgba(16, 185, 129, 0.6)", symbol: "◆" },
-  yellow: { name: "琥珀黃", hex: "#fbbf24", dark: "#78350f", glow: "rgba(251, 191, 36, 0.6)", symbol: "★" },
-  purple: { name: "星雲紫", hex: "#a855f7", dark: "#581c87", glow: "rgba(168, 85, 247, 0.6)", symbol: "⬡" },
-  orange: { name: "烈陽橙", hex: "#fb923c", dark: "#7c2d12", glow: "rgba(251, 146, 60, 0.6)", symbol: "✦" },
+  red: { name: "草莓甜心", hex: "#ff6b8b", dark: "#c2255c", light: "#ffdeeb", glow: "rgba(255, 107, 139, 0.6)", blush: "#ffa8a8", eye: "#491217", type: "red" },
+  blue: { name: "薄荷蘇打", hex: "#38bdf8", dark: "#0284c7", light: "#e0f2fe", glow: "rgba(56, 189, 248, 0.6)", blush: "#ff8787", eye: "#082f49", type: "blue" },
+  green: { name: "奇異青檸", hex: "#4ade80", dark: "#16a34a", light: "#dcfce7", glow: "rgba(74, 222, 128, 0.6)", blush: "#ff8787", eye: "#052e16", type: "green" },
+  yellow: { name: "蜂蜜檸檬", hex: "#fde047", dark: "#ca8a04", light: "#fef9c3", glow: "rgba(253, 224, 71, 0.6)", blush: "#ff8787", eye: "#422006", type: "yellow" },
+  purple: { name: "薰衣草糖", hex: "#c084fc", dark: "#7e22ce", light: "#f3e8ff", glow: "rgba(192, 132, 252, 0.6)", blush: "#ff8787", eye: "#3b0764", type: "purple" },
+  orange: { name: "甜心蜜桃", hex: "#fb923c", dark: "#ea580c", light: "#ffedd5", glow: "rgba(251, 146, 60, 0.6)", blush: "#ff8787", eye: "#431407", type: "orange" },
 
-  // 特殊球
-  bomb: { name: "反物質高爆彈", hex: "#e11d48", dark: "#4c0519", glow: "rgba(225, 29, 72, 0.8)", symbol: "💣" },
-  laser: { name: "貫穿光子雷射", hex: "#38bdf8", dark: "#0369a1", glow: "rgba(56, 189, 248, 0.8)", symbol: "⚡" },
-  rainbow: { name: "七彩量子萬能球", hex: "#ffffff", dark: "#312e81", glow: "rgba(255, 255, 255, 0.9)", symbol: "🌈" }
+  // 特殊萌球
+  bomb: { name: "搗蛋小炸彈", hex: "#f43f5e", dark: "#9f1239", light: "#ffe4e6", glow: "rgba(244, 63, 94, 0.8)", symbol: "💣", type: "bomb" },
+  laser: { name: "元氣閃電星", hex: "#38bdf8", dark: "#0369a1", light: "#e0f2fe", glow: "rgba(56, 189, 248, 0.8)", symbol: "⚡", type: "laser" },
+  rainbow: { name: "七彩糖果波", hex: "#f472b6", dark: "#4338ca", light: "#ffffff", glow: "rgba(244, 114, 182, 0.9)", symbol: "🌈", type: "rainbow" }
 };
 
 const STANDARD_COLORS = ["red", "blue", "green", "yellow", "purple", "orange"];

@@ -207,7 +207,7 @@ body {
   box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
 }
 
-/* 主遊戲視窗 (Viewport & Canvas) */
+/* 主遊戲視窗 (Viewport & Arcade Cabinet) */
 .game-viewport {
   flex: 1;
   position: relative;
@@ -215,18 +215,28 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 30%, #0a0f24 0%, #030611 100%);
-  cursor: crosshair;
+  background: radial-gradient(circle at 50% 30%, #171b34 0%, #060914 100%);
+}
+
+.arcade-cabinet {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 canvas {
   display: block;
-  max-width: 580px;
   width: 100%;
   height: 100%;
-  border-left: 1px solid rgba(0, 240, 255, 0.15);
-  border-right: 1px solid rgba(0, 240, 255, 0.15);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  border-left: 2px solid rgba(255, 107, 139, 0.35);
+  border-right: 2px solid rgba(255, 107, 139, 0.35);
+  background: rgba(10, 15, 30, 0.7);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.5);
+  cursor: crosshair;
 }
 
 /* 提示訊息 (Toast) */
