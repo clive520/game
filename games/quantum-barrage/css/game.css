@@ -1,0 +1,486 @@
+:root {
+  --bg-dark: #060913;
+  --bg-panel: rgba(12, 18, 34, 0.85);
+  --border-cyan: rgba(6, 182, 212, 0.4);
+  --border-pink: rgba(244, 63, 94, 0.4);
+  --phase-blue: #00f0ff;
+  --phase-blue-glow: rgba(0, 240, 255, 0.6);
+  --phase-pink: #ff007f;
+  --phase-pink-glow: rgba(255, 0, 127, 0.6);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace, Consolas, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 90%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
+    linear-gradient(to bottom, #060913, #020408);
+}
+
+/* 頂部即時戰情列 */
+.hud-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-cyan);
+  z-index: 20;
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  color: var(--phase-blue);
+  border-color: var(--phase-blue);
+  background: rgba(0, 240, 255, 0.1);
+}
+
+.game-title-group h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #fff, var(--phase-blue), var(--phase-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--font-mono);
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-icon { font-size: 1.1rem; }
+.stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
+.stat-value { font-size: 0.95rem; font-weight: 700; }
+
+.val-lives { color: #f43f5e; text-shadow: 0 0 10px rgba(244, 63, 94, 0.5); }
+.val-score { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
+.val-graze { color: #a855f7; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-btn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: var(--phase-blue);
+  color: var(--phase-blue);
+}
+
+/* 主遊戲戰場區域 */
+.game-viewport {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6px 12px;
+  background: #03060c;
+}
+
+#gameCanvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  aspect-ratio: 9 / 13; /* 彈幕射擊經典直立比例 540x780 */
+  object-fit: contain;
+  background-color: #050811;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 240, 255, 0.25);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  border-radius: 8px;
+  cursor: crosshair;
+}
+
+/* 浮動提示浮層 */
+.alert-toast {
+  position: absolute;
+  top: 14px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  z-index: 30;
+}
+
+.alert-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alert-toast.danger {
+  background: rgba(244, 63, 94, 0.9);
+  color: #fff;
+  border: 1px solid #fb7185;
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.6);
+}
+
+.alert-toast.info {
+  background: rgba(6, 182, 212, 0.9);
+  color: #070b12;
+  border: 1px solid #22d3ee;
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+}
+
+/* 底部維度穿梭與大絕控制列 */
+.control-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border-cyan);
+  gap: 16px;
+  z-index: 20;
+}
+
+/* 當前維度相位狀態指示器 */
+.phase-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.phase-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  transition: all 0.25s;
+}
+
+.phase-pill.blue {
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid var(--phase-blue);
+  color: var(--phase-blue);
+  box-shadow: 0 0 15px var(--phase-blue-glow);
+}
+
+.phase-pill.pink {
+  background: rgba(255, 0, 127, 0.15);
+  border: 1px solid var(--phase-pink);
+  color: var(--phase-pink);
+  box-shadow: 0 0 15px var(--phase-pink-glow);
+}
+
+.phase-tip {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.key-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* 量子充能能量槽 (Quantum Charge Bar) */
+.energy-container {
+  flex: 1;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.energy-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.energy-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.energy-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f0ff, #a855f7, #ff007f);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
+  transition: width 0.15s ease-out;
+}
+
+.energy-fill.ready {
+  animation: pulse-energy 1s infinite alternate;
+}
+
+@keyframes pulse-energy {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.6) drop-shadow(0 0 8px #ff007f); }
+}
+
+/* 技能與操作按鈕 */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-bomb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #a855f7, #f43f5e);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+  transition: all 0.2s;
+}
+
+.btn-bomb:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.8);
+}
+
+.btn-bomb:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+/* 說明彈窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 6, 14, 0.88);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #0d1527;
+  border: 1px solid var(--border-cyan);
+  border-radius: 16px;
+  padding: 28px 32px;
+  max-width: 680px;
+  width: 90%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.3);
+  transform: scale(0.95);
+  transition: transform 0.25s;
+}
+
+.modal-overlay.active .modal-card { transform: scale(1); }
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-header h2 {
+  font-size: 1.35rem;
+  color: var(--phase-blue);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-close-modal {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.btn-close-modal:hover {
+  color: #fff;
+  border-color: var(--phase-blue);
+}
+
+.modal-body {
+  overflow-y: auto;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.guide-block {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.guide-block h3 {
+  font-size: 0.95rem;
+  color: #38bdf8;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.guide-block p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.modal-footer {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-btn {
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+}
+
+.modal-btn.primary {
+  background: var(--phase-blue);
+  color: #03060c;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+.modal-btn.primary:hover {
+  background: #67e8f9;
+}
+
+.modal-btn.secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>量子彈幕：維度穿梭 | Quantum Barrage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+  <!-- 頂部即時戰情列 -->
+  <header class="hud-bar">
+    <div class="hud-left">
+      <a href="../../index.html" class="back-link">
+        <span>⬅</span>
+        <span>返回大廳</span>
+      </a>
+      <div class="game-title-group">
+        <h2>量子彈幕：維度穿梭</h2>
+      </div>
+    </div>
+
+    <!-- 戰情數值 -->
+    <div class="hud-stats">
+      <div class="stat-chip">
+        <span class="stat-icon">❤️</span>
+        <div>
+          <div class="stat-label">防護機體</div>
+          <div id="valLives" class="stat-value val-lives">❤️❤️❤️</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">⭐</span>
+        <div>
+          <div class="stat-label">作戰得分</div>
+          <div id="valScore" class="stat-value val-score">0</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">⚡</span>
+        <div>
+          <div class="stat-label">極限擦彈</div>
+          <div id="valGraze" class="stat-value val-graze">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 輔助控制項 -->
+    <div class="hud-controls">
+      <button id="btnHelp" class="hud-btn">📖 作戰指南</button>
+      <button id="btnMute" class="hud-btn">🔊 音效: 開</button>
+    </div>
+  </header>
+
+  <!-- 彈幕射擊主視窗 -->
+  <main class="game-viewport">
+    <div id="alertToast" class="alert-toast">維度傳感器連線就緒</div>
+    <canvas id="gameCanvas"></canvas>
+  </main>
+
+  <!-- 底部維度相位與大絕控制列 -->
+  <footer class="control-bar">
+    <!-- 相位指示與切換 -->
+    <div class="phase-indicator">
+      <div id="phasePill" class="phase-pill blue">⚡ ALPHA 相位 (吸收藍彈)</div>
+      <div class="phase-tip">
+        切換相位：<span class="key-tag">Shift</span> / <span class="key-tag">Space</span> / <span class="key-tag">滑鼠右鍵</span>
+      </div>
+    </div>
+
+    <!-- 量子充能能量槽 -->
+    <div class="energy-container">
+      <div class="energy-header">
+        <span>量子坍縮充能量表</span>
+        <span id="energyPercent">0%</span>
+      </div>
+      <div class="energy-track">
+        <div id="energyFill" class="energy-fill"></div>
+      </div>
+    </div>
+
+    <!-- 技能按鈕 -->
+    <div class="action-buttons">
+      <button id="btnBomb" class="btn-bomb" disabled>
+        <span>💥</span>
+        <span>量子坍縮消彈</span>
+        <span class="key-tag">E</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- 戰況結算彈窗 (Modal) -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTitle">作戰結算</h2>
+      </div>
+      <div class="modal-body">
+        <p id="modalDesc" style="color: #cbd5e1; font-size: 1rem; margin-bottom: 16px;">戰役紀錄報告</p>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center;">
+          <div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">最終得分</div>
+            <div id="modalFinalScore" style="font-size: 1.4rem; font-weight: 800; color: #fbbf24;">0</div>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">擦彈次數</div>
+            <div id="modalFinalGraze" style="font-size: 1.4rem; font-weight: 800; color: #a855f7;">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnModalRestart" class="modal-btn primary">重新迎戰</button>
+        <a href="../../index.html" class="modal-btn secondary">返回大廳</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作戰指南說明彈窗 (Help Modal) -->
+  <div id="helpModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><span>📖</span> 量子彈幕：作戰指揮指南</h2>
+        <button id="btnCloseHelp" class="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 維度相位機制 -->
+        <div class="guide-block">
+          <h3>⚡ 雙相維度穿梭核心機制 (Dimension Shift)</h3>
+          <p>
+            您的戰機具備 <strong>Alpha (藍色)</strong> 與 <strong>Beta (洋紅色)</strong> 兩種量子態：
+          </p>
+          <ul style="margin: 8px 0 0 16px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+            <li><strong style="color: #00f0ff;">處於藍色態時</strong>：碰觸藍色子彈會直接<strong>吸收</strong>並轉化為大絕充能與額外分數；但若被<strong>紅色子彈</strong>擊中將會失去生命！</li>
+            <li><strong style="color: #ff007f;">處於紅色態時</strong>：碰觸紅色子彈會<strong>吸收</strong>能量；但會被<strong>藍色子彈</strong>擊中！</li>
+            <li>隨時使用 <span class="key-tag">Space 空白鍵</span> / <span class="key-tag">Shift</span> / <span class="key-tag">滑鼠右鍵</span> 切換維度，在滿天彈幕中化險為夷！</li>
+          </ul>
+        </div>
+
+        <!-- 操作說明 -->
+        <div class="guide-block">
+          <h3>🎮 戰機操控</h3>
+          <ul style="margin: 6px 0 0 16px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+            <li><strong>移動方式</strong>：支援<strong>滑鼠移動跟隨</strong>（微操首選）或鍵盤 <span class="key-tag">W</span> <span class="key-tag">A</span> <span class="key-tag">S</span> <span class="key-tag">D</span> / 方向鍵。</li>
+            <li><strong>自動開火</strong>：戰機會自動發射雙聯光子主砲，無需連續點擊。</li>
+            <li><strong>極限擦彈 (Graze)</strong>：讓敵方子彈擦過戰機外圍的光環，即可賺取大量分數並加快充能速度！</li>
+          </ul>
+        </div>
+
+        <!-- 量子大絕 -->
+        <div class="guide-block">
+          <h3>💥 量子坍縮消彈 (Quantum Nova)</h3>
+          <p>
+            當吸收同色彈幕或擦彈使能量槽達到 <strong>100%</strong> 時，按鍵盤 <span class="key-tag">E</span> 或點擊下方按鈕引爆大絕，<strong>全螢幕清除所有敵方彈幕轉化為大量分數</strong>，並對全場敵人造成 500 點毀滅打擊！
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnGotIt" class="modal-btn primary">我明白了，啟動戰機！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入腳本 -->
+  <script src="./js/audio.js"></script>
+  <script src="./js/entities.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>

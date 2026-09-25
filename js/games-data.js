@@ -31,19 +31,20 @@ const GAMES_DATA = [
     subtitle: "Quantum Barrage",
     category: "action",
     categoryName: "動作射擊",
-    badge: "⚡ 籌備中",
-    status: "coming_soon",
-    path: "#",
+    badge: "🔥 全新上線",
+    status: "playable",
+    path: "./games/quantum-barrage/index.html",
     icon: "🚀",
     thumbnailGradient: "linear-gradient(135deg, #18181b 0%, #3b0764 50%, #f43f5e 100%)",
-    description: "快節奏的街機彈幕射擊遊戲。利用維度相位變換避開漫天雷射，收集暗能量釋放全螢幕消彈衝擊波。",
-    tags: ["彈幕射擊", "街機風格", "極限閃避", "連擊評級"],
+    description: "快節奏雙相彈幕射擊！在藍/紅維度間穿梭吸收同色彈幕轉化能量，極限擦彈累積量子充能，引爆全螢幕消彈衝擊波。",
+    tags: ["雙相維度", "同色吸收", "極限擦彈", "量子消彈", "Canvas 60FPS"],
     features: [
-      "微秒級擦彈判定機制",
-      "多階段變形 Boss 戰",
-      "動態合成器合成原聲音效"
+      "Ikaruga 風格雙相維度切換與彈幕吸收",
+      "微秒級極限擦彈 (Graze) 評分系統",
+      "能量滿載引爆全螢幕量子坍縮大絕",
+      "多波次敵軍與終極維度領主 Boss 戰"
     ],
-    version: "規劃中",
+    version: "v1.0-Release",
     author: "clive520"
   },
   {
