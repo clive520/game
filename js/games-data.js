@@ -90,6 +90,28 @@ const GAMES_DATA = [
     ],
     version: "v1.1-MoeHex",
     author: "clive520"
+  },
+  {
+    id: "knife-storm",
+    title: "飛刀大作戰：月牙刃風暴",
+    subtitle: "Knife Storm: Crescent Clash",
+    category: "action",
+    categoryName: "動作競技",
+    badge: "🔥 全新上線",
+    status: "playable",
+    path: "./games/knife-storm/index.html",
+    icon: "🗡️",
+    thumbnailGradient: "linear-gradient(135deg, #78350f 0%, #b45309 50%, #f59e0b 100%)",
+    description: "風靡全球的飛刀大亂鬥！操控俠客環繞月牙刀陣，吃刀擴張旋風風暴，開啟金鐘罩反彈對手，直擊肉身爆刀終結！",
+    tags: ["飛刀大作戰", "月牙刃", "IO大亂鬥", "金鐘罩", "大逃殺吃雞", "Canvas 60FPS"],
+    features: [
+      "月牙飛刀環繞旋風與散落氣泡拾取擴張",
+      "三大戰術姿態：大範圍進攻、金鐘罩防禦彈刀、疾風突進",
+      "激烈刀刃對撞火花與直擊肉身大爆飛刀",
+      "10 人同場智慧 AI 競技 ＋ 大逃殺縮圈決戰"
+    ],
+    version: "v1.0-Release",
+    author: "clive520"
   }
 ];
 

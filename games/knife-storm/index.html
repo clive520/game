@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飛刀大作戰：月牙刃風暴 | Knife Storm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+  <!-- 頂部即時戰情列 -->
+  <header class="hud-bar">
+    <div class="hud-left">
+      <a href="../../index.html" class="back-link">
+        <span>⬅</span>
+        <span>返回大廳</span>
+      </a>
+      <div class="game-title-group">
+        <h2>飛刀大作戰：月牙刃風暴</h2>
+      </div>
+    </div>
+
+    <!-- 戰況數值 -->
+    <div class="hud-stats">
+      <div class="stat-chip">
+        <span class="stat-icon">🗡️</span>
+        <div>
+          <div class="stat-label">當前飛刀</div>
+          <div id="valKnives" class="stat-value val-knives">3 刃</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">💥</span>
+        <div>
+          <div class="stat-label">擊潰斬殺</div>
+          <div id="valKills" class="stat-value val-kills">0 斬</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">👥</span>
+        <div>
+          <div class="stat-label">擂台倖存</div>
+          <div id="valAlive" class="stat-value val-alive">10 人</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">🏆</span>
+        <div>
+          <div class="stat-label">當前排位</div>
+          <div id="valRank" class="stat-value val-rank">#1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 輔助控制項 -->
+    <div class="hud-controls">
+      <button id="btnHelp" class="hud-btn">📖 秘笈</button>
+      <button id="btnMute" class="hud-btn">🔊 音效: 開</button>
+    </div>
+  </header>
+
+  <!-- 擂台主視窗 -->
+  <main class="game-viewport">
+    <!-- 懸浮即時擊殺播報 -->
+    <div id="killFeed" class="kill-feed"></div>
+
+    <!-- 懸浮飛刀即時排行榜 (Top 5) -->
+    <div class="leaderboard-panel">
+      <div class="leaderboard-title">🏆 擂台飛刀榜</div>
+      <ul id="leaderboardList" class="leaderboard-list"></ul>
+    </div>
+
+    <!-- 提示訊息 -->
+    <div id="alertToast" class="alert-toast">飛刀大亂鬥擂台開戰！</div>
+
+    <canvas id="gameCanvas"></canvas>
+  </main>
+
+  <!-- 底部操作控制列 -->
+  <footer class="control-bar">
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <span class="tip-text">
+        走位：<span class="key-tag">WASD</span> 或滑鼠指針 ｜ 防禦：長按 <span class="key-tag">Space</span> ｜ 衝刺：長按 <span class="key-tag">Shift</span> 或右鍵
+      </span>
+    </div>
+
+    <!-- 衝刺氣力槽 -->
+    <div class="boost-gauge-box">
+      <span>疾速氣力</span>
+      <div class="boost-track">
+        <div id="boostFill" class="boost-fill"></div>
+      </div>
+    </div>
+
+    <!-- 姿態技能按鈕 (支援觸控點按) -->
+    <div class="action-buttons">
+      <button id="btnDefense" class="btn-stance defense">
+        <span>🛡️</span>
+        <span>金鐘罩防禦</span>
+        <span class="key-tag">Space</span>
+      </button>
+      <button id="btnBoost" class="btn-stance boost">
+        <span>⚡</span>
+        <span>疾風突進</span>
+        <span class="key-tag">Shift / 右鍵</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- 戰況結算彈窗 (Result Modal) -->
+  <div id="resultModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="resultTitle">🏆 大吉大利，今晚吃雞！</h2>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <div style="font-size: 2.2rem; font-weight: 800; color: #fbbf24; margin: 12px 0;" id="resultRank">👑 冠軍霸主！</div>
+        <p style="font-size: 1.1rem; color: #f8fafc; margin-bottom: 8px;">戰績斬殺：<span id="resultKills" style="color: #ef4444; font-weight: 700;">0 次斬殺</span></p>
+        <p style="font-size: 0.85rem; color: #a8a29e;">狹路相逢勇者勝，月牙刃芒照九州！</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btnRestart" class="modal-btn primary">重新開戰 ⚔️</button>
+        <a href="../../index.html" class="modal-btn secondary">返回大廳</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作戰指南說明彈窗 (Help Modal) -->
+  <div id="helpModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><span>📖</span> 飛刀大作戰：武林秘笈</h2>
+        <button id="btnCloseHelp" class="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="guide-block">
+          <h3>🗡️ 飛刀環繞與吃刀變強</h3>
+          <p>
+            擂台散落著晶瑩的<strong>月牙飛刀氣泡</strong>，操控角色走位碰觸即可直接吸納至身邊飛刀陣！刀刃越多，環繞半徑越大，宛如移動絞肉旋風！
+          </p>
+        </div>
+
+        <div class="guide-block">
+          <h3>🛡️ 兩大戰術姿態：攻防博弈</h3>
+          <ul style="margin: 8px 0 0 16px; font-size: 0.85rem; color: #d6d3d1; line-height: 1.6;">
+            <li><strong style="color: #fbbf24;">🛡️ 金鐘罩防禦態（長按 Space 空白鍵）</strong>：飛刀瞬間收縮護體、極速旋轉！防禦狀態下可<strong>強行彈開對手並震落對方的飛刀</strong>！即便面對刀數極多的霸主，也能靠防禦態反敗為勝！</li>
+            <li><strong style="color: #ef4444;">⚡ 疾風突進態（長按 Shift 鍵或滑鼠右鍵）</strong>：消耗氣力瞬間爆發移速，適合追剿落單對手或衝破重圍！</li>
+          </ul>
+        </div>
+
+        <div class="guide-block">
+          <h3>💥 斬殺與大爆滿地飛刀</h3>
+          <p>
+            只要飛刀鋒芒<strong>直接刺穿對手的角色肉身</strong>，即可瞬間將對手斬殺淘汰！被擊潰的俠客會<strong>大爆滿地散落飛刀</strong>，迅速上前搶奪壯大自己的刀陣！
+          </p>
+        </div>
+
+        <div class="guide-block">
+          <h3>⚠️ 大逃殺縮圈機制</h3>
+          <p>
+            擂台外圍會隨時間收縮<strong>紫色毒圈</strong>，停留於毒圈外的俠客將持續受到飛刀剝落傷害，務必朝著擂台中心推進決戰！
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnGotIt" class="modal-btn primary">拔刀出戰！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入腳本 -->
+  <script src="./js/audio.js"></script>
+  <script src="./js/entities.js"></script>
+  <script src="./js/arena.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>
