@@ -112,6 +112,29 @@ const GAMES_DATA = [
     ],
     version: "v1.0-Release",
     author: "clive520"
+  },
+  {
+    id: "petanque",
+    title: "法式滾球：普羅旺斯大師",
+    subtitle: "Pétanque: Provence Masters",
+    category: "puzzle",
+    categoryName: "休閒競技",
+    badge: "🇫🇷 法式浪漫",
+    status: "playable",
+    path: "./games/petanque/index.html",
+    icon: "🎯",
+    thumbnailGradient: "linear-gradient(135deg, #78350f 0%, #b47746 50%, #38bdf8 100%)",
+    description: "在南法普羅旺斯陽光碎石紅土地上，體驗純正法式滾球（Pétanque）！精準地滾指球（Point）貼近小木球，或高拋重擊（Shoot）展現驚豔 Carreau 擊飛替換！",
+    tags: ["法式滾球", "Pétanque", "物理碰撞", "皮尺測量", "單人AI/雙人", "Canvas 60FPS"],
+    features: [
+      "2.5D 高拋拋物線與碎石紅土地滾摩擦物理演算",
+      "指球（Point / 地滾）與擊球（Shoot / 高拋）雙技法隨心切換",
+      "經典原地定桿替換（Carreau）金屬重碰撞擊特效",
+      "精確至公釐級的即時距離連線測量皮尺工具",
+      "單人對戰普羅旺斯老爹 Pierre AI ＋ 雙人同機輪流投球模式"
+    ],
+    version: "v1.0-Release",
+    author: "clive520"
   }
 ];
 

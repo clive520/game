@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>法式滾球：普羅旺斯大師 | Pétanque Provence Masters</title>
+  <meta name="description" content="純正法式滾球 (Pétanque) 模擬遊戲，體驗精準地滾指球 (Point) 與高拋重擊 (Carreau)！">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <div class="game-container">
+    <!-- 頂部標題與快速功能 -->
+    <header class="game-header">
+      <div class="header-left">
+        <a href="../../index.html" class="nav-back">
+          <span>◀</span> 返回大廳
+        </a>
+        <h1 class="game-title">法式滾球</h1>
+      </div>
+      <div class="header-right">
+        <button id="btn-mode-toggle" class="icon-btn" title="切換對戰模式">👤 單人 vs 大師</button>
+        <button id="btn-sound-toggle" class="icon-btn" title="開關音效">🔊 音效</button>
+        <button id="btn-help" class="icon-btn" title="玩法規則">📖 規則</button>
+      </div>
+    </header>
+
+    <!-- 即時計分板 HUD -->
+    <div class="scoreboard">
+      <!-- 藍隊 (玩家) -->
+      <div class="team-box blue">
+        <div>
+          <span class="team-badge">藍隊</span>
+          <div class="boule-pips" id="blue-boules-pips">
+            <span class="boule-pip blue active"></span>
+            <span class="boule-pip blue active"></span>
+            <span class="boule-pip blue active"></span>
+          </div>
+        </div>
+        <div class="score-num" id="score-blue">0</div>
+      </div>
+
+      <!-- 局數與目標分 -->
+      <div class="score-divider">
+        <span class="round-tag">MÈNE <span id="round-num">1</span></span>
+        <span class="target-tag">先達 7 分勝</span>
+      </div>
+
+      <!-- 紅隊 (對手/AI) -->
+      <div class="team-box red">
+        <div class="score-num" id="score-red">0</div>
+        <div>
+          <span class="team-badge">紅隊</span>
+          <div class="boule-pips" id="red-boules-pips">
+            <span class="boule-pip red active"></span>
+            <span class="boule-pip red active"></span>
+            <span class="boule-pip red active"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 當前輪替指示條 -->
+    <div class="turn-banner blue" id="turn-banner">🎯 藍隊 擲出小木球</div>
+
+    <!-- 普羅旺斯紅土球場畫布 -->
+    <div class="canvas-wrapper">
+      <canvas id="game-canvas"></canvas>
+      <div class="game-notice" id="game-notice">👉 請從紅圈向後拉力投出目標小木球 (Cochonnet)</div>
+      <div class="ai-status" id="ai-status"></div>
+    </div>
+
+    <!-- 底部控制面板 -->
+    <div class="controls-panel">
+      <!-- 投球技法切換 -->
+      <div class="throw-modes">
+        <button id="btn-mode-point" class="mode-btn active" title="地滾指球：貼地長滾，精準靠攏木球">
+          🎯 指球 (Point)
+        </button>
+        <button id="btn-mode-shoot" class="mode-btn" title="高拋擊球：高弧度砸擊對手球，實現 Carreau 替換！">
+          💥 擊球 (Tir)
+        </button>
+      </div>
+
+      <!-- 輔助工具 -->
+      <div class="action-btns">
+        <button id="btn-tape-toggle" class="icon-btn active" title="開關皮尺測量儀">📏 皮尺</button>
+        <button id="btn-restart" class="icon-btn" title="重新開始比賽">🔄 重開</button>
+      </div>
+    </div>
+
+    <!-- 操作說明提示 -->
+    <div class="control-hint">
+      💡 操作方式：在畫布下半部「向後拉曳」蓄力瞄準，放開即可投球！
+    </div>
+  </div>
+
+  <!-- 本輪 (Mène) 結算彈窗 -->
+  <div class="modal-overlay hidden" id="round-modal">
+    <div class="modal-card">
+      <h2 class="modal-title" id="round-modal-title">🎉 藍隊 贏得本輪！</h2>
+      <p class="modal-text" id="round-modal-text">比對手更靠近小木球，獲得積分！</p>
+      <div class="modal-score" id="round-modal-score">目前比分：藍隊 1 - 0 紅隊</div>
+      <div class="modal-actions">
+        <button class="primary-btn" id="btn-next-round">進入下一輪 ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全場大賽結算彈窗 -->
+  <div class="modal-overlay hidden" id="match-modal">
+    <div class="modal-card">
+      <h2 class="modal-title" id="match-modal-title">🏆 榮膺普羅旺斯滾球大師！</h2>
+      <p class="modal-text" id="match-modal-text">率先達到 7 分，贏得最終勝利！</p>
+      <div class="modal-actions">
+        <button class="primary-btn" id="btn-match-play-again">再戰一局 🔄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 規則教學說明彈窗 -->
+  <div class="modal-overlay hidden" id="help-modal">
+    <div class="modal-card">
+      <h2 class="modal-title">🇫🇷 法式滾球 (Pétanque) 正式規則</h2>
+      <ul class="rules-list">
+        <li><strong>目標小木球 (Cochonnet)：</strong>每輪開始，由開球方先擲出黃色小木球，必須落在 6m~10m 的合格區間內。</li>
+        <li><strong>投球與輪流原則：</strong>擲出木球者投第一球。隨後雙方比較誰離木球更遠，由「暫時落後 (更遠)」的一方繼續投球，直到反超或用完所有球！</li>
+        <li><strong>指球 (Point / 地滾)：</strong>球體平順貼地滾動，適合將球精準送至木球近旁防守。</li>
+        <li><strong>擊球 (Tir / 高拋)：</strong>以高拋弧線直擊對手靠近木球的優勢球；若擊飛對手球且自己的球停在原地，即為最高技藝<strong>「卡羅 (Carreau)」</strong>！</li>
+        <li><strong>計分 (Mène)：</strong>雙方 6 顆球全部投完後結算，唯有離小木球最近的隊伍得分，有幾顆球比對手最接近的球更靠攏，即得幾分！</li>
+        <li><strong>獲勝條件：</strong>先累積達到 7 分者奪得大師冠軍。</li>
+      </ul>
+      <div class="modal-actions">
+        <button class="primary-btn" id="btn-close-help">我知道了，開始遊玩</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 腳本引入 (順序依賴) -->
+  <script src="js/audio.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
