@@ -65,9 +65,16 @@ class PlayerShip {
 
     // 狀態
     this.lives = 3;
+    this.maxLives = 5;
     this.energy = 0; // 0 ~ 100
     this.maxEnergy = 100;
     this.invulnerableTimer = 0;
+
+    // 武器等級 (Lv.1 ~ Lv.5 MAX)
+    this.weaponLevel = 1;
+    this.maxWeaponLevel = 5;
+    this.missileTimer = 0;
+    this.missileInterval = 0.35;
 
     // 自動射擊計時
     this.shootTimer = 0;
@@ -80,9 +87,31 @@ class PlayerShip {
     return this.phase;
   }
 
+  upgradeWeapon() {
+    if (this.weaponLevel < this.maxWeaponLevel) {
+      this.weaponLevel++;
+      audio.playPowerUp();
+      return true;
+    }
+    return false;
+  }
+
+  addLife() {
+    if (this.lives < this.maxLives) {
+      this.lives++;
+      audio.playItemPickup();
+      return true;
+    }
+    return false;
+  }
+
   takeHit(particles) {
     if (this.invulnerableTimer > 0) return false;
     this.lives--;
+    // 受傷稍微降低一級武器（保底 Lv.1）以增加挑戰張力
+    if (this.weaponLevel > 1) {
+      this.weaponLevel--;
+    }
     this.invulnerableTimer = 2.0; // 2秒無敵
     audio.playHit();
 
@@ -113,7 +142,7 @@ class PlayerShip {
     return true;
   }
 
-  update(dt, keys, mousePos, isMouseMode, bullets, particles) {
+  update(dt, keys, mousePos, isMouseMode, bullets, particles, enemies) {
     if (this.invulnerableTimer > 0) {
       this.invulnerableTimer -= dt;
     }
@@ -161,16 +190,65 @@ class PlayerShip {
       ));
     }
 
-    // 3. 自動發射雙聯光子雷射
+    // 3. 自動發射光子主砲 (隨武器等級爆發強化)
     this.shootTimer -= dt;
     if (this.shootTimer <= 0) {
       this.shootTimer = this.shootInterval;
       audio.playShoot();
 
       const color = this.phase === "blue" ? "#00f0ff" : "#ff007f";
-      // 雙聯主砲
-      bullets.push(new Bullet(this.x - 7, this.y - 12, 0, -850, "player", this.phase, color, 12));
-      bullets.push(new Bullet(this.x + 7, this.y - 12, 0, -850, "player", this.phase, color, 12));
+      const dmg = 12 + this.weaponLevel * 3;
+
+      if (this.weaponLevel === 1) {
+        // Lv.1 雙聯光子砲
+        bullets.push(new Bullet(this.x - 7, this.y - 12, 0, -850, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 7, this.y - 12, 0, -850, "player", this.phase, color, dmg));
+      } else if (this.weaponLevel === 2) {
+        // Lv.2 三向擴散砲
+        bullets.push(new Bullet(this.x, this.y - 15, 0, -880, "player", this.phase, color, dmg + 2));
+        bullets.push(new Bullet(this.x - 10, this.y - 10, -110, -860, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 10, this.y - 10, 110, -860, "player", this.phase, color, dmg));
+      } else if (this.weaponLevel === 3) {
+        // Lv.3 四聯暴風雷射
+        bullets.push(new Bullet(this.x - 12, this.y - 10, -80, -880, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x - 4, this.y - 14, -20, -900, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 4, this.y - 14, 20, -900, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 12, this.y - 10, 80, -880, "player", this.phase, color, dmg));
+      } else if (this.weaponLevel === 4) {
+        // Lv.4 五向高能殲滅砲
+        bullets.push(new Bullet(this.x, this.y - 16, 0, -920, "player", this.phase, color, dmg + 4));
+        bullets.push(new Bullet(this.x - 8, this.y - 12, -70, -900, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 8, this.y - 12, 70, -900, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x - 16, this.y - 8, -150, -870, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 16, this.y - 8, 150, -870, "player", this.phase, color, dmg));
+      } else {
+        // Lv.5 (MAX HYPERION) 七向星辰風暴 + 貫穿核心主砲
+        bullets.push(new Bullet(this.x, this.y - 18, 0, -980, "player", this.phase, "#ffffff", dmg + 10, 5));
+        bullets.push(new Bullet(this.x - 6, this.y - 14, -40, -940, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 6, this.y - 14, 40, -940, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x - 14, this.y - 10, -120, -910, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 14, this.y - 10, 120, -910, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x - 22, this.y - 6, -200, -880, "player", this.phase, color, dmg));
+        bullets.push(new Bullet(this.x + 22, this.y - 6, 200, -880, "player", this.phase, color, dmg));
+      }
+    }
+
+    // 4. 等級 3 以上自動發射量子追蹤導彈 (Homing Missiles)
+    if (this.weaponLevel >= 3) {
+      this.missileTimer -= dt;
+      if (this.missileTimer <= 0) {
+        this.missileTimer = this.missileInterval;
+        const color = this.phase === "blue" ? "#38bdf8" : "#fb7185";
+        const missileCount = this.weaponLevel >= 5 ? 4 : 2;
+        for (let i = 0; i < missileCount; i++) {
+          const side = i % 2 === 0 ? -1 : 1;
+          const vx = side * (160 + i * 40);
+          bullets.push(new HomingMissile(
+            this.x + side * 18, this.y,
+            vx, -180, color, 30
+          ));
+        }
+      }
     }
   }
 
@@ -465,3 +543,174 @@ class Enemy {
     ctx.restore();
   }
 }
+
+// 實體：量子導引追蹤導彈 (Homing Missile)
+class HomingMissile {
+  constructor(x, y, vx, vy, color, damage = 35) {
+    this.x = x;
+    this.y = y;
+    this.vx = vx;
+    this.vy = vy;
+    this.color = color;
+    this.damage = damage;
+    this.source = "player";
+    this.radius = 4;
+    this.alive = true;
+    this.life = 2.4;
+    this.speed = 540;
+  }
+
+  update(dt, enemies, particles) {
+    this.life -= dt;
+    if (this.life <= 0) {
+      this.alive = false;
+      return;
+    }
+
+    // 尋找最近活著的敵軍鎖定
+    let closest = null;
+    let minDist = 450;
+    if (enemies) {
+      for (const e of enemies) {
+        if (!e.alive) continue;
+        const d = Math.hypot(e.x - this.x, e.y - this.y);
+        if (d < minDist) {
+          minDist = d;
+          closest = e;
+        }
+      }
+    }
+
+    if (closest) {
+      const targetAngle = Math.atan2(closest.y - this.y, closest.x - this.x);
+      const curAngle = Math.atan2(this.vy, this.vx);
+      let diff = targetAngle - curAngle;
+      while (diff < -Math.PI) diff += Math.PI * 2;
+      while (diff > Math.PI) diff -= Math.PI * 2;
+      const turnSpeed = 9.5 * dt;
+      const newAngle = curAngle + Math.sign(diff) * Math.min(Math.abs(diff), turnSpeed);
+
+      this.vx = Math.cos(newAngle) * this.speed;
+      this.vy = Math.sin(newAngle) * this.speed;
+    }
+
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+
+    // 尾部推進粒子
+    if (particles && Math.random() < 0.5) {
+      particles.push(new Particle(
+        this.x, this.y, this.color,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        0.2, 2
+      ));
+    }
+  }
+
+  draw(ctx) {
+    if (!this.alive) return;
+    ctx.save();
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 導彈高亮核心
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+}
+
+// 實體：掉落寶物道具 (Drop Item)
+class DropItem {
+  constructor(x, y, type) {
+    this.x = x;
+    this.y = y;
+    this.type = type; // 'power' (武器升級) | 'shield' (護甲回血) | 'energy' (大絕充能) | 'score' (星塵高分)
+    this.radius = 13;
+    this.vy = 75;
+    this.vx = (Math.random() - 0.5) * 50;
+    this.alive = true;
+    this.time = 0;
+    this.magnetized = false;
+  }
+
+  update(dt, player) {
+    this.time += dt;
+
+    // 戰機磁吸距離 140px 或全場大絕磁吸
+    const dx = player.x - this.x;
+    const dy = player.y - this.y;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist < 140 || this.magnetized) {
+      const spd = 480;
+      this.x += (dx / dist) * spd * dt;
+      this.y += (dy / dist) * spd * dt;
+    } else {
+      this.x += this.vx * dt;
+      this.y += this.vy * dt;
+      this.vx *= 0.98;
+    }
+
+    // 左右微幅漂浮擺動
+    this.x += Math.sin(this.time * 4) * 0.4;
+  }
+
+  draw(ctx) {
+    if (!this.alive) return;
+    ctx.save();
+
+    let icon = "P";
+    let color = "#fbbf24";
+    let glow = "rgba(251, 191, 36, 0.8)";
+
+    if (this.type === "power") {
+      icon = "⚡P";
+      color = "#fbbf24"; // 金色武器升級
+      glow = "rgba(251, 191, 36, 0.8)";
+    } else if (this.type === "shield") {
+      icon = "🛡️";
+      color = "#34d399"; // 綠色護盾護甲
+      glow = "rgba(52, 211, 153, 0.8)";
+    } else if (this.type === "energy") {
+      icon = "💎";
+      color = "#a855f7"; // 紫色大絕充能
+      glow = "rgba(168, 85, 247, 0.8)";
+    } else if (this.type === "score") {
+      icon = "⭐";
+      color = "#38bdf8"; // 藍色星塵
+      glow = "rgba(56, 189, 248, 0.8)";
+    }
+
+    // 旋轉發光外環
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = glow;
+    ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // 道具文字標籤
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = color;
+    ctx.font = "bold 10px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(icon, this.x, this.y);
+
+    ctx.restore();
+  }
+}
+

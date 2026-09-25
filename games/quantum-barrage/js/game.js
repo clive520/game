@@ -15,6 +15,7 @@ class QuantumBarrageGame {
     this.bullets = [];
     this.enemies = [];
     this.particles = [];
+    this.dropItems = [];
 
     // 背景星空卷軸 (雙層視差星光)
     this.stars = [];
@@ -60,6 +61,7 @@ class QuantumBarrageGame {
     this.btnBomb = document.getElementById("btnBomb");
     this.phasePill = document.getElementById("phasePill");
     this.toastEl = document.getElementById("alertToast");
+    this.weaponLabel = document.getElementById("valWeapon");
 
     // 結算與說明彈窗
     this.modalOverlay = document.getElementById("modalOverlay");
@@ -186,6 +188,12 @@ class QuantumBarrageGame {
           Math.cos(a) * spd, Math.sin(a) * spd, 0.6, 5
         ));
       }
+
+      // 4. 引力磁吸場：全場掉落寶物自動被戰機吸附
+      for (const item of this.dropItems) {
+        item.magnetized = true;
+      }
+
       this.updateHUD();
     }
   }
@@ -204,6 +212,13 @@ class QuantumBarrageGame {
     if (this.livesLabel) this.livesLabel.textContent = "❤️".repeat(Math.max(0, this.player.lives));
     if (this.scoreLabel) this.scoreLabel.textContent = this.score;
     if (this.grazeLabel) this.grazeLabel.textContent = this.grazeCount;
+
+    // 武器武裝等級
+    if (this.weaponLabel) {
+      const names = ["", "Lv.1 雙聯砲", "Lv.2 三向砲", "Lv.3 導彈光子", "Lv.4 暴風殲滅", "Lv.5 ⚡星辰MAX"];
+      this.weaponLabel.textContent = names[this.player.weaponLevel] || "Lv.1 雙聯砲";
+      this.weaponLabel.style.color = this.player.weaponLevel >= 5 ? "#fbbf24" : this.player.weaponLevel >= 3 ? "#a855f7" : "#38bdf8";
+    }
 
     // 量子充能量表
     const pct = Math.min(100, Math.round((this.player.energy / this.player.maxEnergy) * 100));
@@ -235,6 +250,7 @@ class QuantumBarrageGame {
     this.bullets = [];
     this.enemies = [];
     this.particles = [];
+    this.dropItems = [];
     this.score = 0;
     this.grazeCount = 0;
     this.wave = 1;
@@ -284,6 +300,34 @@ class QuantumBarrageGame {
     }
   }
 
+  // 擊敗敵軍時掉落寶物道具
+  spawnDropItem(enemy) {
+    if (enemy.type === "boss") {
+      // Boss 終極爆裝
+      this.dropItems.push(new DropItem(enemy.x - 36, enemy.y, "power"));
+      this.dropItems.push(new DropItem(enemy.x, enemy.y - 20, "shield"));
+      this.dropItems.push(new DropItem(enemy.x + 36, enemy.y, "power"));
+      this.dropItems.push(new DropItem(enemy.x - 18, enemy.y + 24, "energy"));
+      this.dropItems.push(new DropItem(enemy.x + 18, enemy.y + 24, "score"));
+      return;
+    }
+
+    let dropChance = 0.35;
+    if (enemy.type === "cruiser") dropChance = 0.85;
+    else if (enemy.type === "spinner") dropChance = 0.65;
+
+    if (Math.random() < dropChance) {
+      const r = Math.random();
+      let type = "power";
+      if (r < 0.50) type = "power";       // 50% 武器升級晶體
+      else if (r < 0.70) type = "energy";  // 20% 量子充能能量
+      else if (r < 0.88) type = "score";   // 18% 星塵高分
+      else type = "shield";                // 12% 護盾生命修復
+
+      this.dropItems.push(new DropItem(enemy.x, enemy.y, type));
+    }
+  }
+
   update(dt) {
     if (this.isGameOver || this.isVictory) return;
 
@@ -296,8 +340,8 @@ class QuantumBarrageGame {
       }
     }
 
-    // 玩家更新
-    this.player.update(dt, this.keys, this.mousePos, this.isMouseMode, this.bullets, this.particles);
+    // 玩家更新 (傳入 enemies 以供導向追蹤導彈尋標)
+    this.player.update(dt, this.keys, this.mousePos, this.isMouseMode, this.bullets, this.particles, this.enemies);
 
     // 生成敵軍
     this.spawnWave(dt);
@@ -305,19 +349,66 @@ class QuantumBarrageGame {
     // 更新敵人
     for (const enemy of this.enemies) {
       enemy.update(dt, this.player, this.bullets);
-      // 超出底端移除
       if (enemy.y > this.canvas.height + 60) enemy.alive = false;
     }
 
-    // 更新子彈
+    // 更新子彈與導彈
     for (const b of this.bullets) {
-      b.update(dt);
-      if (b.y < -20 || b.y > this.canvas.height + 20 || b.x < -20 || b.x > this.canvas.width + 20) {
+      if (b instanceof HomingMissile) {
+        b.update(dt, this.enemies, this.particles);
+      } else {
+        b.update(dt);
+      }
+      if (b.y < -30 || b.y > this.canvas.height + 30 || b.x < -30 || b.x > this.canvas.width + 30) {
         b.alive = false;
       }
     }
 
-    // 碰撞檢測 1: 玩家子彈擊中敵人
+    // 更新掉落寶物與拾取判定
+    for (const item of this.dropItems) {
+      item.update(dt, this.player);
+      if (item.y > this.canvas.height + 40) item.alive = false;
+
+      // 檢查戰機觸碰拾取
+      const dist = Math.hypot(item.x - this.player.x, item.y - this.player.y);
+      if (dist <= item.radius + this.player.visualRadius + 4) {
+        item.alive = false;
+
+        if (item.type === "power") {
+          const upgraded = this.player.upgradeWeapon();
+          if (upgraded) {
+            this.showToast(`⚔️ 武器升級！達到 Lv.${this.player.weaponLevel}`, "info");
+            this.particles.push(new Particle(this.player.x, this.player.y - 20, "#fbbf24", 0, -60, 0.6, 3, "WEAPON UP!"));
+          } else {
+            this.score += 2000;
+            this.showToast("⚔️ 武器已達 MAX 滿級！獲得額外 +2000 分！", "info");
+            this.particles.push(new Particle(this.player.x, this.player.y - 20, "#fbbf24", 0, -60, 0.6, 3, "+2000 MAX"));
+          }
+        } else if (item.type === "shield") {
+          const restored = this.player.addLife();
+          if (restored) {
+            this.showToast("🛡️ 戰機護甲已修復 (+1 生命)！", "info");
+            this.particles.push(new Particle(this.player.x, this.player.y - 20, "#34d399", 0, -60, 0.6, 3, "+1 LIFE!"));
+          } else {
+            this.score += 2000;
+            this.showToast("🛡️ 護甲已滿額，獲得額外 +2000 分！", "info");
+            this.particles.push(new Particle(this.player.x, this.player.y - 20, "#34d399", 0, -60, 0.6, 3, "+2000 SCORE"));
+          }
+        } else if (item.type === "energy") {
+          this.player.addEnergy(40);
+          audio.playItemPickup();
+          this.showToast("💎 獲得量子能量晶體 (+40% 充能)！", "info");
+          this.particles.push(new Particle(this.player.x, this.player.y - 20, "#a855f7", 0, -60, 0.6, 3, "+40% NOVA"));
+        } else if (item.type === "score") {
+          this.score += 1500;
+          audio.playItemPickup();
+          this.particles.push(new Particle(this.player.x, this.player.y - 20, "#38bdf8", 0, -60, 0.6, 3, "+1500"));
+        }
+      }
+    }
+    this.dropItems = this.dropItems.filter(i => i.alive);
+
+    // 碰撞檢測 1: 玩家子彈/導彈擊中敵人
     for (const b of this.bullets) {
       if (!b.alive || b.source !== "player") continue;
 
@@ -330,6 +421,7 @@ class QuantumBarrageGame {
           if (!e.alive) {
             this.score += e.scoreVal;
             this.player.addEnergy(8); // 擊殺獲得充能
+            this.spawnDropItem(e);    // 擊殺掉落寶物道具！
             if (e.type === "boss" && this.wave === this.maxWaves) {
               this.victory();
             }
@@ -419,16 +511,19 @@ class QuantumBarrageGame {
       ctx.fill();
     }
 
-    // 2. 繪製敵人
+    // 2. 繪製掉落寶物
+    for (const item of this.dropItems) item.draw(ctx);
+
+    // 3. 繪製敵人
     for (const e of this.enemies) e.draw(ctx);
 
-    // 3. 繪製子彈
+    // 4. 繪製子彈
     for (const b of this.bullets) b.draw(ctx);
 
-    // 4. 繪製玩家戰機
+    // 5. 繪製玩家戰機
     if (!this.isGameOver) this.player.draw(ctx);
 
-    // 5. 繪製粒子與飄字
+    // 6. 繪製粒子與飄字
     for (const p of this.particles) p.draw(ctx);
   }
 
