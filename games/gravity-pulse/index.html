@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>引力回圈：重力幾何 | Gravity Pulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+  <!-- 頂部即時戰情列 -->
+  <header class="hud-bar">
+    <div class="hud-left">
+      <a href="../../index.html" class="back-link">
+        <span>⬅</span>
+        <span>返回大廳</span>
+      </a>
+      <div class="game-title-group">
+        <h2>引力回圈：重力幾何</h2>
+      </div>
+    </div>
+
+    <!-- 當前關卡標題與模式 -->
+    <div class="hud-center">
+      <div id="lblLevelTitle" class="level-title-chip">第 1 關：軌道初鳴</div>
+      <div id="modePill" class="phase-pill emerald">🪐 關卡挑戰模式</div>
+    </div>
+
+    <!-- 戰情數值 -->
+    <div class="hud-stats">
+      <div class="stat-chip">
+        <span class="stat-icon">⭐</span>
+        <div>
+          <div class="stat-label">星鑽收集</div>
+          <div id="statStars" class="stat-value val-stars">☆☆☆</div>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <span class="stat-icon">🚀</span>
+        <div>
+          <div class="stat-label">跳躍次數</div>
+          <div id="valLeaps" class="stat-value val-leaps">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 輔助控制項 -->
+    <div class="hud-controls">
+      <button id="btnRetry" class="hud-btn" title="重新挑戰本關 (快捷鍵 R)">🔄 重試</button>
+      <button id="btnLevels" class="hud-btn" title="選擇星系關卡">📑 關卡</button>
+      <button id="btnToggleMode" class="hud-btn primary" title="切換無盡深空模式">🌌 無盡深空</button>
+      <button id="btnHelp" class="hud-btn">📖 指南</button>
+      <button id="btnMute" class="hud-btn">🔊 音效: 開</button>
+    </div>
+  </header>
+
+  <!-- 幾何引力主視窗 -->
+  <main class="game-viewport">
+    <div id="alertToast" class="alert-toast">引力傳感器就緒</div>
+    <canvas id="gameCanvas"></canvas>
+  </main>
+
+  <!-- 底部操作提示與彈射控制列 -->
+  <footer class="control-bar">
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <span id="lblTip" class="tip-text">當探測器旋轉至目標方向時，點擊或按空白鍵釋放，利用切線慣性飛入蟲洞！</span>
+    </div>
+
+    <div class="action-buttons">
+      <button id="btnLaunch" class="btn-launch">
+        <span>🪐</span>
+        <span>釋放引力彈射</span>
+        <span class="key-tag">Space / 點擊</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- 關卡選擇彈窗 (Level Select Modal) -->
+  <div id="levelSelectModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><span>📑</span> 選擇幾何星系關卡</h2>
+        <button class="btn-close-modal" onclick="document.getElementById('levelSelectModal').classList.remove('active')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="levelGrid" class="level-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 過關結算彈窗 (Stage Victory Modal) -->
+  <div id="victoryModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="victoryTitle">🏆 躍遷成功！</h2>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p style="color: #cbd5e1; margin-bottom: 12px;">探測器已安全穿透超空間蟲洞！</p>
+        <div style="font-size: 2.2rem; color: #fbbf24; margin: 16px 0;" id="victoryStars">⭐⭐⭐</div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnNextLevel" class="modal-btn primary">躍遷前往下一關 ➡</button>
+        <button class="modal-btn secondary" onclick="document.getElementById('victoryModal').classList.remove('active'); window.gravityGame.openLevelSelectModal();">選關清單</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作戰指南說明彈窗 (Help Modal) -->
+  <div id="helpModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><span>📖</span> 引力回圈：作戰指揮指南</h2>
+        <button id="btnCloseHelp" class="btn-close-modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="guide-block">
+          <h3>🪐 軌道捕獲與切線彈射 (Orbital Slingshot)</h3>
+          <p>
+            探測器進入任何天體的捕獲圈時，將自動與其建立量子引力牽引並維持穩定公轉。
+            公轉時畫面將即時顯示<strong>切線預測虛線</strong>，在最佳時機按下 <span class="key-tag">Space</span>、<span class="key-tag">Enter</span> 或<strong>點擊畫面上任意位置</strong>即可脫離引力彈射飛出！
+          </p>
+        </div>
+
+        <div class="guide-block">
+          <h3>🌌 多元幾何天體機制</h3>
+          <ul style="margin: 8px 0 0 16px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+            <li><strong style="color: #10b981;">🔵 翡翠標準星</strong>：提供穩定、均勻角速度的公轉軌道。</li>
+            <li><strong style="color: #fbbf24;">⚡ 琥珀脈衝星</strong>：公轉時間越長蓄力越強，能提供超遠距離爆發彈射！</li>
+            <li><strong style="color: #f43f5e;">🔄 玫紅反向星</strong>：每次探測器進入圈內，都會自動<strong>顛倒公轉方向</strong>（順時針 ⇄ 逆時針）。</li>
+            <li><strong style="color: #ef4444;">💥 赤紅衰變星</strong>：不穩定恆星！進入後外環倒數啟動，必須在爆炸前果斷跳出！</li>
+            <li><strong style="color: #8b5cf6;">🚀 紫色巡航星</strong>：沿著幾何航線自主位移的天體，考驗動態窗口捕捉。</li>
+          </ul>
+        </div>
+
+        <div class="guide-block">
+          <h3>⚠️ 致命陷阱與深空障礙</h3>
+          <ul style="margin: 8px 0 0 16px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+            <li><strong>幾何旋轉雷射</strong>：致命光束，碰觸會導致探測器解體（按 <span class="key-tag">R</span> 即可瞬間重試）。</li>
+            <li><strong>奇點黑洞</strong>：強大的不可逆吸積盤，切勿靠近黑洞半徑。</li>
+          </ul>
+        </div>
+
+        <div class="guide-block">
+          <h3>⭐ 幾何星鑽與無盡模式</h3>
+          <p>
+            每關散佈著 3 顆發光的<strong>八面體星鑽</strong>，收集它們挑戰三星完美通關！點擊頂部【🌌 無盡深空】更可進入隨機動態深空，挑戰連續不墜落的極限跳躍次數！
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnGotIt" class="modal-btn primary">啟動探測躍遷！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 載入腳本 -->
+  <script src="./js/audio.js"></script>
+  <script src="./js/entities.js"></script>
+  <script src="./js/levels.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>

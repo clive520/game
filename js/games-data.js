@@ -53,19 +53,20 @@ const GAMES_DATA = [
     subtitle: "Gravity Pulse",
     category: "puzzle",
     categoryName: "休閒益智",
-    badge: "🧩 籌備中",
-    status: "coming_soon",
-    path: "#",
+    badge: "🔥 全新上線",
+    status: "playable",
+    path: "./games/gravity-pulse/index.html",
     icon: "🪐",
     thumbnailGradient: "linear-gradient(135deg, #022c22 0%, #064e3b 50%, #10b981 100%)",
-    description: "基於物理模擬的重力解謎遊戲。發射微型探針並操縱星球引力場，穿透時空裂隙引導信號返回母星。",
-    tags: ["物理益智", "引力模擬", "極簡美學", "休閒放鬆"],
+    description: "節奏流暢的軌道幾何彈射！在多元引力天體間接力躍遷，避開幾何雷射與奇點黑洞，收集星鑽穿透超空間蟲洞。",
+    tags: ["幾何引力", "軌道彈射", "時機跳躍", "無盡深空", "Canvas 60FPS"],
     features: [
-      "真實多體天體引力模擬",
-      "50+ 漸進式思維謎題",
-      "環境環境音效放鬆體驗"
+      "五大特色幾何天體（脈衝加速、維度反轉、衰變超新星等）",
+      "即時切線發射預測軌跡演算系統",
+      "15 個精心編排幾何星系關卡 ＋ 無盡深空程序化生成",
+      "純 Web Audio 幾何空靈共振音效與星鑽琶音"
     ],
-    version: "規劃中",
+    version: "v1.0-Release",
     author: "clive520"
   }
 ];
