@@ -51,6 +51,10 @@
       // 心跳計時器
       this.heartbeatTimer = 0;
 
+      // 離屏黑霧光影渲染畫布 (Fog of War Mask Canvas)
+      this.fogCanvas = document.createElement('canvas');
+      this.fogCtx = this.fogCanvas.getContext('2d');
+
       // 畫面長寬自適應
       this.resizeCanvas();
       window.addEventListener('resize', () => this.resizeCanvas());
@@ -78,6 +82,13 @@
       this.canvas.height = this.height * dpr;
       this.ctx.resetTransform();
       this.ctx.scale(dpr, dpr);
+
+      if (this.fogCanvas) {
+        this.fogCanvas.width = this.canvas.width;
+        this.fogCanvas.height = this.canvas.height;
+        this.fogCtx.resetTransform();
+        this.fogCtx.scale(dpr, dpr);
+      }
     }
 
     // 載入特定關卡
@@ -542,8 +553,34 @@
       const ctx = this.ctx;
       ctx.clearRect(0, 0, this.width, this.height);
 
+      // ==========================================
+      // 第一階段：計算光影可見多邊形 (Raycasting)
+      // ==========================================
+      // 手電筒錐形光束多邊形
+      let conePoly = null;
+      if (this.player.flashlightOn && !this.player.isFlickering && this.player.battery > 0) {
+        conePoly = RaycastLighting.computeConeVisibilityPolygon(
+          this.player.x,
+          this.player.y,
+          this.player.angle,
+          this.player.flashlightFov,
+          this.player.flashlightRange,
+          this.maze.segments
+        );
+      }
+
+      // 360 度近身微光多邊形 (約 50px 半徑)
+      const radialPoly = RaycastLighting.computeRadialVisibilityPolygon(
+        this.player.x,
+        this.player.y,
+        50,
+        this.maze.segments
+      );
+
+      // ==========================================
+      // 第二階段：底層世界渲染 (地磚、牆壁、道具、出口)
+      // ==========================================
       ctx.save();
-      // 鏡頭置中變換
       ctx.translate(this.width / 2 - this.camera.x, this.height / 2 - this.camera.y);
 
       // 1. 繪製世界背景 (迷宮地磚與牆壁)
@@ -586,39 +623,98 @@
         b.draw(ctx, isBatLit);
       }
 
-      // 4. 繪製守衛投射在地面上的探照光錐 (在黑霧籠罩前繪製，讓玩家能看見轉角的燈光反光)
+      // 4. 繪製守衛投射在地面上的探照光錐 (在黑霧覆蓋前繪製)
       for (const g of this.guards) {
         g.drawVisionCone(ctx, this.maze.segments);
       }
 
+      ctx.restore();
+
       // ==========================================
-      // 5. 黑霧遮罩與手電筒動態鏤空 (Dynamic Fog-of-War Mask)
+      // 第三階段：黑霧遮罩 (Fog of War Mask) 掏空受光區域
       // ==========================================
-      // 建立可見多邊形
-      let conePoly = null;
-      if (this.player.flashlightOn && !this.player.isFlickering && this.player.battery > 0) {
-        conePoly = RaycastLighting.computeConeVisibilityPolygon(
-          this.player.x,
-          this.player.y,
-          this.player.angle,
-          this.player.flashlightFov,
-          this.player.flashlightRange,
-          this.maze.segments
-        );
+      if (this.fogCtx) {
+        this.fogCtx.clearRect(0, 0, this.width, this.height);
+        // 全螢幕沉浸黑霧 (未被照射的通道與牆壁隱沒於黑夜)
+        this.fogCtx.fillStyle = 'rgba(3, 7, 18, 0.96)';
+        this.fogCtx.fillRect(0, 0, this.width, this.height);
+
+        this.fogCtx.save();
+        this.fogCtx.translate(this.width / 2 - this.camera.x, this.height / 2 - this.camera.y);
+        this.fogCtx.globalCompositeOperation = 'destination-out';
+
+        // 掏空手電筒光束
+        if (conePoly && conePoly.length > 2) {
+          this.fogCtx.beginPath();
+          this.fogCtx.moveTo(conePoly[0].x, conePoly[0].y);
+          for (let i = 1; i < conePoly.length; i++) {
+            this.fogCtx.lineTo(conePoly[i].x, conePoly[i].y);
+          }
+          this.fogCtx.closePath();
+
+          const grad = this.fogCtx.createRadialGradient(
+            this.player.x, this.player.y, 4,
+            this.player.x, this.player.y, this.player.flashlightRange
+          );
+          grad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
+          grad.addColorStop(0.75, 'rgba(0, 0, 0, 0.92)');
+          grad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
+          this.fogCtx.fillStyle = grad;
+          this.fogCtx.fill();
+        }
+
+        // 掏空主角身邊微光
+        if (radialPoly && radialPoly.length > 2) {
+          this.fogCtx.beginPath();
+          this.fogCtx.moveTo(radialPoly[0].x, radialPoly[0].y);
+          for (let i = 1; i < radialPoly.length; i++) {
+            this.fogCtx.lineTo(radialPoly[i].x, radialPoly[i].y);
+          }
+          this.fogCtx.closePath();
+
+          const radGrad = this.fogCtx.createRadialGradient(
+            this.player.x, this.player.y, 2,
+            this.player.x, this.player.y, 52
+          );
+          radGrad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
+          radGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.8)');
+          radGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
+          this.fogCtx.fillStyle = radGrad;
+          this.fogCtx.fill();
+        }
+
+        // 掏空守衛的探照燈視野 (守衛的光柱也能照亮走廊黑霧)
+        for (const g of this.guards) {
+          const gPoly = RaycastLighting.computeConeVisibilityPolygon(
+            g.x, g.y, g.angle, g.visionFov, g.visionRange, this.maze.segments
+          );
+          if (gPoly && gPoly.length > 2) {
+            this.fogCtx.beginPath();
+            this.fogCtx.moveTo(gPoly[0].x, gPoly[0].y);
+            for (let i = 1; i < gPoly.length; i++) {
+              this.fogCtx.lineTo(gPoly[i].x, gPoly[i].y);
+            }
+            this.fogCtx.closePath();
+            this.fogCtx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+            this.fogCtx.fill();
+          }
+        }
+
+        this.fogCtx.restore();
+        this.fogCtx.globalCompositeOperation = 'source-over';
+
+        // 將黑霧遮罩疊加回主畫面
+        ctx.drawImage(this.fogCanvas, 0, 0, this.width, this.height);
       }
 
-      // 360 度近身微光多邊形
-      const radialPoly = RaycastLighting.computeRadialVisibilityPolygon(
-        this.player.x,
-        this.player.y,
-        50,
-        this.maze.segments
-      );
+      // ==========================================
+      // 第四階段：頂層光束氛圍、角色實體與微粒渲染
+      // ==========================================
+      ctx.save();
+      ctx.translate(this.width / 2 - this.camera.x, this.height / 2 - this.camera.y);
 
-      // 利用離屏剪裁或遮罩覆蓋全景黑夜
-      // 先繪製手電筒的光束本體 (光源染色)
+      // 1. 手電筒光束的金色溫暖氛圍光
       if (conePoly && conePoly.length > 2) {
-        ctx.save();
         ctx.beginPath();
         ctx.moveTo(conePoly[0].x, conePoly[0].y);
         for (let i = 1; i < conePoly.length; i++) {
@@ -630,50 +726,24 @@
           this.player.x, this.player.y, 4,
           this.player.x, this.player.y, this.player.flashlightRange
         );
-        grad.addColorStop(0, 'rgba(255, 255, 230, 0.92)');
-        grad.addColorStop(0.35, 'rgba(254, 240, 138, 0.65)');
-        grad.addColorStop(0.75, 'rgba(253, 224, 71, 0.22)');
+        grad.addColorStop(0, 'rgba(255, 255, 240, 0.38)');
+        grad.addColorStop(0.35, 'rgba(254, 240, 138, 0.22)');
+        grad.addColorStop(0.75, 'rgba(253, 224, 71, 0.08)');
         grad.addColorStop(1, 'rgba(250, 204, 21, 0.0)');
-
         ctx.fillStyle = grad;
         ctx.fill();
-        ctx.restore();
       }
 
-      // 繪製近身微光光暈
-      if (radialPoly && radialPoly.length > 2) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(radialPoly[0].x, radialPoly[0].y);
-        for (let i = 1; i < radialPoly.length; i++) {
-          ctx.lineTo(radialPoly[i].x, radialPoly[i].y);
-        }
-        ctx.closePath();
-
-        const radGrad = ctx.createRadialGradient(
-          this.player.x, this.player.y, 2,
-          this.player.x, this.player.y, 52
-        );
-        radGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)');
-        radGrad.addColorStop(0.6, 'rgba(226, 232, 240, 0.25)');
-        radGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
-
-        ctx.fillStyle = radGrad;
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // 6. 繪製守衛本體 (※ 只有在被手電筒或微光照亮時才繪製！)
+      // 2. 守衛實體 (※ 關鍵規則：只有被主角手電筒照亮時才會畫出本體！)
       for (const g of this.guards) {
         g.drawBody(ctx);
       }
 
-      // 7. 繪製主角本體
+      // 3. 主角本體
       this.player.draw(ctx);
 
-      // 8. 繪製光束中的漂浮微塵
-      ctx.save();
-      ctx.fillStyle = 'rgba(254, 240, 138, 0.6)';
+      // 4. 手電筒光柱中的漂浮微塵
+      ctx.fillStyle = 'rgba(254, 240, 138, 0.65)';
       for (const p of this.dustParticles) {
         if (RaycastLighting.isTargetLitByFlashlight(this.player, p.x, p.y, this.maze.segments)) {
           ctx.beginPath();
@@ -681,11 +751,12 @@
           ctx.fill();
         }
       }
+
       ctx.restore();
 
-      ctx.restore(); // 恢復鏡頭變換
-
-      // 9. 繪製虛擬搖桿 (手機操作介面)
+      // ==========================================
+      // 第五階段：UI 互動層 (手機虛擬搖桿)
+      // ==========================================
       if (this.joystick.active) {
         ctx.save();
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';

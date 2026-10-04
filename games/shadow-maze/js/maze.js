@@ -226,79 +226,86 @@ class MazeGenerator {
     }
   }
 
-  // 提取牆面幾何線段，優化合併同向相鄰邊界 (大幅提升 Raycasting 幀率)
+  // 提取牆面幾何線段，精確分離四個受光朝向，防止對角線虛假橋接
   extractSegments() {
     this.segments = [];
     const S = this.tileSize;
 
-    // 1. 水平邊緣檢測 (頂部與底部邊)
-    for (let r = 0; r <= this.rows; r++) {
+    // 1. 水平邊緣檢測
+    for (let r = 0; r < this.rows; r++) {
+      // 牆格頂邊 (上方為空氣或地圖外)
       let startC = -1;
-      let isTop = false;
-
       for (let c = 0; c < this.cols; c++) {
-        const wallAbove = (r > 0 && this.grid[r - 1][c] === 1);
-        const wallBelow = (r < this.rows && this.grid[r][c] === 1);
-        const isEdge = (wallAbove !== wallBelow);
-
-        if (isEdge) {
-          if (startC === -1) {
-            startC = c;
-            isTop = wallBelow;
-          }
+        const isWall = (this.grid[r][c] === 1);
+        const exposedTop = isWall && (r === 0 || this.grid[r - 1][c] === 0);
+        if (exposedTop) {
+          if (startC === -1) startC = c;
         } else {
           if (startC !== -1) {
-            this.segments.push({
-              x1: startC * S,
-              y1: r * S,
-              x2: c * S,
-              y2: r * S
-            });
+            this.segments.push({ x1: startC * S, y1: r * S, x2: c * S, y2: r * S });
             startC = -1;
           }
         }
       }
       if (startC !== -1) {
-        this.segments.push({
-          x1: startC * S,
-          y1: r * S,
-          x2: this.cols * S,
-          y2: r * S
-        });
+        this.segments.push({ x1: startC * S, y1: r * S, x2: this.cols * S, y2: r * S });
+      }
+
+      // 牆格底邊 (下方為空氣或地圖外)
+      startC = -1;
+      for (let c = 0; c < this.cols; c++) {
+        const isWall = (this.grid[r][c] === 1);
+        const exposedBottom = isWall && (r === this.rows - 1 || this.grid[r + 1][c] === 0);
+        if (exposedBottom) {
+          if (startC === -1) startC = c;
+        } else {
+          if (startC !== -1) {
+            this.segments.push({ x1: startC * S, y1: (r + 1) * S, x2: c * S, y2: (r + 1) * S });
+            startC = -1;
+          }
+        }
+      }
+      if (startC !== -1) {
+        this.segments.push({ x1: startC * S, y1: (r + 1) * S, x2: this.cols * S, y2: (r + 1) * S });
       }
     }
 
-    // 2. 垂直邊緣檢測 (左側與右側邊)
-    for (let c = 0; c <= this.cols; c++) {
+    // 2. 垂直邊緣檢測
+    for (let c = 0; c < this.cols; c++) {
+      // 牆格左邊 (左方為空氣或地圖外)
       let startR = -1;
       for (let r = 0; r < this.rows; r++) {
-        const wallLeft = (c > 0 && this.grid[r][c - 1] === 1);
-        const wallRight = (c < this.cols && this.grid[r][c] === 1);
-        const isEdge = (wallLeft !== wallRight);
-
-        if (isEdge) {
-          if (startR === -1) {
-            startR = r;
-          }
+        const isWall = (this.grid[r][c] === 1);
+        const exposedLeft = isWall && (c === 0 || this.grid[r][c - 1] === 0);
+        if (exposedLeft) {
+          if (startR === -1) startR = r;
         } else {
           if (startR !== -1) {
-            this.segments.push({
-              x1: c * S,
-              y1: startR * S,
-              x2: c * S,
-              y2: r * S
-            });
+            this.segments.push({ x1: c * S, y1: startR * S, x2: c * S, y2: r * S });
             startR = -1;
           }
         }
       }
       if (startR !== -1) {
-        this.segments.push({
-          x1: c * S,
-          y1: startR * S,
-          x2: c * S,
-          y2: this.rows * S
-        });
+        this.segments.push({ x1: c * S, y1: startR * S, x2: c * S, y2: this.rows * S });
+      }
+
+      // 牆格右邊 (右方為空氣或地圖外)
+      startR = -1;
+      for (let r = 0; r < this.rows; r++) {
+        const isWall = (this.grid[r][c] === 1);
+        const exposedRight = isWall && (c === this.cols - 1 || this.grid[r][c + 1] === 0);
+        if (exposedRight) {
+          if (startR === -1) startR = r;
+        } else {
+          if (startR !== -1) {
+            this.segments.push({ x1: (c + 1) * S, y1: startR * S, x2: (c + 1) * S, y2: r * S });
+            startR = -1;
+          }
+        }
+      }
+      if (startR !== -1) {
+        this.segments.push({ x1: (c + 1) * S, y1: startR * S, x2: (c + 1) * S, y2: this.rows * S });
       }
     }
   }
