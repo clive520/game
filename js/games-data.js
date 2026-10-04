@@ -135,6 +135,29 @@ const GAMES_DATA = [
     ],
     version: "v1.0-Release",
     author: "clive520"
+  },
+  {
+    id: "shadow-maze",
+    title: "暗夜迷蹤：手電筒生還者",
+    subtitle: "Shadow Maze: Flashlight Protocol",
+    category: "action",
+    categoryName: "恐怖潛行",
+    badge: "🔦 動態光影",
+    status: "playable",
+    path: "./games/shadow-maze/index.html",
+    icon: "🔦",
+    thumbnailGradient: "linear-gradient(135deg, #030712 0%, #1e1b4b 50%, #facc15 100%)",
+    description: "手持手電筒探索未知黑霧迷宮！真實 2D 光影遮罩與視線演算法，唯有被手電筒照亮處才能看見潛伏的敵人！避開巡邏守衛的探照視野，尋找門禁卡並在警報中撤離！",
+    tags: ["動態光影", "恐怖潛行", "迷霧探索", "手電筒", "巡邏AI", "Canvas 60FPS"],
+    features: [
+      "真 2D 射線投射 (Raycasting) 動態錐形手電筒光束與牆體即時陰影",
+      "敵人潛伏暗處完全隱身，唯有手電筒光束掃過才會現形",
+      "守衛三段警戒 AI（巡邏綠燈、起疑黃燈、狂暴追擊紅燈）",
+      "跑步聲響與潛行腳步、電池電量消耗與備用電池拾取機制",
+      "純 Web Audio 即時緊張心跳、手電筒開關與警報刺音"
+    ],
+    version: "v1.0-Release",
+    author: "clive520"
   }
 ];
 

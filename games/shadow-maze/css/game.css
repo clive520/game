@@ -1,0 +1,413 @@
+/* ==========================================================================
+   《暗夜迷蹤：手電筒生還者》(Shadow Maze: Flashlight Protocol)
+   暗夜恐怖潛行氛圍樣式表
+   ========================================================================== */
+
+:root {
+  --bg-dark: #030712;
+  --bg-panel: rgba(15, 23, 42, 0.88);
+  --border-light: rgba(255, 255, 255, 0.12);
+  --flashlight-yellow: #facc15;
+  --alert-red: #ef4444;
+  --suspicious-amber: #f59e0b;
+  --safe-green: #22c55e;
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, Monaco, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* 主遊戲容器 (全螢幕) */
+.game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 遊戲畫布容器 */
+.canvas-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 頂部 HUD 面板 */
+.hud-top {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hud-top > * {
+  pointer-events: auto;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  color: var(--text-dim);
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.nav-back:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.level-badge {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  color: #f87171;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.icon-btn.muted {
+  opacity: 0.6;
+}
+
+/* 狀態條與目標儀表 (HUD Bottom / Left) */
+.hud-status-panel {
+  position: absolute;
+  bottom: 18px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* 任務目標浮動指示牌 */
+.objective-card {
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* 電量與體力進度槽 */
+.gauge-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(10px);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  width: 220px;
+}
+
+.gauge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.gauge-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-dim);
+}
+
+.gauge-val {
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+
+.gauge-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.1s linear, background-color 0.3s ease;
+}
+
+#hud-battery-fill {
+  background: var(--flashlight-yellow);
+}
+
+#hud-stamina-fill {
+  background: #38bdf8;
+}
+
+/* 手機端底部右側動作按鈕 */
+.mobile-action-panel {
+  position: absolute;
+  bottom: 20px;
+  right: 18px;
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.action-circle-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--bg-panel);
+  border: 2px solid var(--border-light);
+  color: var(--text-main);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  transition: all 0.15s ease;
+}
+
+.action-circle-btn:active, .action-circle-btn.active {
+  transform: scale(0.92);
+  border-color: var(--flashlight-yellow);
+  background: rgba(250, 204, 21, 0.25);
+}
+
+/* 懸浮提示通知 */
+.game-notice {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  color: #fef08a;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* 守衛追擊時全螢幕紅光暗角震顫特效 */
+.screen-alert-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: inset 0 0 80px rgba(239, 68, 68, 0);
+  transition: box-shadow 0.2s ease;
+}
+
+.screen-alert-vignette.active {
+  box-shadow: inset 0 0 100px rgba(239, 68, 68, 0.75);
+  animation: pulse-danger 0.6s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-danger {
+  0% { box-shadow: inset 0 0 60px rgba(239, 68, 68, 0.4); }
+  100% { box-shadow: inset 0 0 110px rgba(239, 68, 68, 0.85); }
+}
+
+/* 操作指引提示文字 */
+.control-hints {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-dim);
+  font-size: 0.74rem;
+  pointer-events: none;
+  z-index: 10;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* 模態彈窗 (Modals) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-card {
+  background: #0f172a;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.modal-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.modal-title.danger {
+  color: #ef4444;
+  text-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+}
+
+.modal-title.success {
+  color: #22c55e;
+  text-shadow: 0 0 16px rgba(34, 197, 94, 0.6);
+}
+
+.modal-text {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 28px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+  transition: all 0.2s ease;
+}
+
+.primary-btn.green {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* 規則清單 */
+.rules-list {
+  text-align: left;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rules-list li {
+  list-style: none;
+  position: relative;
+  padding-left: 22px;
+  line-height: 1.5;
+}
+
+.rules-list li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--flashlight-yellow);
+}
+
+@media (max-width: 600px) {
+  .hud-status-panel {
+    bottom: 84px;
+  }
+  .control-hints {
+    display: none;
+  }
+}

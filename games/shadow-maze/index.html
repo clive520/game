@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>暗夜迷蹤：手電筒生還者 | Shadow Maze Flashlight Protocol</title>
+  <meta name="description" content="真實動態光影迷宮恐怖潛行逃脫遊戲！手持手電筒探索未知黑霧，避開巡邏守衛的探照視野，尋回門禁卡逃出生天！">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <div class="game-container">
+    <!-- 全螢幕黑霧動態光影畫布 -->
+    <div class="canvas-wrapper">
+      <canvas id="game-canvas"></canvas>
+    </div>
+
+    <!-- 守衛追擊狂暴紅光濾鏡 -->
+    <div class="screen-alert-vignette" id="screen-alert-vignette"></div>
+
+    <!-- 頂部 HUD -->
+    <header class="hud-top">
+      <a href="../../index.html" class="nav-back">
+        <span>◀</span> 返回大廳
+      </a>
+      <div class="level-badge" id="hud-level-label">區域 B1</div>
+      <div class="header-buttons">
+        <button id="btn-sound-toggle" class="icon-btn" title="開關音效">🔊 音效</button>
+        <button id="btn-help" class="icon-btn" title="玩法說明">📖 規則</button>
+      </div>
+    </header>
+
+    <!-- 浮動動態通報 -->
+    <div class="game-notice" id="game-notice">🚨 區域 B1：尋找【逃生門禁卡】並避開巡邏守衛！</div>
+
+    <!-- 左下狀態儀表板 -->
+    <div class="hud-status-panel">
+      <!-- 任務目標卡片 -->
+      <div class="objective-card" id="hud-objective-text">
+        🔍 尋找【逃生門禁卡】<span style="color:#fbbf24"> (未取得)</span>
+      </div>
+
+      <!-- 電池與耐力條 -->
+      <div class="gauge-group">
+        <div class="gauge-row">
+          <span class="gauge-label">🔦 手電筒電量</span>
+          <span class="gauge-val" id="hud-battery-val">100%</span>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-fill" id="hud-battery-fill" style="width: 100%;"></div>
+        </div>
+
+        <div class="gauge-row" style="margin-top: 4px;">
+          <span class="gauge-label">⚡ 疾跑體力</span>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-fill" id="hud-stamina-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 行動端虛擬動作按鈕 (右下) -->
+    <div class="mobile-action-panel">
+      <button class="action-circle-btn active" id="btn-flashlight-toggle" title="開關手電筒">🔦</button>
+      <button class="action-circle-btn" id="btn-sprint-toggle" title="按住疾跑">⚡</button>
+    </div>
+
+    <!-- 電腦端鍵盤提示 -->
+    <div class="control-hints">
+      ⌨️ 移動：WASD / 方向鍵 ｜ 瞄準：滑鼠游標 ｜ 疾跑：按住 Shift ｜ 開關手電筒：空白鍵 / F
+    </div>
+  </div>
+
+  <!-- 遭到逮捕失敗彈窗 -->
+  <div class="modal-overlay hidden" id="modal-gameover">
+    <div class="modal-card">
+      <h2 class="modal-title danger">💀 你被巡邏守衛逮住了！</h2>
+      <p class="modal-text">你在黑暗中驚動了生化巡邏者，逃生協議終止。</p>
+      <div class="modal-actions">
+        <button class="primary-btn" id="btn-retry">重新嘗試本區 🔄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 關卡成功通過彈窗 -->
+  <div class="modal-overlay hidden" id="modal-levelclear">
+    <div class="modal-card">
+      <h2 class="modal-title success">🚪 成功撤離本區域！</h2>
+      <p class="modal-text">你成功取得了逃生門禁卡並在警報聲中突圍而出！即將進入更危險的深層禁區...</p>
+      <div class="modal-actions">
+        <button class="primary-btn green" id="btn-next-level">進入下一區 ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 最終全勝通關彈窗 -->
+  <div class="modal-overlay hidden" id="modal-victory">
+    <div class="modal-card">
+      <h2 class="modal-title success">🏆 恭喜生還！逃出生天！</h2>
+      <p class="modal-text">你穿越了所有層級的生化迷宮，在重重守衛與黑暗死寂中完成了不可能的撤離任務！</p>
+      <div class="modal-actions">
+        <button class="primary-btn green" id="btn-play-again">再玩一次 🔄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 玩法規則彈窗 -->
+  <div class="modal-overlay hidden" id="modal-help">
+    <div class="modal-card">
+      <h2 class="modal-title" style="color: #facc15;">🔦 逃生協議行動手冊</h2>
+      <ul class="rules-list">
+        <li><strong>黑暗與光影：</strong>整座迷宮籠罩在漆黑之中。只有你手電筒照亮的地方，才能看見隱匿在陰影中的敵人！</li>
+        <li><strong>守衛視野：</strong>巡邏守衛手持探照燈。一旦踏入守衛的視野光錐，守衛將亮起紅燈進入狂暴追擊態！</li>
+        <li><strong>跑步聲響：</strong>按住 <code>Shift</code> 疾跑會發出腳步聲，引來附近的守衛轉向調查。請謹慎運用潛行慢走。</li>
+        <li><strong>過關目標：</strong>在迷宮深處搜尋<strong>【金色門禁卡】</strong>；取得後出口閘門將解鎖，迅速逃往 EXIT 綠光出口即可過關！</li>
+        <li><strong>資源管理：</strong>手電筒會逐漸消耗電池，可在暗處角落拾取<strong>【綠色備用電池】</strong>補充。</li>
+      </ul>
+      <div class="modal-actions">
+        <button class="primary-btn green" id="btn-close-help">了解，開始行動</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模組腳本載入 -->
+  <script src="js/audio.js"></script>
+  <script src="js/raycast.js"></script>
+  <script src="js/maze.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
