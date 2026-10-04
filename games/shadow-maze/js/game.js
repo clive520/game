@@ -33,10 +33,15 @@
         moveY: 0,
         shift: false,
         aimAngle: 0,
+        screenMouseX: 0,
+        screenMouseY: 0,
         mouseWorldX: 0,
         mouseWorldY: 0
       };
       this.keys = {};
+
+      // 點擊移動目標標記 (Click Beacon)
+      this.clickMarker = null;
 
       // 虛擬搖桿 (手機端)
       this.joystick = {
@@ -157,9 +162,17 @@
       document.getElementById('modal-victory')?.classList.add('hidden');
     }
 
+    // 依據滑鼠螢幕座標與即時鏡頭計算世界座標
+    updateMouseWorldPos() {
+      if (this.input.screenMouseX !== undefined && this.input.screenMouseY !== undefined) {
+        this.input.mouseWorldX = this.input.screenMouseX - (this.width / 2) + this.camera.x;
+        this.input.mouseWorldY = this.input.screenMouseY - (this.height / 2) + this.camera.y;
+      }
+    }
+
     // 鍵盤與滑鼠/觸控事件
     bindControls() {
-      // 鍵盤移動
+      // 鍵盤移動 (仍保留 WASD 作為備選直覺操作)
       window.addEventListener('keydown', (e) => {
         this.keys[e.key.toLowerCase()] = true;
         if (e.key === ' ' || e.key.toLowerCase() === 'f') {
@@ -175,15 +188,12 @@
         this.keys[e.key.toLowerCase()] = false;
       });
 
-      // 滑鼠瞄準
+      // 滑鼠移動：燈光方向精確隨滑鼠游標轉向
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
-        const screenX = e.clientX - rect.left;
-        const screenY = e.clientY - rect.top;
-
-        // 轉換為世界座標
-        this.input.mouseWorldX = screenX - (this.width / 2) + this.camera.x;
-        this.input.mouseWorldY = screenY - (this.height / 2) + this.camera.y;
+        this.input.screenMouseX = e.clientX - rect.left;
+        this.input.screenMouseY = e.clientY - rect.top;
+        this.updateMouseWorldPos();
 
         if (this.player) {
           this.input.aimAngle = Math.atan2(
@@ -193,27 +203,44 @@
         }
       });
 
-      // 觸控支援 (手機雙拇指)
+      // 滑鼠點擊：點到哪裡，就走到哪裡停下
+      this.canvas.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return; // 僅限左鍵
+        const rect = this.canvas.getBoundingClientRect();
+        this.input.screenMouseX = e.clientX - rect.left;
+        this.input.screenMouseY = e.clientY - rect.top;
+        this.updateMouseWorldPos();
+
+        if (this.player && this.player.alive && !this.player.escaped) {
+          this.player.setMoveTarget(this.input.mouseWorldX, this.input.mouseWorldY, this.maze);
+          this.clickMarker = {
+            x: this.input.mouseWorldX,
+            y: this.input.mouseWorldY,
+            timer: 0.65,
+            maxTimer: 0.65
+          };
+        }
+      });
+
+      // 觸控支援 (手機端點擊地面走動，或滑動轉向)
       this.canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         for (let t of e.changedTouches) {
           const rect = this.canvas.getBoundingClientRect();
           const tx = t.clientX - rect.left;
           const ty = t.clientY - rect.top;
+          this.input.screenMouseX = tx;
+          this.input.screenMouseY = ty;
+          this.updateMouseWorldPos();
 
-          // 左半部觸控視為移動搖桿
-          if (tx < this.width * 0.45 && !this.joystick.active) {
-            this.joystick.active = true;
-            this.joystick.identifier = t.identifier;
-            this.joystick.startX = tx;
-            this.joystick.startY = ty;
-            this.joystick.currentX = tx;
-            this.joystick.currentY = ty;
-          } else {
-            // 右半部觸控視為瞄準轉向
-            const worldX = tx - (this.width / 2) + this.camera.x;
-            const worldY = ty - (this.height / 2) + this.camera.y;
-            this.input.aimAngle = Math.atan2(worldY - this.player.y, worldX - this.player.x);
+          if (this.player && this.player.alive && !this.player.escaped) {
+            this.player.setMoveTarget(this.input.mouseWorldX, this.input.mouseWorldY, this.maze);
+            this.clickMarker = {
+              x: this.input.mouseWorldX,
+              y: this.input.mouseWorldY,
+              timer: 0.65,
+              maxTimer: 0.65
+            };
           }
         }
       }, { passive: false });
@@ -454,7 +481,25 @@
       if (!this.player) return;
 
       this.updateInput();
+
+      // 每幀依據最新鏡頭更新滑鼠世界座標，確保人物走動時手電筒也精確指向滑鼠
+      this.updateMouseWorldPos();
+      if (this.player) {
+        this.input.aimAngle = Math.atan2(
+          this.input.mouseWorldY - this.player.y,
+          this.input.mouseWorldX - this.player.x
+        );
+      }
+
       this.player.update(dt, this.input, this.maze);
+
+      // 更新滑鼠點擊目標波紋特效計時
+      if (this.clickMarker) {
+        this.clickMarker.timer -= dt;
+        if (this.clickMarker.timer <= 0) {
+          this.clickMarker = null;
+        }
+      }
 
       // 平滑鏡頭插值
       this.camera.x += (this.player.x - this.camera.x) * 0.12;
@@ -750,6 +795,25 @@
           ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
           ctx.fill();
         }
+      }
+
+      // 5. 繪製滑鼠點擊目的地波紋特效
+      if (this.clickMarker && this.clickMarker.timer > 0) {
+        const progress = 1 - (this.clickMarker.timer / this.clickMarker.maxTimer);
+        const alpha = Math.max(0, 1 - progress);
+        const r = 5 + progress * 16;
+        ctx.save();
+        ctx.strokeStyle = `rgba(250, 204, 21, ${alpha * 0.9})`;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.arc(this.clickMarker.x, this.clickMarker.y, r, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = `rgba(254, 240, 138, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.clickMarker.x, this.clickMarker.y, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       }
 
       ctx.restore();

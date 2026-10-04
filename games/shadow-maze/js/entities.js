@@ -36,42 +36,133 @@ class Player {
     this.hasKeycard = false;
     this.alive = true;
     this.escaped = false;
+
+    // 滑鼠點擊導航路徑 (Click-to-Move Path)
+    this.path = [];
+  }
+
+  // 設定滑鼠點擊移動目的地 (A* 尋路至目標點)
+  setMoveTarget(targetX, targetY, maze) {
+    if (!this.alive || this.escaped) return;
+
+    const S = maze.tileSize;
+    let tGridX = Math.floor(targetX / S);
+    let tGridY = Math.floor(targetY / S);
+
+    // 限制在地圖格內
+    tGridX = Math.max(0, Math.min(maze.cols - 1, tGridX));
+    tGridY = Math.max(0, Math.min(maze.rows - 1, tGridY));
+
+    // 若點擊在牆壁上，尋找最靠近的開闊相鄰通道格
+    if (maze.grid[tGridY][tGridX] === 1) {
+      const neighbors = [
+        { x: tGridX, y: tGridY - 1 }, { x: tGridX, y: tGridY + 1 },
+        { x: tGridX - 1, y: tGridY }, { x: tGridX + 1, y: tGridY }
+      ].filter(n => n.x >= 0 && n.x < maze.cols && n.y >= 0 && n.y < maze.rows && maze.grid[n.y][n.x] === 0);
+
+      if (neighbors.length > 0) {
+        // 挑選離滑鼠點擊點最近的通道格
+        neighbors.sort((a, b) => {
+          const da = Math.hypot((a.x + 0.5) * S - targetX, (a.y + 0.5) * S - targetY);
+          const db = Math.hypot((b.x + 0.5) * S - targetX, (b.y + 0.5) * S - targetY);
+          return da - db;
+        });
+        tGridX = neighbors[0].x;
+        tGridY = neighbors[0].y;
+        targetX = (tGridX + 0.5) * S;
+        targetY = (tGridY + 0.5) * S;
+      } else {
+        return; // 無可到達鄰格
+      }
+    }
+
+    // 檢查從目前位置是否有一條無阻隔的直線視野 (Line of Sight)
+    const hasDirectLine = RaycastLighting.hasLineOfSight(this.x, this.y, targetX, targetY, maze.segments);
+    if (hasDirectLine) {
+      this.path = [{ x: targetX, y: targetY }];
+      return;
+    }
+
+    // 若有轉角隔牆，使用 A* 尋路
+    const pGridX = Math.floor(this.x / S);
+    const pGridY = Math.floor(this.y / S);
+    const navPath = maze.findPath(pGridX, pGridY, tGridX, tGridY);
+
+    if (navPath && navPath.length > 0) {
+      // 終點精確置於玩家點擊的目標點
+      navPath.push({ x: targetX, y: targetY });
+      this.path = navPath;
+    } else {
+      this.path = [{ x: targetX, y: targetY }];
+    }
   }
 
   update(dt, input, maze) {
     if (!this.alive || this.escaped) return;
 
-    // 1. 耐力與奔跑判定
-    this.isRunning = input.shift && (input.moveX !== 0 || input.moveY !== 0) && this.stamina > 5;
-    if (this.isRunning) {
+    // 判斷移動向量 (鍵盤優先，其次滑鼠導航路徑)
+    let vx = 0;
+    let vy = 0;
+    let isMoving = false;
+
+    if (input.moveX !== 0 || input.moveY !== 0) {
+      // 鍵盤移動中，清除滑鼠尋路點
+      this.path = [];
+      const mag = Math.hypot(input.moveX, input.moveY);
+      this.isRunning = input.shift && this.stamina > 5;
+      const speed = this.isRunning ? this.runSpeed : this.walkSpeed;
+      vx = (input.moveX / mag) * speed * dt;
+      vy = (input.moveY / mag) * speed * dt;
+      isMoving = true;
+    } else if (this.path && this.path.length > 0) {
+      // 依照滑鼠導航路徑行進
+      const nextWp = this.path[0];
+      const dx = nextWp.x - this.x;
+      const dy = nextWp.y - this.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 8) {
+        // 抵達該導航節點
+        this.path.shift();
+        if (this.path.length === 0) {
+          // 已到達最終點擊地點，停下腳步！
+          isMoving = false;
+        } else {
+          isMoving = true;
+        }
+      } else {
+        this.isRunning = input.shift && this.stamina > 5;
+        const speed = this.isRunning ? this.runSpeed : this.walkSpeed;
+        vx = (dx / dist) * speed * dt;
+        vy = (dy / dist) * speed * dt;
+        isMoving = true;
+      }
+    } else {
+      this.isRunning = false;
+    }
+
+    // 1. 耐力與跑步聲
+    if (this.isRunning && isMoving) {
       this.stamina = Math.max(0, this.stamina - 26 * dt);
-      this.noiseRadius = 175; // 跑步發出大聲響
+      this.noiseRadius = 175;
     } else {
       this.stamina = Math.min(this.maxStamina, this.stamina + 18 * dt);
-      this.noiseRadius = (input.moveX !== 0 || input.moveY !== 0) ? 35 : 0;
+      this.noiseRadius = isMoving ? 35 : 0;
     }
 
     // 2. 移動與碰撞校正
-    const speed = this.isRunning ? this.runSpeed : this.walkSpeed;
-    if (input.moveX !== 0 || input.moveY !== 0) {
-      const mag = Math.hypot(input.moveX, input.moveY);
-      const vx = (input.moveX / mag) * speed * dt;
-      const vy = (input.moveY / mag) * speed * dt;
-
-      // 分軸碰撞檢測避免卡牆
+    if (isMoving) {
       const resX = maze.checkCircleCollision(this.x + vx, this.y, this.radius);
       this.x = resX.x;
-
       const resY = maze.checkCircleCollision(this.x, this.y + vy, this.radius);
       this.y = resY.y;
 
-      // 播放腳步聲
       if (window.mazeAudio) {
         window.mazeAudio.playFootstep(this.isRunning);
       }
     }
 
-    // 3. 手電筒方向鎖定游標/瞄準點
+    // 3. 手電筒方向鎖定游標/瞄準點 (即時跟隨滑鼠)
     this.angle = input.aimAngle;
 
     // 4. 手電筒電力消耗與低電量閃爍

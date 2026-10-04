@@ -376,16 +376,20 @@ class MazeGenerator {
       const current = openSet.shift();
 
       if (current.x === targetGridX && current.y === targetGridY) {
-        // 重構路徑
+        // 重構路徑 (從終點向前回溯)
         const path = [];
-        let currKey = key(current.x, current.y);
-        while (cameFrom.has(currKey)) {
-          const pt = cameFrom.get(currKey);
+        let curr = current;
+        while (curr) {
           path.unshift({
-            x: (pt.x + 0.5) * this.tileSize,
-            y: (pt.y + 0.5) * this.tileSize
+            x: (curr.x + 0.5) * this.tileSize,
+            y: (curr.y + 0.5) * this.tileSize
           });
-          currKey = key(pt.x, pt.y);
+          const parent = cameFrom.get(key(curr.x, curr.y));
+          if (parent && (parent.x !== startGridX || parent.y !== startGridY)) {
+            curr = parent;
+          } else {
+            break;
+          }
         }
         return path;
       }
