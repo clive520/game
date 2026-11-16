@@ -310,6 +310,8 @@ function renderPanel() {
     actionMessage.textContent = `${FACTIONS[state.winner]?.name ?? "本局"}成為最後存活的陣營。`;
   } else if (state.statusMessage) {
     actionMessage.textContent = state.statusMessage;
+  } else if (onlineRoom && onlineRoom.seats?.[faction]?.controller === "human" && !isHumanFaction(faction)) {
+    actionMessage.textContent = `等待${meta?.name ?? "玩家"}方行棋。`;
   } else if (faction && !isHumanFaction(faction)) {
     actionMessage.textContent = `輪到${meta?.name ?? "電腦"}，電腦正在思考。`;
   } else {
@@ -1018,6 +1020,13 @@ function computerMove() {
 function scheduleComputerTurn() {
   window.clearTimeout(computerTimer);
   if (!state || state.gameOver || state.drawOffer) return;
+  if (onlineRoom) {
+    if (state.statusMessage === "電腦正在思考。") {
+      state.statusMessage = "";
+      render();
+    }
+    return;
+  }
   if (isHumanFaction(state.currentFaction)) {
     if (state.statusMessage === "電腦正在思考。") {
       state.statusMessage = "";

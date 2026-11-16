@@ -472,8 +472,11 @@ export const threeKingdomsJoinRoom = onCall({ enforceAppCheck: true }, async (re
   const candidateMatchId = createMatchId();
   const now = Date.now();
   let assigned = { role: "spectator", faction: null, recoveryCode: null, started: false };
+  let firstTransactionAttempt = true;
   const roomRef = database.ref(`threeKingdoms/rooms/${String(roomCode).toUpperCase()}`);
   const result = await roomRef.transaction((room) => {
+    if (firstTransactionAttempt && !room) room = structuredClone(roomBefore);
+    firstTransactionAttempt = false;
     if (!room?.public || !room?.private) return;
     assigned = { role: "spectator", faction: null, recoveryCode: null, started: false };
     const member = room.private.members?.[uid];
@@ -778,3 +781,4 @@ export const threeKingdomsCleanupIdleRooms = onSchedule("every 1 minutes", async
     ]);
   }
 });
+
