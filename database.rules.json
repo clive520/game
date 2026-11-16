@@ -1,0 +1,34 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "threeKingdoms": {
+      "rooms": {
+        "$roomCode": {
+          "public": {
+            ".read": "auth !== null && auth.token.threeKingdomsClient === true && root.child('threeKingdoms').child('rooms').child($roomCode).child('private').child('members').child(auth.uid).exists()",
+            ".write": false
+          },
+          "private": {
+            ".read": false,
+            ".write": false
+          }
+        }
+      },
+      "presence": {
+        "$roomCode": {
+          "$uid": {
+            "$connectionId": {
+              ".write": "auth !== null && auth.token.threeKingdomsClient === true && auth.uid === $uid",
+              ".validate": "newData.val() === true"
+            }
+          }
+        }
+      },
+      "security": {
+        ".read": false,
+        ".write": false
+      }
+    }
+  }
+}

@@ -1,160 +1,170 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>星際遊戲矩陣 | Nexus Arcade - HTML5 Web Games</title>
-  <meta name="description" content="多款精選 HTML5 網頁遊戲平台。首發旗艦《星際守望者：迷宮防線》開放式迷宮建造塔防。支援 GitHub Pages 靜態極速載入。">
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/portal.css">
-</head>
-<body>
-  <!-- 背景網格紋理 -->
-  <div class="bg-grid-overlay"></div>
-
-  <!-- 頂部導覽列 -->
-  <header class="navbar">
-    <div class="container nav-container">
-      <a href="./index.html" class="logo-group">
-        <div class="logo-icon">🎮</div>
-        <div class="logo-text">
-          <h1>NEXUS ARCADE</h1>
-          <p>星際遊戲矩陣平台</p>
-        </div>
-      </a>
-
-      <div class="nav-actions">
-        <button id="btnOpenGuide" class="github-btn" style="cursor: pointer; background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.4);">
-          <span>📖</span>
-          <span>遊玩指南</span>
-        </button>
-        <a href="https://github.com/clive520/game" target="_blank" rel="noopener noreferrer" class="github-btn">
-          <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-          </svg>
-          <span>GitHub</span>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f1eadb">
+    <meta name="description" content="三人同遊的三國棋，可本機遊玩或建立線上房間。">
+    <title>三國棋｜三人對弈</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="三國棋首頁">
+          <span class="brand-mark" aria-hidden="true">三</span>
+          <span><strong>三國棋</strong><small>THREE KINGDOMS XIANGQI</small></span>
         </a>
-      </div>
-    </div>
-  </header>
+        <div class="prototype-badge" id="connection-badge"><span class="pulse-dot"></span><span id="connection-label">本機遊玩</span></div>
+      </header>
 
-  <!-- 主內容區 -->
-  <main class="container">
-    <!-- 焦點首推遊戲橫幅 (Hero Banner) -->
-    <section class="hero-section">
-      <div class="featured-card">
-        <div class="featured-content">
-          <div class="featured-badge">🔥 旗艦首發推薦</div>
-          <h2>星際守望者：迷宮防線</h2>
-          <div class="subtitle">CYBER DEFENSE: MAZING PROTOCOL</div>
-          <p>
-            突破傳統固定路線！自由在開放式戰場建造高科技防禦塔構建迷宮阻隔強敵，親自操控星際指揮官機甲穿梭防線，結合 A* 即時動態尋路與雷射轟炸的極致塔防對決。
-          </p>
-
-          <div class="feature-bullets">
-            <div class="bullet-item"><span class="bullet-icon">✦</span> 開放式造塔迷宮 (Mazing)</div>
-            <div class="bullet-item"><span class="bullet-icon">✦</span> A* 即時動態尋路引擎</div>
-            <div class="bullet-item"><span class="bullet-icon">✦</span> 可操控星際指揮官機甲</div>
-            <div class="bullet-item"><span class="bullet-icon">✦</span> 60 FPS Canvas 流暢打擊</div>
+      <main class="game-layout">
+        <section class="board-column" aria-label="棋盤區">
+          <div class="game-heading">
+            <div>
+              <p class="eyebrow">三方對弈 · 離線遊玩</p>
+              <h1>棋局<span>・</span>三分天下</h1>
+            </div>
+            <div class="turn-pill" id="turn-pill"><i></i><span>讀取棋盤中</span></div>
           </div>
-
-          <div class="hero-actions">
-            <a href="./games/cyber-defense/index.html" class="btn-primary">
-              <span>立即啟動遊戲</span>
-              <span>➔</span>
-            </a>
+          <div class="board-wrap">
+            <div class="board-glow"></div>
+            <svg id="board" class="board-svg" viewBox="80 34 820 720" role="img" aria-label="三國棋六角棋盤">
+              <defs>
+                <linearGradient id="boardSurface" x1="0" y1="0" x2="0.8" y2="1">
+                  <stop offset="0" stop-color="#fffdf7"/>
+                  <stop offset="1" stop-color="#e8e1d3"/>
+                </linearGradient>
+                <linearGradient id="riverSurface" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#d5e4e1"/>
+                  <stop offset="0.5" stop-color="#c7dcd9"/>
+                  <stop offset="1" stop-color="#b6d0ce"/>
+                </linearGradient>
+                <linearGradient id="pieceRed" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#e88869"/><stop offset="0.48" stop-color="#b94234"/><stop offset="1" stop-color="#7d251e"/>
+                </linearGradient>
+                <linearGradient id="pieceBlue" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#98c6dc"/><stop offset="0.5" stop-color="#397da4"/><stop offset="1" stop-color="#1d4967"/>
+                </linearGradient>
+                <linearGradient id="pieceGold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#f1d78b"/><stop offset="0.5" stop-color="#b88732"/><stop offset="1" stop-color="#75501b"/>
+                </linearGradient>
+                <linearGradient id="pieceIvory" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fffdf4"/><stop offset="1" stop-color="#cfc4a9"/>
+                </linearGradient>
+                <filter id="softShadow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="4"/>
+                </filter>
+              </defs>
+              <g id="board-art"></g>
+              <g id="move-hints"></g>
+              <g id="node-layer"></g>
+              <g id="piece-layer"></g>
+            </svg>
           </div>
-        </div>
-
-        <div class="featured-visual">
-          <div class="visual-mockup">
-            <div class="visual-icon-glow">🛡️</div>
-            <div class="visual-tag">[ PROTOCOL: ONLINE ]</div>
+          <div class="camera-toolbar" role="group" aria-label="棋盤視角控制">
+            <button type="button" data-camera="rotate-left" aria-label="棋盤向左旋轉">↶</button>
+            <button type="button" data-camera="rotate-right" aria-label="棋盤向右旋轉">↷</button>
+            <span aria-hidden="true"></span>
+            <button type="button" data-camera="zoom-out" aria-label="縮小棋盤">−</button>
+            <button type="button" data-camera="zoom-in" aria-label="放大棋盤">＋</button>
+            <button type="button" data-camera="reset" aria-label="重設棋盤視角">重設</button>
           </div>
-        </div>
-      </div>
-    </section>
+          <div class="board-footer">
+            <span><i class="legend-dot red"></i>蜀・紅</span>
+            <span><i class="legend-dot blue"></i>吳・藍</span>
+            <span><i class="legend-dot gold"></i>魏・金</span>
+            <span class="footer-note">點選己方棋子查看可走位置</span>
+          </div>
+        </section>
 
-    <!-- 分類過濾與搜尋控制列 -->
-    <section class="controls-section">
-      <div class="filter-tabs">
-        <button class="filter-tab active" data-category="all">全部遊戲</button>
-        <button class="filter-tab" data-category="strategy">🛡️ 策略塔防</button>
-        <button class="filter-tab" data-category="action">🚀 動作射擊</button>
-        <button class="filter-tab" data-category="puzzle">🧩 休閒益智</button>
-      </div>
+        <aside class="side-panel">
+          <section class="panel-card turn-card">
+            <div class="panel-title-row"><h2>行棋順序</h2><span class="round-label" id="move-count">第 1 回合</span></div>
+            <div class="seat-list" id="seat-list"></div>
+          </section>
 
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" class="search-input" placeholder="搜尋遊戲名稱或標籤...">
-      </div>
-    </section>
+          <section class="panel-card action-card">
+            <div class="panel-title-row"><h2>目前行動</h2><span class="turn-number" id="turn-number">01</span></div>
+            <label class="mode-field" for="game-mode">遊玩模式
+              <select id="game-mode">
+                <option value="three-humans">三位真人</option>
+                <option value="two-humans">兩位真人＋一台電腦（魏）</option>
+                <option value="one-human">一位真人＋兩台電腦（吳、魏）</option>
+              </select>
+            </label>
+            <p class="action-message" id="action-message">選擇輪到你的棋子，查看合法走法。</p>
+            <div class="selected-piece" id="selected-piece">
+              <div class="selection-emblem">將</div>
+              <div><small>已選棋子</small><strong>尚未選擇</strong></div>
+            </div>
+            <button class="primary-button" id="restart-button" type="button">
+              <span aria-hidden="true">↻</span> 重新開始
+            </button>
+            <button class="room-button secondary draw-offer-button" id="propose-draw-button" type="button" hidden>提議和棋</button>
+            <div class="draw-vote-box" id="draw-vote-box" hidden>
+              <p id="draw-vote-message" class="room-message"></p>
+              <div class="room-actions">
+                <button class="room-button" id="accept-draw-button" type="button">同意和棋</button>
+                <button class="room-button secondary" id="reject-draw-button" type="button">拒絕</button>
+              </div>
+            </div>
+          </section>
 
-    <!-- 遊戲展示清單 (由 JS 動態注入) -->
-    <section>
-      <div id="gameCount" style="font-size: 0.875rem; color: var(--text-dim); margin-bottom: 16px;"></div>
-      <div id="gamesGrid" class="games-grid">
-        <!-- 動態渲染卡片 -->
-      </div>
-    </section>
-  </main>
+          <section class="panel-card room-card" aria-labelledby="room-heading">
+            <div class="panel-title-row"><h2 id="room-heading">線上房間</h2><span class="local-label" id="firebase-status">檢查 Firebase</span></div>
+            <label class="room-field" for="display-name">玩家名稱
+              <input id="display-name" type="text" maxlength="20" autocomplete="nickname" placeholder="訪客">
+            </label>
+            <label class="room-field" for="room-pin">6 位數房間密碼
+              <input id="room-pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="建立與加入時使用">
+            </label>
+            <div class="room-actions">
+              <button class="room-button" id="create-room-button" type="button" disabled>建立房間</button>
+              <button class="room-button secondary" id="leave-room-button" type="button" disabled>離開房間</button>
+            </div>
+            <label class="room-field" for="room-code">房間代碼
+              <input id="room-code" type="text" maxlength="8" autocomplete="off" placeholder="輸入對方提供的代碼">
+            </label>
+            <button class="room-button secondary" id="join-room-button" type="button" disabled>輸入代碼加入／觀戰</button>
+            <p class="room-message" id="room-message" role="status">本機模式可直接遊玩；線上房間需完成 Firebase 設定。</p>
+            <div class="room-credentials" id="room-credentials" hidden></div>
+            <p class="prototype-note">線上對局結束後，暱稱、陣營、結果與完整棋譜會公開保存；棋譜庫只保留最新 300 局。</p>
+          </section>
 
-  <!-- 頁尾 -->
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 Nexus Arcade. 極速靜態網頁遊戲平台 · 專為 GitHub Pages 打造</p>
+          <section class="panel-card guide-card">
+            <div class="panel-title-row"><h2>對局提示</h2><span class="guide-icon">✦</span></div>
+            <ul>
+              <li><b>選棋</b><span>點選目前陣營的棋子。</span></li>
+              <li><b>走棋</b><span>點亮起的棋位即可移動。</span></li>
+              <li><b>淘汰</b><span>主帥被吃或無棋可走時，該國出局。</span></li>
+            </ul>
+          </section>
+
+          <section class="panel-card history-card">
+            <div class="panel-title-row"><h2>本局紀錄</h2><span class="local-label" id="history-scope">僅本機</span></div>
+            <ol id="move-log" class="move-log"><li class="empty-log">棋局開始後，走棋紀錄會顯示在這裡。</li></ol>
+          </section>
+
+          <section class="panel-card archive-card" aria-labelledby="archive-heading">
+            <div class="panel-title-row"><h2 id="archive-heading">公開棋譜</h2><span class="local-label">最新 300 局</span></div>
+            <button class="room-button secondary" id="load-matches-button" type="button" disabled>載入最近棋局</button>
+            <ol class="match-list" id="match-list"><li class="empty-log">Firebase 設定完成後，可瀏覽已結束的公開棋譜。</li></ol>
+            <div class="replay-controls" id="replay-controls" hidden>
+              <p class="room-message" id="replay-caption"></p>
+              <div class="room-actions">
+                <button class="room-button secondary" id="replay-previous" type="button">上一步</button>
+                <button class="room-button secondary" id="replay-next" type="button">下一步</button>
+              </div>
+              <button class="room-button" id="replay-exit" type="button">結束重播</button>
+            </div>
+          </section>
+
+          <p class="prototype-note"><span>✧</span> <span id="storage-note">本機遊玩不會上傳棋局資料</span></p>
+        </aside>
+      </main>
+      <footer class="site-footer"><span>三國棋・本機與線上房間</span><span>即時對局與公開棋譜由 Firebase 提供</span></footer>
     </div>
-  </footer>
-
-  <!-- 平台與遊戲遊玩指南彈窗 (Guide Modal) -->
-  <div id="guideModal" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h2><span>📖</span> Nexus Arcade 平台遊玩指南</h2>
-        <button id="btnCloseGuide" class="btn-close-modal" title="關閉指南">✕</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="guide-block">
-          <h3>🎮 平台總覽</h3>
-          <p>
-            Nexus Arcade 是一個匯聚多款獨立 HTML5 靜態遊戲的聚合大廳。您可以透過上方分類標籤或搜尋欄快速篩選遊戲，點選卡片即可免安裝、秒速進入遊戲遊玩！
-          </p>
-        </div>
-
-        <div class="guide-block">
-          <h3>🛡️ 首發旗艦：《星際守望者：迷宮防線》玩法簡介</h3>
-          <p>一款結合「開放式迷宮建造」與「指揮官機甲操控」的未來科幻塔防：</p>
-          <ul class="guide-list">
-            <li><span class="guide-badge">造塔</span> 自由在網格建造防禦塔構築迷宮，敵人會依 A* 即時尋路繞道。注意不能完全堵死！</li>
-            <li><span class="guide-badge">英雄</span> 使用鍵盤 <span class="guide-badge">WASD</span> 或滑鼠右鍵操控星際指揮官，具備自動機砲、[Q] EMP 癱瘓脈衝與 [E] 軌道轟炸。</li>
-            <li><span class="guide-badge">防禦塔</span> 包含光子脈衝、重力磁軌砲、電磁緩速與巡弋導彈 4 種武裝，皆可升級至 Lv.3 或折價出售。</li>
-            <li><span class="guide-badge">目標</span> 守護基地核心（❤️ 20點），堅守並殲滅全部 15 波機械大軍！</li>
-          </ul>
-        </div>
-
-        <div class="guide-block">
-          <h3>🚀 擴充與持續更新</h3>
-          <p>
-            本平台為純前端開源架構，未來將持續上線更多街機動作、重力物理益智等多元類型遊戲。所有進度與成就皆自動保存於您的本機瀏覽器。
-          </p>
-        </div>
-      </div>
-
-      <div class="guide-footer">
-        <a href="./games/cyber-defense/index.html" class="btn-primary" style="padding: 10px 20px; font-size: 0.9rem;">
-          <span>立即體驗《星際守望者》</span>
-          <span>➔</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 載入腳本 -->
-  <script src="./js/games-data.js"></script>
-  <script src="./js/portal.js"></script>
-</body>
+    <script type="module" src="./src/main.js"></script>
+  </body>
 </html>

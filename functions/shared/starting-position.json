@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "source": "starting-formation-concept.svg",
+  "piecesPerFaction": 16,
+  "pieces": [
+    {
+      "id": "SH-rook-01",
+      "type": "rook",
+      "faction": "SH",
+      "nodeId": "SH-A0",
+      "alive": true
+    },
+    {
+      "id": "SH-horse-01",
+      "type": "horse",
+      "faction": "SH",
+      "nodeId": "SH-B0",
+      "alive": true
+    },
+    {
+      "id": "SH-elephant-01",
+      "type": "elephant",
+      "faction": "SH",
+      "nodeId": "SH-C0",
+      "alive": true
+    },
+    {
+      "id": "SH-advisor-01",
+      "type": "advisor",
+      "faction": "SH",
+      "nodeId": "SH-D0",
+      "alive": true
+    },
+    {
+      "id": "SH-general-01",
+      "type": "general",
+      "faction": "SH",
+      "nodeId": "SH-E0",
+      "alive": true
+    },
+    {
+      "id": "SH-advisor-02",
+      "type": "advisor",
+      "faction": "SH",
+      "nodeId": "SH-F0",
+      "alive": true
+    },
+    {
+      "id": "SH-elephant-02",
+      "type": "elephant",
+      "faction": "SH",
+      "nodeId": "SH-G0",
+      "alive": true
+    },
+    {
+      "id": "SH-horse-02",
+      "type": "horse",
+      "faction": "SH",
+      "nodeId": "SH-H0",
+      "alive": true
+    },
+    {
+      "id": "SH-rook-02",
+      "type": "rook",
+      "faction": "SH",
+      "nodeId": "SH-I0",
+      "alive": true
+    },
+    {
+      "id": "SH-cannon-01",
+      "type": "cannon",
+      "faction": "SH",
+      "nodeId": "SH-B2",
+      "alive": true
+    },
+    {
+      "id": "SH-cannon-02",
+      "type": "cannon",
+      "faction": "SH",
+      "nodeId": "SH-H2",
+      "alive": true
+    },
+    {
+      "id": "SH-pawn-01",
+      "type": "pawn",
+      "faction": "SH",
+      "nodeId": "SH-A3",
+      "alive": true,
+      "directionFaction": "SH"
+    },
+    {
+      "id": "SH-pawn-02",
+      "type": "pawn",
+      "faction": "SH",
+      "nodeId": "SH-C3",
+      "alive": true,
+      "directionFaction": "SH"
+    },
+    {
+      "id": "SH-pawn-03",
+      "type": "pawn",
+      "faction": "SH",
+      "nodeId": "SH-E3",
+      "alive": true,
+      "directionFaction": "SH"
+    },
+    {
+      "id": "SH-pawn-04",
+      "type": "pawn",
+      "faction": "SH",
+      "nodeId": "SH-G3",
+      "alive": true,
+      "directionFaction": "SH"
+    },
+    {
+      "id": "SH-pawn-05",
+      "type": "pawn",
+      "faction": "SH",
+      "nodeId": "SH-I3",
+      "alive": true,
+      "directionFaction": "SH"
+    },
+    {
+      "id": "WE-rook-01",
+      "type": "rook",
+      "faction": "WE",
+      "nodeId": "WE-A0",
+      "alive": true
+    },
+    {
+      "id": "WE-horse-01",
+      "type": "horse",
+      "faction": "WE",
+      "nodeId": "WE-B0",
+      "alive": true
+    },
+    {
+      "id": "WE-elephant-01",
+      "type": "elephant",
+      "faction": "WE",
+      "nodeId": "WE-C0",
+      "alive": true
+    },
+    {
+      "id": "WE-advisor-01",
+      "type": "advisor",
+      "faction": "WE",
+      "nodeId": "WE-D0",
+      "alive": true
+    },
+    {
+      "id": "WE-general-01",
+      "type": "general",
+      "faction": "WE",
+      "nodeId": "WE-E0",
+      "alive": true
+    },
+    {
+      "id": "WE-advisor-02",
+      "type": "advisor",
+      "faction": "WE",
+      "nodeId": "WE-F0",
+      "alive": true
+    },
+    {
+      "id": "WE-elephant-02",
+      "type": "elephant",
+      "faction": "WE",
+      "nodeId": "WE-G0",
+      "alive": true
+    },
+    {
+      "id": "WE-horse-02",
+      "type": "horse",
+      "faction": "WE",
+      "nodeId": "WE-H0",
+      "alive": true
+    },
+    {
+      "id": "WE-rook-02",
+      "type": "rook",
+      "faction": "WE",
+      "nodeId": "WE-I0",
+      "alive": true
+    },
+    {
+      "id": "WE-cannon-01",
+      "type": "cannon",
+      "faction": "WE",
+      "nodeId": "WE-B2",
+      "alive": true
+    },
+    {
+      "id": "WE-cannon-02",
+      "type": "cannon",
+      "faction": "WE",
+      "nodeId": "WE-H2",
+      "alive": true
+    },
+    {
+      "id": "WE-pawn-01",
+      "type": "pawn",
+      "faction": "WE",
+      "nodeId": "WE-A3",
+      "alive": true,
+      "directionFaction": "WE"
+    },
+    {
+      "id": "WE-pawn-02",
+      "type": "pawn",
+      "faction": "WE",
+      "nodeId": "WE-C3",
+      "alive": true,
+      "directionFaction": "WE"
+    },
+    {
+      "id": "WE-pawn-03",
+      "type": "pawn",
+      "faction": "WE",
+      "nodeId": "WE-E3",
+      "alive": true,
+      "directionFaction": "WE"
+    },
+    {
+      "id": "WE-pawn-04",
+      "type": "pawn",
+      "faction": "WE",
+      "nodeId": "WE-G3",
+      "alive": true,
+      "directionFaction": "WE"
+    },
+    {
+      "id": "WE-pawn-05",
+      "type": "pawn",
+      "faction": "WE",
+      "nodeId": "WE-I3",
+      "alive": true,
+      "directionFaction": "WE"
+    },
+    {
+      "id": "WU-rook-01",
+      "type": "rook",
+      "faction": "WU",
+      "nodeId": "WU-A0",
+      "alive": true
+    },
+    {
+      "id": "WU-horse-01",
+      "type": "horse",
+      "faction": "WU",
+      "nodeId": "WU-B0",
+      "alive": true
+    },
+    {
+      "id": "WU-elephant-01",
+      "type": "elephant",
+      "faction": "WU",
+      "nodeId": "WU-C0",
+      "alive": true
+    },
+    {
+      "id": "WU-advisor-01",
+      "type": "advisor",
+      "faction": "WU",
+      "nodeId": "WU-D0",
+      "alive": true
+    },
+    {
+      "id": "WU-general-01",
+      "type": "general",
+      "faction": "WU",
+      "nodeId": "WU-E0",
+      "alive": true
+    },
+    {
+      "id": "WU-advisor-02",
+      "type": "advisor",
+      "faction": "WU",
+      "nodeId": "WU-F0",
+      "alive": true
+    },
+    {
+      "id": "WU-elephant-02",
+      "type": "elephant",
+      "faction": "WU",
+      "nodeId": "WU-G0",
+      "alive": true
+    },
+    {
+      "id": "WU-horse-02",
+      "type": "horse",
+      "faction": "WU",
+      "nodeId": "WU-H0",
+      "alive": true
+    },
+    {
+      "id": "WU-rook-02",
+      "type": "rook",
+      "faction": "WU",
+      "nodeId": "WU-I0",
+      "alive": true
+    },
+    {
+      "id": "WU-cannon-01",
+      "type": "cannon",
+      "faction": "WU",
+      "nodeId": "WU-B2",
+      "alive": true
+    },
+    {
+      "id": "WU-cannon-02",
+      "type": "cannon",
+      "faction": "WU",
+      "nodeId": "WU-H2",
+      "alive": true
+    },
+    {
+      "id": "WU-pawn-01",
+      "type": "pawn",
+      "faction": "WU",
+      "nodeId": "WU-A3",
+      "alive": true,
+      "directionFaction": "WU"
+    },
+    {
+      "id": "WU-pawn-02",
+      "type": "pawn",
+      "faction": "WU",
+      "nodeId": "WU-C3",
+      "alive": true,
+      "directionFaction": "WU"
+    },
+    {
+      "id": "WU-pawn-03",
+      "type": "pawn",
+      "faction": "WU",
+      "nodeId": "WU-E3",
+      "alive": true,
+      "directionFaction": "WU"
+    },
+    {
+      "id": "WU-pawn-04",
+      "type": "pawn",
+      "faction": "WU",
+      "nodeId": "WU-G3",
+      "alive": true,
+      "directionFaction": "WU"
+    },
+    {
+      "id": "WU-pawn-05",
+      "type": "pawn",
+      "faction": "WU",
+      "nodeId": "WU-I3",
+      "alive": true,
+      "directionFaction": "WU"
+    }
+  ]
+}

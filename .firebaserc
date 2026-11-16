@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "ot-exam-review"
+  },
+  "targets": {
+    "ot-exam-review": {
+      "database": {
+        "three-kingdoms": [
+          "three-kingdoms-ot-exam-review"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isThreeKingdomsClient() {
+      return request.auth != null &&
+        request.auth.token.keys().hasAny(['threeKingdomsClient']) &&
+        request.auth.token.threeKingdomsClient == true;
+    }
+
+    match /users/{userId} {
+      allow read, write: if request.auth != null && !isThreeKingdomsClient() && request.auth.uid == userId;
+    }
+    match /reports/{reportId} {
+      allow create: if request.auth != null && !isThreeKingdomsClient();
+      allow read, update, delete: if !isThreeKingdomsClient() && isAdmin();
+    }
+    match /admins/{uid} {
+      allow read: if request.auth != null && !isThreeKingdomsClient();
+      allow write: if false;
+    }
+    function isAdmin() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /threeKingdomsMatches/{matchId} {
+      allow read: if isThreeKingdomsClient() &&
+        resource.data.status in ['completed', 'draw', 'interrupted'];
+      allow create, update, delete: if false;
+      match /events/{eventId} {
+        allow read: if isThreeKingdomsClient() &&
+          get(/databases/$(database)/documents/threeKingdomsMatches/$(matchId)).data.status
+            in ['completed', 'draw', 'interrupted'];
+        allow create, update, delete: if false;
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
