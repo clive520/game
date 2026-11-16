@@ -1,0 +1,4029 @@
+{
+  "schemaVersion": 2,
+  "status": "approved-topology",
+  "generatedFrom": [
+    "board-coordinate-map.svg"
+  ],
+  "nodeCount": 135,
+  "edgeCount": 291,
+  "riverBands": [
+    {
+      "id": "river-band-1",
+      "from": [
+        478.5,
+        390.0
+      ],
+      "to": [
+        478.5,
+        50.0
+      ],
+      "width": 48
+    },
+    {
+      "id": "river-band-2",
+      "from": [
+        478.5,
+        390.0
+      ],
+      "to": [
+        773.5,
+        560.0
+      ],
+      "width": 48
+    },
+    {
+      "id": "river-band-3",
+      "from": [
+        478.5,
+        390.0
+      ],
+      "to": [
+        183.5,
+        560.0
+      ],
+      "width": 48
+    }
+  ],
+  "nodes": [
+    {
+      "id": "SH-A0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "A",
+      "rank": 0,
+      "x": 282.0,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-A1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "A",
+      "rank": 1,
+      "x": 257.38,
+      "y": 687.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-A2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "A",
+      "rank": 2,
+      "x": 232.75,
+      "y": 645.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-A3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "A",
+      "rank": 3,
+      "x": 208.12,
+      "y": 602.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-A4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "A",
+      "rank": 4,
+      "x": 195.8,
+      "y": 581.3,
+      "highlight": true
+    },
+    {
+      "id": "SH-B0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "B",
+      "rank": 0,
+      "x": 331.12,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-B1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "B",
+      "rank": 1,
+      "x": 313.95,
+      "y": 676.63,
+      "highlight": false
+    },
+    {
+      "id": "SH-B2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "B",
+      "rank": 2,
+      "x": 296.66,
+      "y": 622.9,
+      "highlight": false
+    },
+    {
+      "id": "SH-B3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "B",
+      "rank": 3,
+      "x": 279.3,
+      "y": 568.94,
+      "highlight": false
+    },
+    {
+      "id": "SH-B4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "B",
+      "rank": 4,
+      "x": 269.5,
+      "y": 538.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-C0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "C",
+      "rank": 0,
+      "x": 380.25,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-C1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "C",
+      "rank": 1,
+      "x": 370.04,
+      "y": 665.85,
+      "highlight": false
+    },
+    {
+      "id": "SH-C2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "C",
+      "rank": 2,
+      "x": 359.73,
+      "y": 601.08,
+      "highlight": false
+    },
+    {
+      "id": "SH-C3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "C",
+      "rank": 3,
+      "x": 349.35,
+      "y": 535.9,
+      "highlight": false
+    },
+    {
+      "id": "SH-C4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "C",
+      "rank": 4,
+      "x": 343.0,
+      "y": 496.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-D0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "D",
+      "rank": 0,
+      "x": 429.38,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-D1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "D",
+      "rank": 1,
+      "x": 425.89,
+      "y": 655.11,
+      "highlight": false
+    },
+    {
+      "id": "SH-D2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "D",
+      "rank": 2,
+      "x": 422.36,
+      "y": 579.42,
+      "highlight": false
+    },
+    {
+      "id": "SH-D3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "D",
+      "rank": 3,
+      "x": 418.81,
+      "y": 503.15,
+      "highlight": false
+    },
+    {
+      "id": "SH-D4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "D",
+      "rank": 4,
+      "x": 416.5,
+      "y": 453.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-E0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "E",
+      "rank": 0,
+      "x": 478.5,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-E1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "E",
+      "rank": 1,
+      "x": 478.5,
+      "y": 645.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-E2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "E",
+      "rank": 2,
+      "x": 478.5,
+      "y": 560.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-E3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "E",
+      "rank": 3,
+      "x": 478.5,
+      "y": 475.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-E4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "E",
+      "rank": 4,
+      "x": 478.5,
+      "y": 421.3,
+      "highlight": true
+    },
+    {
+      "id": "SH-F0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "F",
+      "rank": 0,
+      "x": 527.62,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-F1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "F",
+      "rank": 1,
+      "x": 531.04,
+      "y": 655.1,
+      "highlight": false
+    },
+    {
+      "id": "SH-F2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "F",
+      "rank": 2,
+      "x": 534.5,
+      "y": 579.37,
+      "highlight": false
+    },
+    {
+      "id": "SH-F3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "F",
+      "rank": 3,
+      "x": 537.99,
+      "y": 503.05,
+      "highlight": false
+    },
+    {
+      "id": "SH-F4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "F",
+      "rank": 4,
+      "x": 540.25,
+      "y": 453.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-G0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "G",
+      "rank": 0,
+      "x": 576.75,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-G1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "G",
+      "rank": 1,
+      "x": 586.96,
+      "y": 665.85,
+      "highlight": false
+    },
+    {
+      "id": "SH-G2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "G",
+      "rank": 2,
+      "x": 597.27,
+      "y": 601.08,
+      "highlight": false
+    },
+    {
+      "id": "SH-G3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "G",
+      "rank": 3,
+      "x": 607.65,
+      "y": 535.9,
+      "highlight": false
+    },
+    {
+      "id": "SH-G4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "G",
+      "rank": 4,
+      "x": 614.0,
+      "y": 496.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-H0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "H",
+      "rank": 0,
+      "x": 625.88,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-H1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "H",
+      "rank": 1,
+      "x": 643.12,
+      "y": 676.64,
+      "highlight": false
+    },
+    {
+      "id": "SH-H2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "H",
+      "rank": 2,
+      "x": 660.47,
+      "y": 622.94,
+      "highlight": false
+    },
+    {
+      "id": "SH-H3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "H",
+      "rank": 3,
+      "x": 677.89,
+      "y": 569.02,
+      "highlight": false
+    },
+    {
+      "id": "SH-H4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "H",
+      "rank": 4,
+      "x": 687.75,
+      "y": 538.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-I0",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "I",
+      "rank": 0,
+      "x": 675.0,
+      "y": 730.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-I1",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "I",
+      "rank": 1,
+      "x": 699.62,
+      "y": 687.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-I2",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "I",
+      "rank": 2,
+      "x": 724.25,
+      "y": 645.0,
+      "highlight": false
+    },
+    {
+      "id": "SH-I3",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "I",
+      "rank": 3,
+      "x": 748.88,
+      "y": 602.5,
+      "highlight": false
+    },
+    {
+      "id": "SH-I4",
+      "kind": "territory",
+      "faction": "SH",
+      "file": "I",
+      "rank": 4,
+      "x": 761.2,
+      "y": 581.3,
+      "highlight": true
+    },
+    {
+      "id": "WE-A0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "A",
+      "rank": 0,
+      "x": 282.3,
+      "y": 49.83,
+      "highlight": false
+    },
+    {
+      "id": "WE-A1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "A",
+      "rank": 1,
+      "x": 331.42,
+      "y": 49.75,
+      "highlight": false
+    },
+    {
+      "id": "WE-A2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "A",
+      "rank": 2,
+      "x": 380.54,
+      "y": 49.67,
+      "highlight": false
+    },
+    {
+      "id": "WE-A3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "A",
+      "rank": 3,
+      "x": 429.66,
+      "y": 49.6,
+      "highlight": false
+    },
+    {
+      "id": "WE-A4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "A",
+      "rank": 4,
+      "x": 453.9,
+      "y": 50.0,
+      "highlight": true
+    },
+    {
+      "id": "WE-B0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "B",
+      "rank": 0,
+      "x": 257.74,
+      "y": 92.37,
+      "highlight": false
+    },
+    {
+      "id": "WE-B1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "B",
+      "rank": 1,
+      "x": 312.55,
+      "y": 104.18,
+      "highlight": false
+    },
+    {
+      "id": "WE-B2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "B",
+      "rank": 2,
+      "x": 367.72,
+      "y": 116.07,
+      "highlight": false
+    },
+    {
+      "id": "WE-B3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "B",
+      "rank": 3,
+      "x": 423.13,
+      "y": 128.02,
+      "highlight": false
+    },
+    {
+      "id": "WE-B4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "B",
+      "rank": 4,
+      "x": 454.4,
+      "y": 134.75,
+      "highlight": false
+    },
+    {
+      "id": "WE-C0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "C",
+      "rank": 0,
+      "x": 233.18,
+      "y": 134.91,
+      "highlight": false
+    },
+    {
+      "id": "WE-C1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "C",
+      "rank": 1,
+      "x": 293.84,
+      "y": 158.15,
+      "highlight": false
+    },
+    {
+      "id": "WE-C2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "C",
+      "rank": 2,
+      "x": 355.08,
+      "y": 181.6,
+      "highlight": false
+    },
+    {
+      "id": "WE-C3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "C",
+      "rank": 3,
+      "x": 416.72,
+      "y": 205.2,
+      "highlight": false
+    },
+    {
+      "id": "WE-C4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "C",
+      "rank": 4,
+      "x": 454.45,
+      "y": 219.65,
+      "highlight": false
+    },
+    {
+      "id": "WE-D0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "D",
+      "rank": 0,
+      "x": 208.61,
+      "y": 177.46,
+      "highlight": false
+    },
+    {
+      "id": "WE-D1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "D",
+      "rank": 1,
+      "x": 275.21,
+      "y": 211.88,
+      "highlight": false
+    },
+    {
+      "id": "WE-D2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "D",
+      "rank": 2,
+      "x": 342.53,
+      "y": 246.67,
+      "highlight": false
+    },
+    {
+      "id": "WE-D3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "D",
+      "rank": 3,
+      "x": 410.35,
+      "y": 281.73,
+      "highlight": false
+    },
+    {
+      "id": "WE-D4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "D",
+      "rank": 4,
+      "x": 454.51,
+      "y": 304.56,
+      "highlight": false
+    },
+    {
+      "id": "WE-E0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "E",
+      "rank": 0,
+      "x": 184.05,
+      "y": 220.0,
+      "highlight": false
+    },
+    {
+      "id": "WE-E1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "E",
+      "rank": 1,
+      "x": 257.66,
+      "y": 262.5,
+      "highlight": false
+    },
+    {
+      "id": "WE-E2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "E",
+      "rank": 2,
+      "x": 331.28,
+      "y": 305.0,
+      "highlight": false
+    },
+    {
+      "id": "WE-E3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "E",
+      "rank": 3,
+      "x": 404.89,
+      "y": 347.5,
+      "highlight": false
+    },
+    {
+      "id": "WE-E4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "E",
+      "rank": 4,
+      "x": 454.3,
+      "y": 374.7,
+      "highlight": true
+    },
+    {
+      "id": "WE-F0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "F",
+      "rank": 0,
+      "x": 159.49,
+      "y": 262.54,
+      "highlight": false
+    },
+    {
+      "id": "WE-F1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "F",
+      "rank": 1,
+      "x": 222.65,
+      "y": 302.95,
+      "highlight": false
+    },
+    {
+      "id": "WE-F2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "F",
+      "rank": 2,
+      "x": 286.5,
+      "y": 343.81,
+      "highlight": false
+    },
+    {
+      "id": "WE-F3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "F",
+      "rank": 3,
+      "x": 350.85,
+      "y": 384.99,
+      "highlight": false
+    },
+    {
+      "id": "WE-F4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "F",
+      "rank": 4,
+      "x": 392.63,
+      "y": 411.73,
+      "highlight": false
+    },
+    {
+      "id": "WE-G0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "G",
+      "rank": 0,
+      "x": 134.93,
+      "y": 305.09,
+      "highlight": false
+    },
+    {
+      "id": "WE-G1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "G",
+      "rank": 1,
+      "x": 185.38,
+      "y": 346.0,
+      "highlight": false
+    },
+    {
+      "id": "WE-G2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "G",
+      "rank": 2,
+      "x": 236.31,
+      "y": 387.32,
+      "highlight": false
+    },
+    {
+      "id": "WE-G3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "G",
+      "rank": 3,
+      "x": 287.57,
+      "y": 428.9,
+      "highlight": false
+    },
+    {
+      "id": "WE-G4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "G",
+      "rank": 4,
+      "x": 318.95,
+      "y": 454.35,
+      "highlight": false
+    },
+    {
+      "id": "WE-H0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "H",
+      "rank": 0,
+      "x": 110.36,
+      "y": 347.63,
+      "highlight": false
+    },
+    {
+      "id": "WE-H1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "H",
+      "rank": 1,
+      "x": 147.95,
+      "y": 389.25,
+      "highlight": false
+    },
+    {
+      "id": "WE-H2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "H",
+      "rank": 2,
+      "x": 185.78,
+      "y": 431.12,
+      "highlight": false
+    },
+    {
+      "id": "WE-H3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "H",
+      "rank": 3,
+      "x": 223.77,
+      "y": 473.17,
+      "highlight": false
+    },
+    {
+      "id": "WE-H4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "H",
+      "rank": 4,
+      "x": 245.27,
+      "y": 496.97,
+      "highlight": false
+    },
+    {
+      "id": "WE-I0",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "I",
+      "rank": 0,
+      "x": 85.8,
+      "y": 390.17,
+      "highlight": false
+    },
+    {
+      "id": "WE-I1",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "I",
+      "rank": 1,
+      "x": 110.29,
+      "y": 432.75,
+      "highlight": false
+    },
+    {
+      "id": "WE-I2",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "I",
+      "rank": 2,
+      "x": 134.79,
+      "y": 475.33,
+      "highlight": false
+    },
+    {
+      "id": "WE-I3",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "I",
+      "rank": 3,
+      "x": 159.28,
+      "y": 517.9,
+      "highlight": false
+    },
+    {
+      "id": "WE-I4",
+      "kind": "territory",
+      "faction": "WE",
+      "file": "I",
+      "rank": 4,
+      "x": 171.2,
+      "y": 538.7,
+      "highlight": true
+    },
+    {
+      "id": "WU-A0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "A",
+      "rank": 0,
+      "x": 871.2,
+      "y": 390.17,
+      "highlight": false
+    },
+    {
+      "id": "WU-A1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "A",
+      "rank": 1,
+      "x": 846.71,
+      "y": 432.75,
+      "highlight": false
+    },
+    {
+      "id": "WU-A2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "A",
+      "rank": 2,
+      "x": 822.21,
+      "y": 475.33,
+      "highlight": false
+    },
+    {
+      "id": "WU-A3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "A",
+      "rank": 3,
+      "x": 797.72,
+      "y": 517.9,
+      "highlight": false
+    },
+    {
+      "id": "WU-A4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "A",
+      "rank": 4,
+      "x": 785.8,
+      "y": 538.7,
+      "highlight": true
+    },
+    {
+      "id": "WU-B0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "B",
+      "rank": 0,
+      "x": 846.64,
+      "y": 347.63,
+      "highlight": false
+    },
+    {
+      "id": "WU-B1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "B",
+      "rank": 1,
+      "x": 809.0,
+      "y": 389.19,
+      "highlight": false
+    },
+    {
+      "id": "WU-B2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "B",
+      "rank": 2,
+      "x": 771.12,
+      "y": 431.03,
+      "highlight": false
+    },
+    {
+      "id": "WU-B3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "B",
+      "rank": 3,
+      "x": 733.07,
+      "y": 473.04,
+      "highlight": false
+    },
+    {
+      "id": "WU-B4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "B",
+      "rank": 4,
+      "x": 711.6,
+      "y": 496.75,
+      "highlight": false
+    },
+    {
+      "id": "WU-C0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "C",
+      "rank": 0,
+      "x": 822.07,
+      "y": 305.09,
+      "highlight": false
+    },
+    {
+      "id": "WU-C1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "C",
+      "rank": 1,
+      "x": 771.62,
+      "y": 346.0,
+      "highlight": false
+    },
+    {
+      "id": "WU-C2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "C",
+      "rank": 2,
+      "x": 720.69,
+      "y": 387.32,
+      "highlight": false
+    },
+    {
+      "id": "WU-C3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "C",
+      "rank": 3,
+      "x": 669.43,
+      "y": 428.9,
+      "highlight": false
+    },
+    {
+      "id": "WU-C4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "C",
+      "rank": 4,
+      "x": 638.05,
+      "y": 454.35,
+      "highlight": false
+    },
+    {
+      "id": "WU-D0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "D",
+      "rank": 0,
+      "x": 797.51,
+      "y": 262.54,
+      "highlight": false
+    },
+    {
+      "id": "WU-D1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "D",
+      "rank": 1,
+      "x": 734.4,
+      "y": 303.01,
+      "highlight": false
+    },
+    {
+      "id": "WU-D2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "D",
+      "rank": 2,
+      "x": 670.61,
+      "y": 343.91,
+      "highlight": false
+    },
+    {
+      "id": "WU-D3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "D",
+      "rank": 3,
+      "x": 606.34,
+      "y": 385.12,
+      "highlight": false
+    },
+    {
+      "id": "WU-D4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "D",
+      "rank": 4,
+      "x": 564.49,
+      "y": 411.94,
+      "highlight": false
+    },
+    {
+      "id": "WU-E0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "E",
+      "rank": 0,
+      "x": 772.95,
+      "y": 220.0,
+      "highlight": false
+    },
+    {
+      "id": "WU-E1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "E",
+      "rank": 1,
+      "x": 699.34,
+      "y": 262.5,
+      "highlight": false
+    },
+    {
+      "id": "WU-E2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "E",
+      "rank": 2,
+      "x": 625.72,
+      "y": 305.0,
+      "highlight": false
+    },
+    {
+      "id": "WU-E3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "E",
+      "rank": 3,
+      "x": 552.11,
+      "y": 347.5,
+      "highlight": false
+    },
+    {
+      "id": "WU-E4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "E",
+      "rank": 4,
+      "x": 508.5,
+      "y": 374.7,
+      "highlight": true
+    },
+    {
+      "id": "WU-F0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "F",
+      "rank": 0,
+      "x": 748.39,
+      "y": 177.46,
+      "highlight": false
+    },
+    {
+      "id": "WU-F1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "F",
+      "rank": 1,
+      "x": 681.81,
+      "y": 211.95,
+      "highlight": false
+    },
+    {
+      "id": "WU-F2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "F",
+      "rank": 2,
+      "x": 614.5,
+      "y": 246.82,
+      "highlight": false
+    },
+    {
+      "id": "WU-F3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "F",
+      "rank": 3,
+      "x": 546.66,
+      "y": 281.96,
+      "highlight": false
+    },
+    {
+      "id": "WU-F4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "F",
+      "rank": 4,
+      "x": 502.62,
+      "y": 304.77,
+      "highlight": false
+    },
+    {
+      "id": "WU-G0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "G",
+      "rank": 0,
+      "x": 723.82,
+      "y": 134.91,
+      "highlight": false
+    },
+    {
+      "id": "WU-G1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "G",
+      "rank": 1,
+      "x": 663.16,
+      "y": 158.15,
+      "highlight": false
+    },
+    {
+      "id": "WU-G2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "G",
+      "rank": 2,
+      "x": 601.92,
+      "y": 181.6,
+      "highlight": false
+    },
+    {
+      "id": "WU-G3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "G",
+      "rank": 3,
+      "x": 540.28,
+      "y": 205.2,
+      "highlight": false
+    },
+    {
+      "id": "WU-G4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "G",
+      "rank": 4,
+      "x": 502.55,
+      "y": 219.65,
+      "highlight": false
+    },
+    {
+      "id": "WU-H0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "H",
+      "rank": 0,
+      "x": 699.26,
+      "y": 92.37,
+      "highlight": false
+    },
+    {
+      "id": "WU-H1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "H",
+      "rank": 1,
+      "x": 644.43,
+      "y": 104.11,
+      "highlight": false
+    },
+    {
+      "id": "WU-H2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "H",
+      "rank": 2,
+      "x": 589.25,
+      "y": 115.94,
+      "highlight": false
+    },
+    {
+      "id": "WU-H3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "H",
+      "rank": 3,
+      "x": 533.84,
+      "y": 127.81,
+      "highlight": false
+    },
+    {
+      "id": "WU-H4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "H",
+      "rank": 4,
+      "x": 502.48,
+      "y": 134.53,
+      "highlight": false
+    },
+    {
+      "id": "WU-I0",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "I",
+      "rank": 0,
+      "x": 674.7,
+      "y": 49.83,
+      "highlight": false
+    },
+    {
+      "id": "WU-I1",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "I",
+      "rank": 1,
+      "x": 625.58,
+      "y": 49.75,
+      "highlight": false
+    },
+    {
+      "id": "WU-I2",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "I",
+      "rank": 2,
+      "x": 576.46,
+      "y": 49.67,
+      "highlight": false
+    },
+    {
+      "id": "WU-I3",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "I",
+      "rank": 3,
+      "x": 527.34,
+      "y": 49.6,
+      "highlight": false
+    },
+    {
+      "id": "WU-I4",
+      "kind": "territory",
+      "faction": "WU",
+      "file": "I",
+      "rank": 4,
+      "x": 503.1,
+      "y": 50.0,
+      "highlight": true
+    }
+  ],
+  "edges": [
+    {
+      "from": "SH-A0",
+      "to": "SH-A1",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A0",
+      "to": "SH-B0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A1",
+      "to": "SH-A2",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A1",
+      "to": "SH-B1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A2",
+      "to": "SH-A3",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A2",
+      "to": "SH-B2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A3",
+      "to": "SH-A4",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A3",
+      "to": "SH-B3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A4",
+      "to": "SH-B4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-A4",
+      "to": "SH-B4",
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-A4",
+      "to": "WE-I4",
+      "kind": "outer-connector"
+    },
+    {
+      "from": "SH-A4",
+      "to": "WE-I4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-A4",
+      "to": "WE-I4",
+      "kind": "river-crossing",
+      "faction": "river-3"
+    },
+    {
+      "from": "SH-B0",
+      "to": "SH-B1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B0",
+      "to": "SH-C0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B1",
+      "to": "SH-B2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B1",
+      "to": "SH-C1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B2",
+      "to": "SH-B3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B2",
+      "to": "SH-C2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B3",
+      "to": "SH-B4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B3",
+      "to": "SH-C3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B4",
+      "to": "SH-C4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-B4",
+      "to": "SH-C4",
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-B4",
+      "to": "WE-H4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-B4",
+      "to": "WE-H4",
+      "kind": "river-crossing",
+      "faction": "river-3"
+    },
+    {
+      "from": "SH-C0",
+      "to": "SH-C1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C0",
+      "to": "SH-D0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C1",
+      "to": "SH-C2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C1",
+      "to": "SH-D1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C2",
+      "to": "SH-C3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C2",
+      "to": "SH-D2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C3",
+      "to": "SH-C4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C3",
+      "to": "SH-D3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C4",
+      "to": "SH-D4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-C4",
+      "to": "SH-D4",
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-C4",
+      "to": "WE-G4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-C4",
+      "to": "WE-G4",
+      "kind": "river-crossing",
+      "faction": "river-3"
+    },
+    {
+      "from": "SH-D0",
+      "to": "SH-D1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D0",
+      "to": "SH-E0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D0",
+      "to": "SH-E1",
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D1",
+      "to": "SH-D2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D1",
+      "to": "SH-E1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D2",
+      "to": "SH-D3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D2",
+      "to": "SH-E1",
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D2",
+      "to": "SH-E2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D3",
+      "to": "SH-D4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D3",
+      "to": "SH-E3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D4",
+      "to": "SH-E4",
+      "kind": "central-link",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-D4",
+      "to": "WE-F4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-D4",
+      "to": "WE-F4",
+      "kind": "river-crossing",
+      "faction": "river-3"
+    },
+    {
+      "from": "SH-E0",
+      "to": "SH-E1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E0",
+      "to": "SH-F0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E1",
+      "to": "SH-E2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E1",
+      "to": "SH-F0",
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E1",
+      "to": "SH-F1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E1",
+      "to": "SH-F2",
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E2",
+      "to": "SH-E3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E2",
+      "to": "SH-F2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E3",
+      "to": "SH-E4",
+      "kind": "central-link",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E3",
+      "to": "SH-E4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E3",
+      "to": "SH-F3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E4",
+      "to": "SH-F4",
+      "kind": "central-link",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-E4",
+      "to": "WE-E4",
+      "kind": "central-link"
+    },
+    {
+      "from": "SH-E4",
+      "to": "WU-E4",
+      "kind": "central-link"
+    },
+    {
+      "from": "SH-F0",
+      "to": "SH-F1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F0",
+      "to": "SH-G0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F1",
+      "to": "SH-F2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F1",
+      "to": "SH-G1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F2",
+      "to": "SH-F3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F2",
+      "to": "SH-G2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F3",
+      "to": "SH-F4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F3",
+      "to": "SH-G3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F4",
+      "to": "SH-G4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-F4",
+      "to": "SH-G4",
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-F4",
+      "to": "WU-D4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-F4",
+      "to": "WU-D4",
+      "kind": "river-crossing",
+      "faction": "river-2"
+    },
+    {
+      "from": "SH-G0",
+      "to": "SH-G1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G0",
+      "to": "SH-H0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G1",
+      "to": "SH-G2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G1",
+      "to": "SH-H1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G2",
+      "to": "SH-G3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G2",
+      "to": "SH-H2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G3",
+      "to": "SH-G4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G3",
+      "to": "SH-H3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G4",
+      "to": "SH-H4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-G4",
+      "to": "SH-H4",
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-G4",
+      "to": "WU-C4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-G4",
+      "to": "WU-C4",
+      "kind": "river-crossing",
+      "faction": "river-2"
+    },
+    {
+      "from": "SH-H0",
+      "to": "SH-H1",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H0",
+      "to": "SH-I0",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H1",
+      "to": "SH-H2",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H1",
+      "to": "SH-I1",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H2",
+      "to": "SH-H3",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H2",
+      "to": "SH-I2",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H3",
+      "to": "SH-H4",
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H3",
+      "to": "SH-I3",
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H4",
+      "to": "SH-I4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-H4",
+      "to": "SH-I4",
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-H4",
+      "to": "WU-B4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-H4",
+      "to": "WU-B4",
+      "kind": "river-crossing",
+      "faction": "river-2"
+    },
+    {
+      "from": "SH-I0",
+      "to": "SH-I1",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-I1",
+      "to": "SH-I2",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-I2",
+      "to": "SH-I3",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-I3",
+      "to": "SH-I4",
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "from": "SH-I4",
+      "to": "WU-A4",
+      "kind": "outer-connector"
+    },
+    {
+      "from": "SH-I4",
+      "to": "WU-A4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "SH-I4",
+      "to": "WU-A4",
+      "kind": "river-crossing",
+      "faction": "river-2"
+    },
+    {
+      "from": "WE-A0",
+      "to": "WE-A1",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A0",
+      "to": "WE-B0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A1",
+      "to": "WE-A2",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A1",
+      "to": "WE-B1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A2",
+      "to": "WE-A3",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A2",
+      "to": "WE-B2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A3",
+      "to": "WE-A4",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A3",
+      "to": "WE-B3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A4",
+      "to": "WE-B4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-A4",
+      "to": "WE-B4",
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-A4",
+      "to": "WU-I4",
+      "kind": "outer-connector"
+    },
+    {
+      "from": "WE-A4",
+      "to": "WU-I4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-A4",
+      "to": "WU-I4",
+      "kind": "river-crossing",
+      "faction": "river-1"
+    },
+    {
+      "from": "WE-B0",
+      "to": "WE-B1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B0",
+      "to": "WE-C0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B1",
+      "to": "WE-B2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B1",
+      "to": "WE-C1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B2",
+      "to": "WE-B3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B2",
+      "to": "WE-C2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B3",
+      "to": "WE-B4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B3",
+      "to": "WE-C3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B4",
+      "to": "WE-C4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-B4",
+      "to": "WE-C4",
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-B4",
+      "to": "WU-H4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-B4",
+      "to": "WU-H4",
+      "kind": "river-crossing",
+      "faction": "river-1"
+    },
+    {
+      "from": "WE-C0",
+      "to": "WE-C1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C0",
+      "to": "WE-D0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C1",
+      "to": "WE-C2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C1",
+      "to": "WE-D1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C2",
+      "to": "WE-C3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C2",
+      "to": "WE-D2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C3",
+      "to": "WE-C4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C3",
+      "to": "WE-D3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C4",
+      "to": "WE-D4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-C4",
+      "to": "WE-D4",
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-C4",
+      "to": "WU-G4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-C4",
+      "to": "WU-G4",
+      "kind": "river-crossing",
+      "faction": "river-1"
+    },
+    {
+      "from": "WE-D0",
+      "to": "WE-D1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D0",
+      "to": "WE-E0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D0",
+      "to": "WE-E1",
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D1",
+      "to": "WE-D2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D1",
+      "to": "WE-E1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D2",
+      "to": "WE-D3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D2",
+      "to": "WE-E1",
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D2",
+      "to": "WE-E2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D3",
+      "to": "WE-D4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D3",
+      "to": "WE-E3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D4",
+      "to": "WE-E4",
+      "kind": "central-link",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-D4",
+      "to": "WU-F4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-D4",
+      "to": "WU-F4",
+      "kind": "river-crossing",
+      "faction": "river-1"
+    },
+    {
+      "from": "WE-E0",
+      "to": "WE-E1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E0",
+      "to": "WE-F0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E1",
+      "to": "WE-E2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E1",
+      "to": "WE-F0",
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E1",
+      "to": "WE-F1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E1",
+      "to": "WE-F2",
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E2",
+      "to": "WE-E3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E2",
+      "to": "WE-F2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E3",
+      "to": "WE-E4",
+      "kind": "central-link",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E3",
+      "to": "WE-E4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E3",
+      "to": "WE-F3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E4",
+      "to": "WE-F4",
+      "kind": "central-link",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-E4",
+      "to": "WU-E4",
+      "kind": "central-link"
+    },
+    {
+      "from": "WE-F0",
+      "to": "WE-F1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F0",
+      "to": "WE-G0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F1",
+      "to": "WE-F2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F1",
+      "to": "WE-G1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F2",
+      "to": "WE-F3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F2",
+      "to": "WE-G2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F3",
+      "to": "WE-F4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F3",
+      "to": "WE-G3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-F4",
+      "to": "WE-G4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-F4",
+      "to": "WE-G4",
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G0",
+      "to": "WE-G1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G0",
+      "to": "WE-H0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G1",
+      "to": "WE-G2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G1",
+      "to": "WE-H1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G2",
+      "to": "WE-G3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G2",
+      "to": "WE-H2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G3",
+      "to": "WE-G4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G3",
+      "to": "WE-H3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-G4",
+      "to": "WE-H4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-G4",
+      "to": "WE-H4",
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H0",
+      "to": "WE-H1",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H0",
+      "to": "WE-I0",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H1",
+      "to": "WE-H2",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H1",
+      "to": "WE-I1",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H2",
+      "to": "WE-H3",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H2",
+      "to": "WE-I2",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H3",
+      "to": "WE-H4",
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H3",
+      "to": "WE-I3",
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-H4",
+      "to": "WE-I4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WE-H4",
+      "to": "WE-I4",
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-I0",
+      "to": "WE-I1",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-I1",
+      "to": "WE-I2",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-I2",
+      "to": "WE-I3",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WE-I3",
+      "to": "WE-I4",
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "from": "WU-A0",
+      "to": "WU-A1",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A0",
+      "to": "WU-B0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A1",
+      "to": "WU-A2",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A1",
+      "to": "WU-B1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A2",
+      "to": "WU-A3",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A2",
+      "to": "WU-B2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A3",
+      "to": "WU-A4",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A3",
+      "to": "WU-B3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-A4",
+      "to": "WU-B4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WU-A4",
+      "to": "WU-B4",
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B0",
+      "to": "WU-B1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B0",
+      "to": "WU-C0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B1",
+      "to": "WU-B2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B1",
+      "to": "WU-C1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B2",
+      "to": "WU-B3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B2",
+      "to": "WU-C2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B3",
+      "to": "WU-B4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B3",
+      "to": "WU-C3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-B4",
+      "to": "WU-C4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WU-B4",
+      "to": "WU-C4",
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C0",
+      "to": "WU-C1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C0",
+      "to": "WU-D0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C1",
+      "to": "WU-C2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C1",
+      "to": "WU-D1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C2",
+      "to": "WU-C3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C2",
+      "to": "WU-D2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C3",
+      "to": "WU-C4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C3",
+      "to": "WU-D3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-C4",
+      "to": "WU-D4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WU-C4",
+      "to": "WU-D4",
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D0",
+      "to": "WU-D1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D0",
+      "to": "WU-E0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D0",
+      "to": "WU-E1",
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D1",
+      "to": "WU-D2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D1",
+      "to": "WU-E1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D2",
+      "to": "WU-D3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D2",
+      "to": "WU-E1",
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D2",
+      "to": "WU-E2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D3",
+      "to": "WU-D4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D3",
+      "to": "WU-E3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-D4",
+      "to": "WU-E4",
+      "kind": "central-link",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E0",
+      "to": "WU-E1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E0",
+      "to": "WU-F0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E1",
+      "to": "WU-E2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E1",
+      "to": "WU-F0",
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E1",
+      "to": "WU-F1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E1",
+      "to": "WU-F2",
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E2",
+      "to": "WU-E3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E2",
+      "to": "WU-F2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E3",
+      "to": "WU-E4",
+      "kind": "central-link",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E3",
+      "to": "WU-E4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E3",
+      "to": "WU-F3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-E4",
+      "to": "WU-F4",
+      "kind": "central-link",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F0",
+      "to": "WU-F1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F0",
+      "to": "WU-G0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F1",
+      "to": "WU-F2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F1",
+      "to": "WU-G1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F2",
+      "to": "WU-F3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F2",
+      "to": "WU-G2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F3",
+      "to": "WU-F4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F3",
+      "to": "WU-G3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-F4",
+      "to": "WU-G4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WU-F4",
+      "to": "WU-G4",
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G0",
+      "to": "WU-G1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G0",
+      "to": "WU-H0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G1",
+      "to": "WU-G2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G1",
+      "to": "WU-H1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G2",
+      "to": "WU-G3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G2",
+      "to": "WU-H2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G3",
+      "to": "WU-G4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G3",
+      "to": "WU-H3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-G4",
+      "to": "WU-H4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WU-G4",
+      "to": "WU-H4",
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H0",
+      "to": "WU-H1",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H0",
+      "to": "WU-I0",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H1",
+      "to": "WU-H2",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H1",
+      "to": "WU-I1",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H2",
+      "to": "WU-H3",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H2",
+      "to": "WU-I2",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H3",
+      "to": "WU-H4",
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H3",
+      "to": "WU-I3",
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-H4",
+      "to": "WU-I4",
+      "kind": "river-continuation"
+    },
+    {
+      "from": "WU-H4",
+      "to": "WU-I4",
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-I0",
+      "to": "WU-I1",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-I1",
+      "to": "WU-I2",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-I2",
+      "to": "WU-I3",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "from": "WU-I3",
+      "to": "WU-I4",
+      "kind": "outer-boundary",
+      "faction": "WU"
+    }
+  ],
+  "lineRuns": [
+    {
+      "id": "SH-base",
+      "nodes": [
+        "SH-A0",
+        "SH-B0",
+        "SH-C0",
+        "SH-D0",
+        "SH-E0",
+        "SH-F0",
+        "SH-G0",
+        "SH-H0",
+        "SH-I0"
+      ],
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-central-spokes",
+      "nodes": [
+        "SH-D4",
+        "SH-E4",
+        "SH-F4"
+      ],
+      "kind": "central-link",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-A",
+      "nodes": [
+        "SH-A0",
+        "SH-A1",
+        "SH-A2",
+        "SH-A3",
+        "SH-A4"
+      ],
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-B",
+      "nodes": [
+        "SH-B0",
+        "SH-B1",
+        "SH-B2",
+        "SH-B3",
+        "SH-B4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-C",
+      "nodes": [
+        "SH-C0",
+        "SH-C1",
+        "SH-C2",
+        "SH-C3",
+        "SH-C4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-D",
+      "nodes": [
+        "SH-D0",
+        "SH-D1",
+        "SH-D2",
+        "SH-D3",
+        "SH-D4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-E",
+      "nodes": [
+        "SH-E0",
+        "SH-E1",
+        "SH-E2",
+        "SH-E3",
+        "SH-E4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-F",
+      "nodes": [
+        "SH-F0",
+        "SH-F1",
+        "SH-F2",
+        "SH-F3",
+        "SH-F4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-G",
+      "nodes": [
+        "SH-G0",
+        "SH-G1",
+        "SH-G2",
+        "SH-G3",
+        "SH-G4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-H",
+      "nodes": [
+        "SH-H0",
+        "SH-H1",
+        "SH-H2",
+        "SH-H3",
+        "SH-H4"
+      ],
+      "kind": "local-rank",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-file-I",
+      "nodes": [
+        "SH-I0",
+        "SH-I1",
+        "SH-I2",
+        "SH-I3",
+        "SH-I4"
+      ],
+      "kind": "outer-boundary",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-palace-D0",
+      "nodes": [
+        "SH-D0",
+        "SH-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-palace-D2",
+      "nodes": [
+        "SH-D2",
+        "SH-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-palace-F0",
+      "nodes": [
+        "SH-F0",
+        "SH-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-palace-F2",
+      "nodes": [
+        "SH-F2",
+        "SH-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-rank-1",
+      "nodes": [
+        "SH-A1",
+        "SH-B1",
+        "SH-C1",
+        "SH-D1",
+        "SH-E1",
+        "SH-F1",
+        "SH-G1",
+        "SH-H1",
+        "SH-I1"
+      ],
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-rank-2",
+      "nodes": [
+        "SH-A2",
+        "SH-B2",
+        "SH-C2",
+        "SH-D2",
+        "SH-E2",
+        "SH-F2",
+        "SH-G2",
+        "SH-H2",
+        "SH-I2"
+      ],
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-rank-3",
+      "nodes": [
+        "SH-A3",
+        "SH-B3",
+        "SH-C3",
+        "SH-D3",
+        "SH-E3",
+        "SH-F3",
+        "SH-G3",
+        "SH-H3",
+        "SH-I3"
+      ],
+      "kind": "local-file",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-shore-A",
+      "nodes": [
+        "SH-A4",
+        "SH-B4",
+        "SH-C4",
+        "SH-D4"
+      ],
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "id": "SH-shore-F",
+      "nodes": [
+        "SH-F4",
+        "SH-G4",
+        "SH-H4",
+        "SH-I4"
+      ],
+      "kind": "river-shoreline",
+      "faction": "SH"
+    },
+    {
+      "id": "WE-base",
+      "nodes": [
+        "WE-A0",
+        "WE-B0",
+        "WE-C0",
+        "WE-D0",
+        "WE-E0",
+        "WE-F0",
+        "WE-G0",
+        "WE-H0",
+        "WE-I0"
+      ],
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-central-spokes",
+      "nodes": [
+        "WE-D4",
+        "WE-E4",
+        "WE-F4"
+      ],
+      "kind": "central-link",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-A",
+      "nodes": [
+        "WE-A0",
+        "WE-A1",
+        "WE-A2",
+        "WE-A3",
+        "WE-A4"
+      ],
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-B",
+      "nodes": [
+        "WE-B0",
+        "WE-B1",
+        "WE-B2",
+        "WE-B3",
+        "WE-B4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-C",
+      "nodes": [
+        "WE-C0",
+        "WE-C1",
+        "WE-C2",
+        "WE-C3",
+        "WE-C4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-D",
+      "nodes": [
+        "WE-D0",
+        "WE-D1",
+        "WE-D2",
+        "WE-D3",
+        "WE-D4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-E",
+      "nodes": [
+        "WE-E0",
+        "WE-E1",
+        "WE-E2",
+        "WE-E3",
+        "WE-E4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-F",
+      "nodes": [
+        "WE-F0",
+        "WE-F1",
+        "WE-F2",
+        "WE-F3",
+        "WE-F4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-G",
+      "nodes": [
+        "WE-G0",
+        "WE-G1",
+        "WE-G2",
+        "WE-G3",
+        "WE-G4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-H",
+      "nodes": [
+        "WE-H0",
+        "WE-H1",
+        "WE-H2",
+        "WE-H3",
+        "WE-H4"
+      ],
+      "kind": "local-rank",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-file-I",
+      "nodes": [
+        "WE-I0",
+        "WE-I1",
+        "WE-I2",
+        "WE-I3",
+        "WE-I4"
+      ],
+      "kind": "outer-boundary",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-palace-D0",
+      "nodes": [
+        "WE-D0",
+        "WE-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-palace-D2",
+      "nodes": [
+        "WE-D2",
+        "WE-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-palace-F0",
+      "nodes": [
+        "WE-F0",
+        "WE-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-palace-F2",
+      "nodes": [
+        "WE-F2",
+        "WE-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-rank-1",
+      "nodes": [
+        "WE-A1",
+        "WE-B1",
+        "WE-C1",
+        "WE-D1",
+        "WE-E1",
+        "WE-F1",
+        "WE-G1",
+        "WE-H1",
+        "WE-I1"
+      ],
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-rank-2",
+      "nodes": [
+        "WE-A2",
+        "WE-B2",
+        "WE-C2",
+        "WE-D2",
+        "WE-E2",
+        "WE-F2",
+        "WE-G2",
+        "WE-H2",
+        "WE-I2"
+      ],
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-rank-3",
+      "nodes": [
+        "WE-A3",
+        "WE-B3",
+        "WE-C3",
+        "WE-D3",
+        "WE-E3",
+        "WE-F3",
+        "WE-G3",
+        "WE-H3",
+        "WE-I3"
+      ],
+      "kind": "local-file",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-shore-A",
+      "nodes": [
+        "WE-A4",
+        "WE-B4",
+        "WE-C4",
+        "WE-D4"
+      ],
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "id": "WE-shore-F",
+      "nodes": [
+        "WE-F4",
+        "WE-G4",
+        "WE-H4",
+        "WE-I4"
+      ],
+      "kind": "river-shoreline",
+      "faction": "WE"
+    },
+    {
+      "id": "WU-base",
+      "nodes": [
+        "WU-A0",
+        "WU-B0",
+        "WU-C0",
+        "WU-D0",
+        "WU-E0",
+        "WU-F0",
+        "WU-G0",
+        "WU-H0",
+        "WU-I0"
+      ],
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-central-spokes",
+      "nodes": [
+        "WU-D4",
+        "WU-E4",
+        "WU-F4"
+      ],
+      "kind": "central-link",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-A",
+      "nodes": [
+        "WU-A0",
+        "WU-A1",
+        "WU-A2",
+        "WU-A3",
+        "WU-A4"
+      ],
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-B",
+      "nodes": [
+        "WU-B0",
+        "WU-B1",
+        "WU-B2",
+        "WU-B3",
+        "WU-B4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-C",
+      "nodes": [
+        "WU-C0",
+        "WU-C1",
+        "WU-C2",
+        "WU-C3",
+        "WU-C4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-D",
+      "nodes": [
+        "WU-D0",
+        "WU-D1",
+        "WU-D2",
+        "WU-D3",
+        "WU-D4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-E",
+      "nodes": [
+        "WU-E0",
+        "WU-E1",
+        "WU-E2",
+        "WU-E3",
+        "WU-E4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-F",
+      "nodes": [
+        "WU-F0",
+        "WU-F1",
+        "WU-F2",
+        "WU-F3",
+        "WU-F4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-G",
+      "nodes": [
+        "WU-G0",
+        "WU-G1",
+        "WU-G2",
+        "WU-G3",
+        "WU-G4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-H",
+      "nodes": [
+        "WU-H0",
+        "WU-H1",
+        "WU-H2",
+        "WU-H3",
+        "WU-H4"
+      ],
+      "kind": "local-rank",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-file-I",
+      "nodes": [
+        "WU-I0",
+        "WU-I1",
+        "WU-I2",
+        "WU-I3",
+        "WU-I4"
+      ],
+      "kind": "outer-boundary",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-palace-D0",
+      "nodes": [
+        "WU-D0",
+        "WU-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-palace-D2",
+      "nodes": [
+        "WU-D2",
+        "WU-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-palace-F0",
+      "nodes": [
+        "WU-F0",
+        "WU-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-palace-F2",
+      "nodes": [
+        "WU-F2",
+        "WU-E1"
+      ],
+      "kind": "palace-diagonal",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-rank-1",
+      "nodes": [
+        "WU-A1",
+        "WU-B1",
+        "WU-C1",
+        "WU-D1",
+        "WU-E1",
+        "WU-F1",
+        "WU-G1",
+        "WU-H1",
+        "WU-I1"
+      ],
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-rank-2",
+      "nodes": [
+        "WU-A2",
+        "WU-B2",
+        "WU-C2",
+        "WU-D2",
+        "WU-E2",
+        "WU-F2",
+        "WU-G2",
+        "WU-H2",
+        "WU-I2"
+      ],
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-rank-3",
+      "nodes": [
+        "WU-A3",
+        "WU-B3",
+        "WU-C3",
+        "WU-D3",
+        "WU-E3",
+        "WU-F3",
+        "WU-G3",
+        "WU-H3",
+        "WU-I3"
+      ],
+      "kind": "local-file",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-shore-A",
+      "nodes": [
+        "WU-A4",
+        "WU-B4",
+        "WU-C4",
+        "WU-D4"
+      ],
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "id": "WU-shore-F",
+      "nodes": [
+        "WU-F4",
+        "WU-G4",
+        "WU-H4",
+        "WU-I4"
+      ],
+      "kind": "river-shoreline",
+      "faction": "WU"
+    },
+    {
+      "id": "central-triangle-SH-E4-WE-E4",
+      "nodes": [
+        "SH-E4",
+        "WE-E4"
+      ],
+      "kind": "central-link"
+    },
+    {
+      "id": "central-triangle-WE-E4-WU-E4",
+      "nodes": [
+        "WE-E4",
+        "WU-E4"
+      ],
+      "kind": "central-link"
+    },
+    {
+      "id": "central-triangle-WU-E4-SH-E4",
+      "nodes": [
+        "WU-E4",
+        "SH-E4"
+      ],
+      "kind": "central-link"
+    },
+    {
+      "id": "outer-SH-A4-WE-I4",
+      "nodes": [
+        "SH-A4",
+        "WE-I4"
+      ],
+      "kind": "outer-connector"
+    },
+    {
+      "id": "outer-WE-A4-WU-I4",
+      "nodes": [
+        "WE-A4",
+        "WU-I4"
+      ],
+      "kind": "outer-connector"
+    },
+    {
+      "id": "outer-WU-A4-SH-I4",
+      "nodes": [
+        "WU-A4",
+        "SH-I4"
+      ],
+      "kind": "outer-connector"
+    },
+    {
+      "id": "river-1-continuation-1",
+      "nodes": [
+        "WE-A4",
+        "WE-B4",
+        "WE-C4",
+        "WE-D4",
+        "WU-F4",
+        "WU-G4",
+        "WU-H4",
+        "WU-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-1-continuation-2",
+      "nodes": [
+        "WE-A4",
+        "WE-B4",
+        "WE-C4",
+        "WU-G4",
+        "WU-H4",
+        "WU-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-1-continuation-3",
+      "nodes": [
+        "WE-A4",
+        "WE-B4",
+        "WU-H4",
+        "WU-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-1-continuation-4",
+      "nodes": [
+        "WE-A4",
+        "WU-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-2-continuation-1",
+      "nodes": [
+        "WU-A4",
+        "WU-B4",
+        "WU-C4",
+        "WU-D4",
+        "SH-F4",
+        "SH-G4",
+        "SH-H4",
+        "SH-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-2-continuation-2",
+      "nodes": [
+        "WU-A4",
+        "WU-B4",
+        "WU-C4",
+        "SH-G4",
+        "SH-H4",
+        "SH-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-2-continuation-3",
+      "nodes": [
+        "WU-A4",
+        "WU-B4",
+        "SH-H4",
+        "SH-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-2-continuation-4",
+      "nodes": [
+        "WU-A4",
+        "SH-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-3-continuation-1",
+      "nodes": [
+        "SH-A4",
+        "SH-B4",
+        "SH-C4",
+        "SH-D4",
+        "WE-F4",
+        "WE-G4",
+        "WE-H4",
+        "WE-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-3-continuation-2",
+      "nodes": [
+        "SH-A4",
+        "SH-B4",
+        "SH-C4",
+        "WE-G4",
+        "WE-H4",
+        "WE-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-3-continuation-3",
+      "nodes": [
+        "SH-A4",
+        "SH-B4",
+        "WE-H4",
+        "WE-I4"
+      ],
+      "kind": "river-continuation"
+    },
+    {
+      "id": "river-3-continuation-4",
+      "nodes": [
+        "SH-A4",
+        "WE-I4"
+      ],
+      "kind": "river-continuation"
+    }
+  ],
+  "highlightNodeIds": [
+    "SH-A4",
+    "SH-E4",
+    "SH-I4",
+    "WE-A4",
+    "WE-E4",
+    "WE-I4",
+    "WU-A4",
+    "WU-E4",
+    "WU-I4"
+  ],
+  "notes": [
+    "Playable positions are exactly the three sets of A0-I4 territory points.",
+    "River bands are visual separators; no C or R1-1 through R3-4 playable nodes exist.",
+    "River crossings connect the approved opposing bank pairs directly."
+  ]
+}
