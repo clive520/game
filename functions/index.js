@@ -82,11 +82,33 @@ function initialGame() {
 }
 
 function livingFactions(game) {
+  game.eliminated = Array.isArray(game.eliminated) ? game.eliminated : [];
   return factions.filter((faction) => !game.eliminated.includes(faction));
+}
+
+function normalizeGameCollections(game) {
+  if (!game) return game;
+  game.pieces = Array.isArray(game.pieces) ? game.pieces : [];
+  game.eliminated = Array.isArray(game.eliminated) ? game.eliminated : [];
+  game.history = Array.isArray(game.history) ? game.history : [];
+  return game;
+}
+
+async function transactWithSnapshot(ref, update) {
+  const initialSnapshot = await ref.get();
+  let firstAttempt = true;
+  return ref.transaction((current) => {
+    if (firstAttempt && current == null && initialSnapshot.exists()) {
+      current = structuredClone(initialSnapshot.val());
+    }
+    firstAttempt = false;
+    return update(current);
+  }, undefined, false);
 }
 
 function eliminateFaction(room, faction, reason) {
   const game = room.public.game;
+  normalizeGameCollections(game);
   if (game.eliminated.includes(faction)) return;
   game.eliminated.push(faction);
   game.pieces = game.pieces.map((piece) => piece.faction === faction ? { ...piece, alive: false, nodeId: null } : piece);
@@ -216,7 +238,7 @@ async function recordFailedPinAttempt(request) {
   const attemptRef = database.ref(`threeKingdoms/security/pinAttempts/${key}`);
   const now = Date.now();
   let limited = false;
-  await attemptRef.transaction((value) => {
+  await transactWithSnapshot(attemptRef, (value) => {
     const recent = (Array.isArray(value) ? value : []).filter((time) => time > now - 15 * 60 * 1000);
     if (recent.length >= 10) {
       limited = true;
@@ -253,6 +275,7 @@ function publicSeat(faction, controller, name) {
 
 function completeGameMove(room, mover, move) {
   const game = room.public.game;
+  normalizeGameCollections(game);
   const eliminatedBeforeMove = new Set(game.eliminated);
   const captured = move.captureId ? game.pieces.find((piece) => piece.id === move.captureId) : null;
   const result = applyMoveToPieces(game.pieces, move);
@@ -288,8 +311,9 @@ function completeGameMove(room, mover, move) {
 async function transactComputerTurn(roomCode) {
   const roomRef = database.ref(`threeKingdoms/rooms/${roomCode}`);
   let noOp = false;
-  const result = await roomRef.transaction((room) => {
+  const result = await transactWithSnapshot(roomRef, (room) => {
     if (!room?.public?.game || room.public.meta.status !== "playing" || room.public.game.drawOffer) return;
+    normalizeGameCollections(room.public.game);
     const faction = room.public.game.currentFaction;
     if (room.public.seats[faction]?.controller !== "ai") {
       noOp = true;
@@ -324,8 +348,9 @@ async function transactComputerTurn(roomCode) {
 
 async function transactComputerDrawVote(roomCode, faction) {
   const roomRef = database.ref(`threeKingdoms/rooms/${roomCode}`);
-  return roomRef.transaction((room) => {
+  return transactWithSnapshot(roomRef, (room) => {
     const game = room?.public?.game;
+    normalizeGameCollections(game);
     const offer = game?.drawOffer;
     if (!game || room.public.meta.status !== "playing" || !offer
       || room.public.seats[faction]?.controller !== "ai"
@@ -472,11 +497,9 @@ export const threeKingdomsJoinRoom = onCall({ enforceAppCheck: true }, async (re
   const candidateMatchId = createMatchId();
   const now = Date.now();
   let assigned = { role: "spectator", faction: null, recoveryCode: null, started: false };
-  let firstTransactionAttempt = true;
   const roomRef = database.ref(`threeKingdoms/rooms/${String(roomCode).toUpperCase()}`);
-  const result = await roomRef.transaction((room) => {
-    if (firstTransactionAttempt && !room) room = structuredClone(roomBefore);
-    firstTransactionAttempt = false;
+  const result = await transactWithSnapshot(roomRef, (room) => {
+    if (!room) room = structuredClone(roomBefore);
     if (!room?.public || !room?.private) return;
     assigned = { role: "spectator", faction: null, recoveryCode: null, started: false };
     const member = room.private.members?.[uid];
@@ -552,7 +575,7 @@ export const threeKingdomsSubmitMove = onCall({ enforceAppCheck: true }, async (
     throw new HttpsError("invalid-argument", "棋步資料無效。");
   }
   let failure = null;
-  const result = await database.ref(`threeKingdoms/rooms/${roomCode}`).transaction((room) => {
+  const result = await transactWithSnapshot(database.ref(`threeKingdoms/rooms/${roomCode}`), (room) => {
     const member = room?.private?.members?.[uid];
     if (!room?.public?.game || room.public.meta.status !== "playing" || member?.role !== "player") {
       failure = "你目前沒有此房間的行棋席位。";
@@ -591,13 +614,14 @@ export const threeKingdomsProposeDraw = onCall({ enforceAppCheck: true }, async 
   const roomCode = String(request.data?.roomCode ?? "").toUpperCase();
   if (!roomCodePattern.test(roomCode)) throw new HttpsError("invalid-argument", "房間代碼無效。");
   let failure = null;
-  const result = await database.ref(`threeKingdoms/rooms/${roomCode}`).transaction((room) => {
+  const result = await transactWithSnapshot(database.ref(`threeKingdoms/rooms/${roomCode}`), (room) => {
     const member = room?.private?.members?.[uid];
     const game = room?.public?.game;
     if (!game || room.public.meta.status !== "playing" || member?.role !== "player") {
       failure = "你目前不能在此房間提出和棋。";
       return;
     }
+    normalizeGameCollections(game);
     const proposer = member.faction;
     if (game.currentFaction !== proposer || game.drawOffer) {
       failure = "只能在自己的回合提出和棋，且目前不能已有待決提議。";
@@ -647,7 +671,7 @@ export const threeKingdomsVoteDraw = onCall({ enforceAppCheck: true }, async (re
   const accepted = request.data?.accepted;
   if (!roomCodePattern.test(roomCode) || typeof accepted !== "boolean") throw new HttpsError("invalid-argument", "和棋表決資料無效。");
   let failure = null;
-  const result = await database.ref(`threeKingdoms/rooms/${roomCode}`).transaction((room) => {
+  const result = await transactWithSnapshot(database.ref(`threeKingdoms/rooms/${roomCode}`), (room) => {
     const member = room?.private?.members?.[uid];
     const game = room?.public?.game;
     const offer = game?.drawOffer;
@@ -655,6 +679,7 @@ export const threeKingdomsVoteDraw = onCall({ enforceAppCheck: true }, async (re
       failure = "目前沒有待表決的和棋提議。";
       return;
     }
+    normalizeGameCollections(game);
     const voter = member.faction;
     if (!offer.requiredFactions.includes(voter) || voter === offer.proposer || game.eliminated.includes(voter) || voter in offer.votes) {
       failure = "你不需要或已經完成這次表決。";
@@ -691,7 +716,7 @@ export const threeKingdomsLeaveRoom = onCall({ enforceAppCheck: true }, async (r
   const roomCode = String(request.data?.roomCode ?? "").toUpperCase();
   if (!roomCodePattern.test(roomCode)) throw new HttpsError("invalid-argument", "房間代碼無效。");
   let faction = null;
-  const result = await database.ref(`threeKingdoms/rooms/${roomCode}`).transaction((room) => {
+  const result = await transactWithSnapshot(database.ref(`threeKingdoms/rooms/${roomCode}`), (room) => {
     const member = room?.private?.members?.[uid];
     if (!member) return;
     faction = member.role === "player" ? member.faction : null;
@@ -731,7 +756,7 @@ export const threeKingdomsOnPlayerPresenceDeleted = onValueDeleted({ instance: "
   const remainingConnections = await database.ref(`threeKingdoms/presence/${roomCode}/${uid}`).get();
   if (remainingConnections.exists()) return;
   let lostFaction = null;
-  const result = await database.ref(`threeKingdoms/rooms/${roomCode}`).transaction((room) => {
+  const result = await transactWithSnapshot(database.ref(`threeKingdoms/rooms/${roomCode}`), (room) => {
     const member = room?.private?.members?.[uid];
     const faction = member?.role === "player" ? member.faction : null;
     if (!faction || room.private.seats?.[faction]?.uid !== uid || room.public.seats[faction]?.controller !== "human") return;

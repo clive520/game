@@ -835,7 +835,7 @@ function applyOnlineRoom(publicRoom) {
       statusMessage: "等待遊戲開始。",
     };
   } else if (meta.status === "playing" && publicRoom.game) {
-    const game = publicRoom.game;
+    const game = normalizeOnlineGame(publicRoom.game);
     state = {
       ...game,
       mode: meta.mode,
@@ -844,7 +844,7 @@ function applyOnlineRoom(publicRoom) {
     };
     roomMessage.textContent = `房間 ${onlineRoomId} · ${seatName}${onlineSeat?.faction ? `（${factionNames[onlineSeat.faction]}）` : ""}。${onlineSeat?.role === "spectator" ? "目前為觀戰模式。" : "棋局已即時同步。"}`;
   } else {
-    const game = publicRoom.game ?? initialState();
+    const game = normalizeOnlineGame(publicRoom.game ?? initialState());
     state = {
       ...game,
       mode: meta.mode,
@@ -857,6 +857,15 @@ function applyOnlineRoom(publicRoom) {
   joinRoomButton.disabled = true;
   leaveRoomButton.disabled = false;
   render();
+}
+
+function normalizeOnlineGame(game) {
+  return {
+    ...game,
+    pieces: Array.isArray(game.pieces) ? game.pieces : [],
+    eliminated: Array.isArray(game.eliminated) ? game.eliminated : [],
+    history: Array.isArray(game.history) ? game.history : [],
+  };
 }
 
 async function enterOnlineRoom(roomCode, seat, recoveryCode = null) {
