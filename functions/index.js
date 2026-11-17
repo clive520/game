@@ -299,7 +299,7 @@ function completeGameMove(room, mover, move) {
       captureId: captured?.id ?? null,
       eliminatedFactions: game.eliminated.filter((faction) => !eliminatedBeforeMove.has(faction)),
       nextFaction: game.currentFaction,
-      winner: game.winner,
+      winner: game.winner ?? null,
       historyText,
       additionalHistory: game.history.slice(historyLengthBeforeMove + 1),
     },
